@@ -63,7 +63,7 @@ export default function RegisterScreen() {
           <AuthGenderSelect label="Jenis Kelamin *" value={gender} onChange={setGender} />
 
           <View style={{ marginTop: 4 }}>
-            <AuthButton label="Daftar" onPress={() => router.replace("/home")} disabled={!canSubmit} />
+            <AuthButton label="Daftar" onPress={() => router.replace("/")} disabled={!canSubmit} />
           </View>
         </Animated.View>
 

@@ -126,11 +126,6 @@ export default function HeroCarousel() {
         </View>
 
         <Text style={styles.hint}>Geser buat lihat event lain</Text>
-        <View style={styles.infoPill}>
-          <Text style={styles.infoPillText}>
-            Event baru tersedia! <Text style={styles.infoPillLink}>Lihat Info Tiket</Text>
-          </Text>
-        </View>
       </View>
     </GestureHandlerRootView>
   );
@@ -144,15 +139,4 @@ const styles = StyleSheet.create({
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#C2C8D0" },
   dotActive: { width: 18, backgroundColor: gfColors.teal },
   hint: { textAlign: "center", fontSize: 11.5, color: MUTED_TEXT, marginTop: 4 },
-  infoPill: {
-    marginHorizontal: 24,
-    marginTop: 14,
-    marginBottom: 24,
-    backgroundColor: "rgba(255,255,255,0.7)",
-    borderRadius: 14,
-    paddingVertical: 12,
-    alignItems: "center",
-  },
-  infoPillText: { fontSize: 12, color: MUTED_TEXT },
-  infoPillLink: { color: gfColors.teal, fontWeight: "700" },
 });

@@ -39,7 +39,7 @@ export default function LoginScreen() {
 
           <Text style={styles.forgot}>Lupa password?</Text>
 
-          <AuthButton label="Masuk" onPress={() => router.replace("/home")} disabled={!canSubmit} />
+          <AuthButton label="Masuk" onPress={() => router.replace("/")} disabled={!canSubmit} />
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(340)}>

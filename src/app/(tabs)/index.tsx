@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import HeroCarousel from "../components/home/hero-carousel";
+import HeroCarousel from "../../components/home/hero-carousel";
 
 export default function HomeScreen() {
   return (
