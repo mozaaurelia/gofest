@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { Platform, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import type { PointerEvent } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
@@ -28,6 +29,25 @@ export default function HeroCarousel() {
 
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
+  const parallaxX = useSharedValue(0);
+
+  // Web: strip card langsung ikut posisi kursor (kiri/kanan) tanpa perlu ditekan.
+  const webPointerProps =
+    Platform.OS === "web"
+      ? {
+          onPointerMove: (e: PointerEvent) => {
+            const progress = Math.max(-1, Math.min(1, (e.nativeEvent.clientX - width / 2) / (width / 2)));
+            parallaxX.value = withTiming(progress * snapInterval * 0.15, { duration: 90 });
+          },
+          onPointerLeave: () => {
+            parallaxX.value = withTiming(0, { duration: 220 });
+          },
+        }
+      : {};
+
+  const parallaxStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: parallaxX.value }],
+  }));
 
   const panGesture = Gesture.Pan()
     .onStart(() => {
@@ -57,7 +77,7 @@ export default function HeroCarousel() {
 
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
-      <Animated.View style={[styles.container, bgStyle]}>
+      <Animated.View style={[styles.container, bgStyle]} {...webPointerProps}>
         <LinearGradient
           colors={["rgba(255,255,255,0.07)", "rgba(0,0,0,0.32)"]}
           start={{ x: 0.5, y: 0 }}
@@ -68,11 +88,11 @@ export default function HeroCarousel() {
         <HomeNavbar />
 
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={styles.carouselWrap}>
+          <Animated.View style={[styles.carouselWrap, parallaxStyle]}>
             {HERO_EVENTS.map((item, index) => (
               <Animated.View
                 key={item.id}
-                style={{ position: "absolute", left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center" }}
+                style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "center" }}
               >
                 <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
               </Animated.View>
@@ -100,7 +120,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  carouselWrap: { flex: 1, overflow: "hidden" },
+  carouselWrap: { flex: 1, overflow: "hidden", paddingVertical: 18 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.25)" },
   dotActive: { width: 18, backgroundColor: gfColors.lime },
