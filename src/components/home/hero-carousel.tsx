@@ -120,7 +120,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  carouselWrap: { flex: 1, overflow: "hidden", paddingVertical: 18 },
+  carouselWrap: { flex: 1, overflow: "hidden", paddingTop: 12, paddingBottom: 44 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.25)" },
   dotActive: { width: 18, backgroundColor: gfColors.lime },

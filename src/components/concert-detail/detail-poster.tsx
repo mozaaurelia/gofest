@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { Image } from "expo-image";
+import { ImageSourcePropType, StyleSheet, View, useWindowDimensions } from "react-native";
 import { gfColors } from "../../constants/gf-theme";
 
-type DetailPosterProps = { from: string; to: string };
+type DetailPosterProps = { from: string; to: string; image: ImageSourcePropType };
 
-export default function DetailPoster({ from, to }: DetailPosterProps) {
+export default function DetailPoster({ from, to, image }: DetailPosterProps) {
   const { width } = useWindowDimensions();
   const posterWidth = width * 0.62;
   const posterHeight = posterWidth * (4 / 3);
@@ -14,9 +15,10 @@ export default function DetailPoster({ from, to }: DetailPosterProps) {
       {/* Ambient gradient blur di belakang poster, warna ngikutin poster-nya */}
       <View style={[StyleSheet.absoluteFill, { backgroundColor: to, opacity: 0.35 }]} />
 
-      {/* taro image mu di sini - ganti View di bawah jadi <Image> */}
-      <View style={[styles.poster, { width: posterWidth, height: posterHeight, backgroundColor: from }]}>
-        <View style={[StyleSheet.absoluteFill, { backgroundColor: to, opacity: 0.6 }]} />
+      {/* Poster konser sesuai kartu yang diklik */}
+      <View style={[styles.poster, { width: posterWidth, height: posterHeight, overflow: "hidden" }]}>
+        <Image source={image} style={StyleSheet.absoluteFill} contentFit="cover" />
+        <View style={[StyleSheet.absoluteFill, { backgroundColor: to, opacity: 0.18 }]} />
       </View>
     </View>
   );
