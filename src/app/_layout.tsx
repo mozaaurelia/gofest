@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Stack, useRouter, useRootNavigationState } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import AnimatedSplashScreen from "../components/animated-splash-screen";
@@ -9,6 +9,7 @@ export default function RootLayout() {
   const [showSplash, setShowSplash] = useState(true);
   const router = useRouter();
   const navigationState = useRootNavigationState();
+  const didRedirect = useRef(false);
 
   useEffect(() => {
     SplashScreen.hideAsync();
@@ -16,7 +17,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (!navigationState?.key) return;
-    if (!showSplash) {
+    if (!showSplash && !didRedirect.current) {
+      didRedirect.current = true;
       router.replace("/auth/login");
     }
   }, [navigationState?.key, showSplash]);
