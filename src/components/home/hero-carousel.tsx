@@ -17,7 +17,7 @@ import HomeNavbar from "./home-navbar";
 import { gfColors } from "../../constants/gf-theme";
 
 const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
-const ITEM_SPACING = 12;
+const ITEM_SPACING = 28;
 
 // Background metalik: abu-putih netral dengan pantulan cahaya (brushed steel/silver)
 const METALLIC_COLORS = ["#DCDCDE", "#F5F5F3", "#E0E0E2", "#F8F8F6"] as const;

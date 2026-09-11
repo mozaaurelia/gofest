@@ -23,8 +23,9 @@ export default function HeroCard({ event, index, scrollX, snapInterval, cardWidt
 
     const scale = interpolate(scrollX.value, inputRange, [0.9, 1, 0.9], Extrapolate.CLAMP);
     const opacity = interpolate(scrollX.value, inputRange, [0.55, 1, 0.55], Extrapolate.CLAMP);
+    const rotate = interpolate(scrollX.value, inputRange, [12, 0, -12], Extrapolate.CLAMP);
 
-    return { transform: [{ translateX: scrollX.value }, { scale }], opacity };
+    return { transform: [{ translateX: scrollX.value }, { scale }, { rotate: `${rotate}deg` }], opacity };
   });
 
   return (
