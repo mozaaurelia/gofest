@@ -58,7 +58,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
     borderWidth: 3,
-    borderColor: "rgba(255,255,255,0.85)",
+    borderColor: "#FFFFFF",
+    shadowColor: "#000000",
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
   },
   info: {
     position: "absolute",
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 15, fontWeight: "800", color: "#FFFFFF", marginTop: 3 },
   venue: { fontSize: 10.5, color: "#FFFFFF", opacity: 0.85, marginTop: 2 },
   caption: { flexDirection: "row", marginTop: 9, paddingHorizontal: 4 },
-  captionMuted: { fontSize: 12, color: gfColors.textMuted, fontWeight: "600" },
-  captionTitle: { fontSize: 12, color: gfColors.text, fontWeight: "800" },
+  captionMuted: { fontSize: 12, color: "#5A6572", fontWeight: "600" },
+  captionTitle: { fontSize: 12, color: "#1B222D", fontWeight: "800" },
   captionTour: { fontSize: 12, color: gfColors.teal, fontWeight: "700" },
 });
