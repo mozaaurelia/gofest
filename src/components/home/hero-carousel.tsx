@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
-  useAnimatedScrollHandler,
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
+  runOnJS,
   interpolateColor,
+  withTiming,
 } from "react-native-reanimated";
 import { HERO_EVENTS } from "../../constants/home-data";
 import HeroCard from "./hero-card";
@@ -21,75 +23,84 @@ export default function HeroCarousel() {
   const snapInterval = cardWidth + ITEM_SPACING;
   const sidePadding = (width - cardWidth) / 2;
 
-  const scrollX = useSharedValue(0);
+  const count = HERO_EVENTS.length;
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollX.value = event.contentOffset.x;
-    },
-  });
+  const translateX = useSharedValue(0);
+  const startX = useSharedValue(0);
 
-  function onMomentumScrollEnd(e: any) {
-    const index = Math.round(e.nativeEvent.contentOffset.x / snapInterval);
-    setActiveIndex(Math.max(0, Math.min(index, HERO_EVENTS.length - 1)));
-  }
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      startX.value = translateX.value;
+    })
+    .onUpdate((e) => {
+      translateX.value = startX.value + e.translationX;
+    })
+    .onEnd((e) => {
+      const threshold = snapInterval * 0.3;
+      let next = Math.round(-translateX.value / snapInterval);
+      const movedFar = Math.abs(e.translationX) > threshold;
+      const swipedFast = Math.abs(e.velocityX) > 500;
+      if (movedFar || swipedFast) {
+        next = e.translationX < 0 || e.velocityX < 0 ? next + 1 : next - 1;
+      }
+      next = Math.max(0, Math.min(next, count - 1));
+      translateX.value = withTiming(-next * snapInterval, { duration: 260 });
+      runOnJS(setActiveIndex)(next);
+    });
 
   const bgStyle = useAnimatedStyle(() => {
-    const inputRange = HERO_EVENTS.map((_, i) => i * snapInterval);
+    const inputRange = HERO_EVENTS.map((_, i) => -i * snapInterval);
     const outputRange = HERO_EVENTS.map((e) => e.bgColor);
-    return { backgroundColor: interpolateColor(scrollX.value, inputRange, outputRange) };
+    return { backgroundColor: interpolateColor(translateX.value, inputRange, outputRange) };
   });
 
   return (
-    <Animated.View style={[styles.container, bgStyle]}>
-      <LinearGradient
-        colors={["rgba(255,255,255,0.07)", "rgba(0,0,0,0.32)"]}
-        start={{ x: 0.5, y: 0 }}
-        end={{ x: 0.5, y: 1 }}
-        style={StyleSheet.absoluteFill}
-        pointerEvents="none"
-      />
-      <HomeNavbar />
-
-      <View style={styles.carouselWrap}>
-        <Animated.FlatList
-          data={HERO_EVENTS}
-          keyExtractor={(item) => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          snapToInterval={snapInterval}
-          decelerationRate="fast"
-          bounces={false}
-          contentContainerStyle={{ paddingHorizontal: sidePadding }}
-          onScroll={scrollHandler}
-          onMomentumScrollEnd={onMomentumScrollEnd}
-          scrollEventThrottle={16}
-          renderItem={({ item, index }) => (
-            <HeroCard event={item} index={index} scrollX={scrollX} snapInterval={snapInterval} cardWidth={cardWidth} />
-          )}
+    <GestureHandlerRootView style={styles.flex} collapsable={false}>
+      <Animated.View style={[styles.container, bgStyle]}>
+        <LinearGradient
+          colors={["rgba(255,255,255,0.07)", "rgba(0,0,0,0.32)"]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFill}
+          pointerEvents="none"
         />
-      </View>
+        <HomeNavbar />
 
-      <View style={styles.dots}>
-        {HERO_EVENTS.map((_, i) => (
-          <View key={i} style={[styles.dot, i === activeIndex && styles.dotActive]} />
-        ))}
-      </View>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View style={styles.carouselWrap}>
+            {HERO_EVENTS.map((item, index) => (
+              <Animated.View
+                key={item.id}
+                style={{ position: "absolute", left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center" }}
+              >
+                <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
+              </Animated.View>
+            ))}
+          </Animated.View>
+        </GestureDetector>
 
-      <Text style={styles.hint}>Ketuk banner buat lihat info event</Text>
-      <View style={styles.infoPill}>
-        <Text style={styles.infoPillText}>
-          Event baru tersedia! <Text style={styles.infoPillLink}>Lihat Info Tiket</Text>
-        </Text>
-      </View>
-    </Animated.View>
+        <View style={styles.dots}>
+          {HERO_EVENTS.map((_, i) => (
+            <View key={i} style={[styles.dot, i === activeIndex && styles.dotActive]} />
+          ))}
+        </View>
+
+        <Text style={styles.hint}>Geser buat lihat event lain</Text>
+        <View style={styles.infoPill}>
+          <Text style={styles.infoPillText}>
+            Event baru tersedia! <Text style={styles.infoPillLink}>Lihat Info Tiket</Text>
+          </Text>
+        </View>
+      </Animated.View>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: { flex: 1 },
   container: { flex: 1 },
-  carouselWrap: { flex: 1, justifyContent: "center", alignItems: "center" },
+  carouselWrap: { flex: 1, overflow: "hidden" },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.25)" },
   dotActive: { width: 18, backgroundColor: gfColors.lime },

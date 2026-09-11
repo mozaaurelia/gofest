@@ -16,28 +16,27 @@ export default function HeroCard({ event, index, scrollX, snapInterval, cardWidt
   const cardHeight = cardWidth * 1.2; // height lebih pendek biar sedang
 
   const animatedStyle = useAnimatedStyle(() => {
-    const inputRange = [(index - 1) * snapInterval, index * snapInterval, (index + 1) * snapInterval];
+    const center = -index * snapInterval;
+    const inputRange = [center - snapInterval, center, center + snapInterval];
 
     const scale = interpolate(scrollX.value, inputRange, [0.9, 1, 0.9], Extrapolate.CLAMP);
     const opacity = interpolate(scrollX.value, inputRange, [0.55, 1, 0.55], Extrapolate.CLAMP);
 
-    return { transform: [{ scale }], opacity };
+    return { transform: [{ translateX: scrollX.value }, { scale }], opacity };
   });
 
   return (
-    <View style={{ width: snapInterval, alignItems: "center" }}>
-      <Animated.View style={[styles.card, { width: cardWidth, height: cardHeight }, animatedStyle]}>
-        {/* Poster dari assets/images */}
-        <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" />
-        <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,0,0,0.28)" }]} />
+    <Animated.View style={[styles.card, { width: cardWidth, height: cardHeight }, animatedStyle]}>
+      {/* Poster dari assets/images */}
+      <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" />
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,0,0,0.28)" }]} />
 
-        <View style={styles.info}>
-          <Text style={styles.date}>{event.date}</Text>
-          <Text style={styles.title}>{event.title}</Text>
-          <Text style={styles.venue}>{event.venue}</Text>
-        </View>
-      </Animated.View>
-    </View>
+      <View style={styles.info}>
+        <Text style={styles.date}>{event.date}</Text>
+        <Text style={styles.title}>{event.title}</Text>
+        <Text style={styles.venue}>{event.venue}</Text>
+      </View>
+    </Animated.View>
   );
 }
 
