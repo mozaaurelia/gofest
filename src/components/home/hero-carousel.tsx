@@ -22,8 +22,10 @@ import { gfColors } from "../../constants/gf-theme";
 const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
 const ITEM_SPACING = 28;
 
-// Background metalik: abu-putih netral dengan pantulan cahaya (brushed steel/silver)
-const METALLIC_COLORS = ["#DCDCDE", "#F5F5F3", "#E0E0E2", "#F8F8F6"] as const;
+// Background metalik: MULTI-LAYER brushed metal - kontras jelas antar stop (±20 per channel)
+const METALLIC_BASE = ["#D8D8DA", "#F2F2F0", "#C8C8CC", "#F5F5F3"] as const;
+// Layer highlight horizontal: putih -> transparent -> putih (kedua arah beda dari base)
+const METALLIC_HIGHLIGHT = ["rgba(255,255,255,0)", "rgba(255,255,255,0.62)", "rgba(255,255,255,0)"] as const;
 
 const DARK_TEXT = "#1B222D";
 const MUTED_TEXT = "#5A6572";
@@ -171,17 +173,38 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        {/* Base metalik: gradient abu-putih diagonal biar kesan pantulan logam */}
+        {/* Layer 1 - base metalik diagonal 4 stop kontras jelas (beda 15-40 per channel) */}
         <LinearGradient
-          colors={METALLIC_COLORS}
+          colors={METALLIC_BASE}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
+          locations={[0, 0.33, 0.66, 1]}
           style={StyleSheet.absoluteFill}
           pointerEvents="none"
         />
 
-        {/* Rona warna poster aktif yang SANGAT subtle */}
-        <Animated.View style={[StyleSheet.absoluteFill, { opacity: 0.08 }, tintStyle]} pointerEvents="none" />
+        {/* Layer 2 - highlight cahaya horizontal yang nimpa base (opacity ~18%) */}
+        <LinearGradient
+          colors={METALLIC_HIGHLIGHT}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          locations={[0, 0.48, 1]}
+          style={[StyleSheet.absoluteFill, { opacity: 0.32 }]}
+          pointerEvents="none"
+        />
+
+        {/* Layer 2b - highlight vertikal subtle tambahan biar brushed metal lebih kebaca */}
+        <LinearGradient
+          colors={["rgba(255,255,255,0)", "rgba(255,255,255,0.38)", "rgba(255,255,255,0)"]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          locations={[0, 0.52, 1]}
+          style={[StyleSheet.absoluteFill, { opacity: 0.22 }]}
+          pointerEvents="none"
+        />
+
+        {/* Tint poster - naik dari 0.08 jadi 0.14 biar kerasa tapi tetap dominan metalik */}
+        <Animated.View style={[StyleSheet.absoluteFill, { opacity: 0.14 }, tintStyle]} pointerEvents="none" />
 
         <HomeNavbar />
 
@@ -250,7 +273,9 @@ export default function HeroCarousel() {
           ))}
         </View>
 
-        <Text style={styles.hint}>{count === 0 ? " " : t.hint}</Text>
+        <View style={styles.hintWrap}>
+          <Text style={styles.hint}>{count === 0 ? " " : t.hint}</Text>
+        </View>
       </View>
     </GestureHandlerRootView>
   );
@@ -300,10 +325,20 @@ const styles = StyleSheet.create({
   langTextActive: { color: "#FFFFFF" },
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
   emptyWrap: { height: 320, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
-  emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT },
-  emptySub: { fontSize: 12, color: MUTED_TEXT, marginTop: 4 },
+  emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT, textShadowColor: "rgba(255,255,255,0.9)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 6 },
+  emptySub: { fontSize: 12, color: MUTED_TEXT, marginTop: 4, textShadowColor: "rgba(255,255,255,0.9)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 6 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#C2C8D0" },
   dotActive: { width: 18, backgroundColor: gfColors.teal },
-  hint: { textAlign: "center", fontSize: 11.5, color: MUTED_TEXT, marginTop: 4 },
+  hintWrap: {
+    alignSelf: "center",
+    marginTop: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 100,
+    backgroundColor: "rgba(255,255,255,0.58)",
+    borderWidth: 1,
+    borderColor: "rgba(200,200,204,0.45)",
+  },
+  hint: { textAlign: "center", fontSize: 11.5, color: MUTED_TEXT, textShadowColor: "rgba(255,255,255,0.95)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 4 },
 });
