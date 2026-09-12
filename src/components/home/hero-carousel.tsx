@@ -223,7 +223,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 2, marginBottom: 10 },
+  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 2, marginBottom: 6 },
   searchBox: {
     flex: 1,
     flexDirection: "row",
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   langBtnActive: { backgroundColor: "#142C4A", borderColor: "#142C4A" },
   langText: { fontSize: 12, fontWeight: "800", color: DARK_TEXT, letterSpacing: 0.5 },
   langTextActive: { color: "#FFFFFF" },
-  carouselWrap: { overflow: "hidden", paddingTop: 18, paddingBottom: 16 },
+  carouselWrap: { overflow: "hidden", paddingTop: 8, paddingBottom: 16 },
   emptyWrap: { height: 320, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
   emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT },
   emptySub: { fontSize: 12, color: MUTED_TEXT, marginTop: 4 },
