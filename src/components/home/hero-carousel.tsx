@@ -32,6 +32,25 @@ export default function HeroCarousel() {
   const snapInterval = cardWidth + ITEM_SPACING;
   const sidePadding = (width - cardWidth) / 2;
 
+  const [lang, setLang] = useState<"id" | "en">("id");
+  const t = useMemo(
+    () =>
+      lang === "id"
+        ? {
+            searchPlaceholder: "Cari konser, artis, venue...",
+            hint: "Geser buat lihat event lain",
+            empty: "Tidak ada event ditemukan",
+            emptySub: "Coba kata kunci lain",
+          }
+        : {
+            searchPlaceholder: "Search concerts, artists, venue...",
+            hint: "Swipe to see other events",
+            empty: "No events found",
+            emptySub: "Try another keyword",
+          },
+    [lang]
+  );
+
   const [query, setQuery] = useState("");
   const filteredEvents = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -130,7 +149,7 @@ export default function HeroCarousel() {
 
         <HomeNavbar />
 
-        {/* Searchbar di bawah Go fest */}
+        {/* Searchbar + bahasa di bawah Go fest */}
         <View style={styles.searchWrap}>
           <View style={styles.searchBox}>
             <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
@@ -140,7 +159,7 @@ export default function HeroCarousel() {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Cari konser, artis, venue..."
+              placeholder={t.searchPlaceholder}
               placeholderTextColor={MUTED_TEXT}
               style={styles.searchInput}
               returnKeyType="search"
@@ -154,12 +173,25 @@ export default function HeroCarousel() {
               </Pressable>
             )}
           </View>
+
+          {/* Button ganti bahasa di sebelah kanan search bar */}
+          <Pressable
+            onPress={() => setLang((v) => (v === "id" ? "en" : "id"))}
+            style={[styles.langBtn, lang === "en" && styles.langBtnActive]}
+          >
+            <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
+              <Circle cx="12" cy="12" r="9" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.6} />
+              <Path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.4} strokeLinecap="round" />
+              <Path d="M4.5 8.5h15M4.5 15.5h15" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.2} strokeLinecap="round" opacity={0.9} />
+            </Svg>
+            <Text style={[styles.langText, lang === "en" && styles.langTextActive]}>{lang.toUpperCase()}</Text>
+          </Pressable>
         </View>
 
         {count === 0 ? (
           <View style={styles.emptyWrap}>
-            <Text style={styles.emptyText}>Tidak ada event ditemukan</Text>
-            <Text style={styles.emptySub}>Coba kata kunci lain</Text>
+            <Text style={styles.emptyText}>{t.empty}</Text>
+            <Text style={styles.emptySub}>{t.emptySub}</Text>
           </View>
         ) : (
           <GestureDetector gesture={panGesture}>
@@ -182,7 +214,7 @@ export default function HeroCarousel() {
           ))}
         </View>
 
-        <Text style={styles.hint}>{count === 0 ? " " : "Geser buat lihat event lain"}</Text>
+        <Text style={styles.hint}>{count === 0 ? " " : t.hint}</Text>
       </View>
     </GestureHandlerRootView>
   );
@@ -191,8 +223,9 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  searchWrap: { paddingHorizontal: 20, marginTop: 2, marginBottom: 10 },
+  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 2, marginBottom: 10 },
   searchBox: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
@@ -210,6 +243,25 @@ const styles = StyleSheet.create({
   },
   searchInput: { flex: 1, fontSize: 13.5, color: DARK_TEXT, paddingVertical: 0 },
   clearBtn: { width: 24, height: 24, alignItems: "center", justifyContent: "center" },
+  langBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1.5,
+    borderColor: "#E2E5EA",
+    borderRadius: 100,
+    paddingHorizontal: 12,
+    height: 44,
+    shadowColor: "#1A2E4D",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  langBtnActive: { backgroundColor: "#142C4A", borderColor: "#142C4A" },
+  langText: { fontSize: 12, fontWeight: "800", color: DARK_TEXT, letterSpacing: 0.5 },
+  langTextActive: { color: "#FFFFFF" },
   carouselWrap: { overflow: "hidden", paddingTop: 18, paddingBottom: 16 },
   emptyWrap: { height: 320, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
   emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT },
