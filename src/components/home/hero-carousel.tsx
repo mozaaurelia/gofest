@@ -10,6 +10,8 @@ import Animated, {
   runOnJS,
   interpolateColor,
   withTiming,
+  withSpring,
+  Easing,
 } from "react-native-reanimated";
 import { HERO_EVENTS } from "../../constants/home-data";
 import { CONCERT_DETAILS } from "../../constants/concert-detail-data";
@@ -80,10 +82,10 @@ export default function HeroCarousel() {
       ? {
           onPointerMove: (e: PointerEvent) => {
             const progress = Math.max(-1, Math.min(1, (e.nativeEvent.clientX - width / 2) / (width / 2)));
-            parallaxX.value = withTiming(progress * snapInterval * 0.15, { duration: 90 });
+            parallaxX.value = withTiming(progress * snapInterval * 0.15, { duration: 140, easing: Easing.out(Easing.quad) });
           },
           onPointerLeave: () => {
-            parallaxX.value = withTiming(0, { duration: 220 });
+            parallaxX.value = withTiming(0, { duration: 320, easing: Easing.out(Easing.cubic) });
           },
         }
       : {};
@@ -92,11 +94,11 @@ export default function HeroCarousel() {
     transform: [{ translateX: parallaxX.value }],
   }));
 
-  // reset carousel when filter changes
+  // reset carousel when filter changes — smooth spring
   useEffect(() => {
     setActiveIndex(0);
-    translateX.value = 0;
-    parallaxX.value = 0;
+    translateX.value = withSpring(0, { damping: 22, stiffness: 180, mass: 0.8 });
+    parallaxX.value = withSpring(0, { damping: 22, stiffness: 180, mass: 0.8 });
   }, [count]);
 
   const tintInputRange = filteredEvents.length ? filteredEvents.map((_, i) => -i * snapInterval) : [0];
@@ -111,24 +113,36 @@ export default function HeroCarousel() {
 
   const panGesture = Gesture.Pan()
     // Directional lock: gesture horizontal aktif duluan, scroll vertikal tetap bebas
-    .activeOffsetX([-12, 12])
-    .failOffsetY([-15, 15])
+    .activeOffsetX([-10, 10])
+    .failOffsetY([-12, 12])
     .onStart(() => {
       startX.value = translateX.value;
     })
     .onUpdate((e) => {
-      translateX.value = startX.value + e.translationX;
+      const lowerBound = -(count - 1) * snapInterval;
+      const upperBound = 0;
+      let nextX = startX.value + e.translationX;
+      // edge resistance biar tidak kaku pas mentok kiri/kanan
+      if (nextX > upperBound) nextX = upperBound + (nextX - upperBound) * 0.35;
+      if (nextX < lowerBound) nextX = lowerBound + (nextX - lowerBound) * 0.35;
+      translateX.value = nextX;
     })
     .onEnd((e) => {
-      // Threshold rendah + selalu snap ke card terdekat = swipe terasa ringan
-      const dragMoved = Math.abs(e.translationX) > snapInterval * 0.15;
-      const swipedFast = Math.abs(e.velocityX) > 350;
+      const dragMoved = Math.abs(e.translationX) > snapInterval * 0.14;
+      const swipedFast = Math.abs(e.velocityX) > 380;
       let next = Math.round(-translateX.value / snapInterval);
       if (dragMoved || swipedFast) {
-        next = e.translationX < 0 || e.velocityX < 0 ? next + 1 : next - 1;
+        // pakai base dari start biar 1 swipe = 1 card, tidak double
+        const base = Math.round(-startX.value / snapInterval);
+        next = e.translationX < 0 || e.velocityX < 0 ? base + 1 : base - 1;
       }
       next = Math.max(0, Math.min(next, count - 1));
-      translateX.value = withTiming(-next * snapInterval, { duration: 220 });
+      translateX.value = withSpring(-next * snapInterval, {
+        damping: 24,
+        stiffness: 175,
+        mass: 0.9,
+        overshootClamping: false,
+      });
       runOnJS(setActiveIndex)(next);
     });
 
