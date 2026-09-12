@@ -76,18 +76,36 @@ export default function HeroCarousel() {
   const startX = useSharedValue(0);
   const parallaxX = useSharedValue(0);
 
-  // Web: strip card langsung ikut posisi kursor (kiri/kanan) tanpa perlu ditekan.
+  // Web: strip card ikut posisi kursor tanpa perlu drag — lebih sensitif & smooth
   const webPointerProps =
     Platform.OS === "web"
       ? {
           onPointerMove: (e: PointerEvent) => {
             const progress = Math.max(-1, Math.min(1, (e.nativeEvent.clientX - width / 2) / (width / 2)));
-            parallaxX.value = withTiming(progress * snapInterval * 0.15, { duration: 140, easing: Easing.out(Easing.quad) });
+            // 0.38 = geser terasa ngikutin kursor tapi tetap dalam 1 card, tidak lompat
+            parallaxX.value = withTiming(progress * snapInterval * 0.38, { duration: 220, easing: Easing.out(Easing.cubic) });
           },
           onPointerLeave: () => {
-            parallaxX.value = withTiming(0, { duration: 320, easing: Easing.out(Easing.cubic) });
+            parallaxX.value = withTiming(0, { duration: 420, easing: Easing.out(Easing.cubic) });
           },
-        }
+          // scroll wheel horizontal / vertical untuk ganti card (biar tidak harus drag)
+          onWheel: (e: any) => {
+            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            if (Math.abs(delta) < 10) return;
+            // throttle via JS state
+            const dir = delta > 0 ? 1 : -1;
+            const next = Math.max(0, Math.min(count - 1, activeIndex + dir));
+            if (next !== activeIndex) {
+              translateX.value = withSpring(-next * snapInterval, {
+                damping: 26,
+                stiffness: 190,
+                mass: 0.85,
+                overshootClamping: false,
+              });
+              setActiveIndex(next);
+            }
+          },
+        } as any
       : {};
 
   const parallaxStyle = useAnimatedStyle(() => ({
@@ -112,24 +130,27 @@ export default function HeroCarousel() {
   }));
 
   const panGesture = Gesture.Pan()
-    // Directional lock: gesture horizontal aktif duluan, scroll vertikal tetap bebas
-    .activeOffsetX([-10, 10])
-    .failOffsetY([-12, 12])
+    // Lebih sensitif: sedikit geser langsung aktif, tidak harus tekan kuat
+    .activeOffsetX([-6, 6])
+    .failOffsetY([-10, 10])
+    .minDistance(4)
     .onStart(() => {
       startX.value = translateX.value;
+      // matikan parallax saat drag biar tidak bentrok & terasa 1:1
+      parallaxX.value = withTiming(0, { duration: 120, easing: Easing.out(Easing.quad) });
     })
     .onUpdate((e) => {
       const lowerBound = -(count - 1) * snapInterval;
       const upperBound = 0;
       let nextX = startX.value + e.translationX;
-      // edge resistance biar tidak kaku pas mentok kiri/kanan
-      if (nextX > upperBound) nextX = upperBound + (nextX - upperBound) * 0.35;
-      if (nextX < lowerBound) nextX = lowerBound + (nextX - lowerBound) * 0.35;
+      // edge resistance lebih soft biar tidak patah di ujung
+      if (nextX > upperBound) nextX = upperBound + (nextX - upperBound) * 0.45;
+      if (nextX < lowerBound) nextX = lowerBound + (nextX - lowerBound) * 0.45;
       translateX.value = nextX;
     })
     .onEnd((e) => {
-      const dragMoved = Math.abs(e.translationX) > snapInterval * 0.14;
-      const swipedFast = Math.abs(e.velocityX) > 380;
+      const dragMoved = Math.abs(e.translationX) > snapInterval * 0.08;
+      const swipedFast = Math.abs(e.velocityX) > 260;
       let next = Math.round(-translateX.value / snapInterval);
       if (dragMoved || swipedFast) {
         // pakai base dari start biar 1 swipe = 1 card, tidak double
@@ -137,10 +158,11 @@ export default function HeroCarousel() {
         next = e.translationX < 0 || e.velocityX < 0 ? base + 1 : base - 1;
       }
       next = Math.max(0, Math.min(next, count - 1));
+      // spring lebih empuk biar tidak kedet/patah
       translateX.value = withSpring(-next * snapInterval, {
-        damping: 24,
-        stiffness: 175,
-        mass: 0.9,
+        damping: 26,
+        stiffness: 190,
+        mass: 0.85,
         overshootClamping: false,
       });
       runOnJS(setActiveIndex)(next);
@@ -237,7 +259,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 2, marginBottom: 20 },
+  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 16, marginBottom: 20 },
   searchBox: {
     flex: 1,
     flexDirection: "row",
