@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { CalendarEvent } from "../../constants/calendar-data";
 import { gfColors } from "../../constants/gf-theme";
@@ -26,8 +27,9 @@ export default function EventTimelineItem({ event, showDateBadge, isLast }: Even
       </View>
 
       <Pressable style={styles.card} onPress={() => router.push(`/concert/${event.id}`)}>
-        <View style={[styles.poster, { backgroundColor: event.posterFrom }]}>
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: event.posterTo, opacity: 0.5 }]} />
+        <View style={styles.poster}>
+          <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" transition={200} />
+          <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,0,0,0.16)" }]} />
         </View>
         <View style={styles.perforationRow}>
           <View style={styles.notch} />
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   day: { fontSize: 18, fontWeight: "800", color: gfColors.text },
   line: { flex: 1, width: 1, backgroundColor: gfColors.border, marginTop: 6, marginBottom: -6 },
   card: { flex: 1, backgroundColor: gfColors.surface, borderRadius: 18, overflow: "hidden", borderWidth: 1, borderColor: gfColors.border, marginBottom: 24 },
-  poster: { height: 130 },
+  poster: { height: 150, overflow: "hidden", backgroundColor: gfColors.surface },
   perforationRow: { flexDirection: "row", alignItems: "center", marginTop: -1 },
   dash: { flex: 1, borderTopWidth: 2, borderStyle: "dashed", borderColor: gfColors.border },
   notch: { width: 16, height: 16, borderRadius: 8, backgroundColor: gfColors.bg, marginHorizontal: -8 },
