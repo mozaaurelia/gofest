@@ -10,7 +10,6 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import TicketIcon from "./ticket-icon";
-import { gfColors } from "../constants/gf-theme";
 
 type AnimatedSplashScreenProps = {
   onFinish: () => void;
@@ -84,7 +83,7 @@ export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenP
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "#1B222D",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 26,
     fontWeight: "800",
-    color: gfColors.text,
+    color: "#FFFFFF",
     letterSpacing: 0.2,
   },
 });
