@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import React, { useState, useEffect, useMemo } from "react";
+import { Platform, StyleSheet, Text, View, useWindowDimensions, TextInput, Pressable } from "react-native";
 import type { PointerEvent } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Svg, { Circle, Path } from "react-native-svg";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
@@ -31,7 +32,21 @@ export default function HeroCarousel() {
   const snapInterval = cardWidth + ITEM_SPACING;
   const sidePadding = (width - cardWidth) / 2;
 
-  const count = HERO_EVENTS.length;
+  const [query, setQuery] = useState("");
+  const filteredEvents = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return HERO_EVENTS;
+    return HERO_EVENTS.filter(
+      (e) =>
+        e.title.toLowerCase().includes(q) ||
+        (e.subtitle && e.subtitle.toLowerCase().includes(q)) ||
+        (e.tour && e.tour.toLowerCase().includes(q)) ||
+        e.venue.toLowerCase().includes(q) ||
+        e.date.toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  const count = filteredEvents.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const cardHeight = cardWidth * 1.2;
   const carouselHeight = cardHeight + 58; // card + caption + padding ( +10 buat geser sedikit ke bawah )
@@ -58,10 +73,17 @@ export default function HeroCarousel() {
     transform: [{ translateX: parallaxX.value }],
   }));
 
-  const tintInputRange = HERO_EVENTS.map((_, i) => -i * snapInterval);
-  const tintOutputRange = HERO_EVENTS.map(
-    (e) => CONCERT_DETAILS.find((c) => c.id === e.id)?.posterTo ?? "#E8E8EA",
-  );
+  // reset carousel when filter changes
+  useEffect(() => {
+    setActiveIndex(0);
+    translateX.value = 0;
+    parallaxX.value = 0;
+  }, [count]);
+
+  const tintInputRange = filteredEvents.length ? filteredEvents.map((_, i) => -i * snapInterval) : [0];
+  const tintOutputRange = filteredEvents.length
+    ? filteredEvents.map((e) => CONCERT_DETAILS.find((c) => c.id === e.id)?.posterTo ?? "#E8E8EA")
+    : ["#E8E8EA"];
 
   // Tint subtle dari poster aktif di atas background metalik (opacity rendah)
   const tintStyle = useAnimatedStyle(() => ({
@@ -108,26 +130,59 @@ export default function HeroCarousel() {
 
         <HomeNavbar />
 
-        <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.carouselWrap, { height: carouselHeight }, parallaxStyle]}>
-            {HERO_EVENTS.map((item, index) => (
-              <Animated.View
-                key={item.id}
-                style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "flex-start", paddingTop: 2 }}
-              >
-                <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
-              </Animated.View>
-            ))}
-          </Animated.View>
-        </GestureDetector>
+        {/* Searchbar di bawah Go fest */}
+        <View style={styles.searchWrap}>
+          <View style={styles.searchBox}>
+            <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
+              <Circle cx="11" cy="11" r="7" stroke={MUTED_TEXT} strokeWidth={1.8} />
+              <Path d="M15.5 15.5L20 20" stroke={MUTED_TEXT} strokeWidth={1.8} strokeLinecap="round" />
+            </Svg>
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Cari konser, artis, venue..."
+              placeholderTextColor={MUTED_TEXT}
+              style={styles.searchInput}
+              returnKeyType="search"
+              clearButtonMode="while-editing"
+            />
+            {query.length > 0 && (
+              <Pressable onPress={() => setQuery("")} hitSlop={10} style={styles.clearBtn}>
+                <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
+                  <Path d="M6 6l12 12M18 6L6 18" stroke={MUTED_TEXT} strokeWidth={1.8} strokeLinecap="round" />
+                </Svg>
+              </Pressable>
+            )}
+          </View>
+        </View>
+
+        {count === 0 ? (
+          <View style={styles.emptyWrap}>
+            <Text style={styles.emptyText}>Tidak ada event ditemukan</Text>
+            <Text style={styles.emptySub}>Coba kata kunci lain</Text>
+          </View>
+        ) : (
+          <GestureDetector gesture={panGesture}>
+            <Animated.View style={[styles.carouselWrap, { height: carouselHeight }, parallaxStyle]}>
+              {filteredEvents.map((item, index) => (
+                <Animated.View
+                  key={item.id}
+                  style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "flex-start", paddingTop: 2 }}
+                >
+                  <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
+                </Animated.View>
+              ))}
+            </Animated.View>
+          </GestureDetector>
+        )}
 
         <View style={styles.dots}>
-          {HERO_EVENTS.map((_, i) => (
+          {filteredEvents.map((_, i) => (
             <View key={i} style={[styles.dot, i === activeIndex && styles.dotActive]} />
           ))}
         </View>
 
-        <Text style={styles.hint}>Geser buat lihat event lain</Text>
+        <Text style={styles.hint}>{count === 0 ? " " : "Geser buat lihat event lain"}</Text>
       </View>
     </GestureHandlerRootView>
   );
@@ -136,7 +191,29 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
+  searchWrap: { paddingHorizontal: 20, marginTop: 2, marginBottom: 10 },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1.5,
+    borderColor: "#E2E5EA",
+    borderRadius: 100,
+    paddingHorizontal: 14,
+    height: 44,
+    shadowColor: "#1A2E4D",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  searchInput: { flex: 1, fontSize: 13.5, color: DARK_TEXT, paddingVertical: 0 },
+  clearBtn: { width: 24, height: 24, alignItems: "center", justifyContent: "center" },
   carouselWrap: { overflow: "hidden", paddingTop: 18, paddingBottom: 16 },
+  emptyWrap: { height: 320, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
+  emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT },
+  emptySub: { fontSize: 12, color: MUTED_TEXT, marginTop: 4 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#C2C8D0" },
   dotActive: { width: 18, backgroundColor: gfColors.teal },
