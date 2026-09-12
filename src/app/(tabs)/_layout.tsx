@@ -49,16 +49,6 @@ function TabIcon({ name, color }: { name: TabName; color: string }) {
   );
 }
 
-function LogoutIcon() {
-  return (
-    <Svg viewBox="0 0 24 24" width={26} height={26} fill="none">
-      <Path d="M14.2 5.2H8.6A2.1 2.1 0 0 0 6.5 7.3v9.4a2.1 2.1 0 0 0 2.1 2.1h5.6" stroke="#E57575" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-      <Path d="M13.2 12H20.5" stroke="#E57575" strokeWidth={1.8} strokeLinecap="round" />
-      <Path d="M17.2 8.7 20.5 12l-3.3 3.3" stroke="#E57575" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
-    </Svg>
-  );
-}
-
 function routeToTabName(routeName: string): TabName {
   if (routeName === "index") return "home";
   if (routeName === "kalender") return "kalender";
@@ -72,18 +62,6 @@ function CustomTabBar({ state, navigation }: any) {
   return (
     <View style={[styles.wrapper, { paddingBottom: Math.max(insets.bottom, 10) + 8 }]} pointerEvents="box-none">
       <View style={styles.row}>
-        {/* logout icon outside pill */}
-        <Pressable
-          onPress={() => {
-            // optional: navigate to login
-            // navigation.navigate("auth/login" as never);
-          }}
-          style={styles.logoutBtn}
-          hitSlop={10}
-        >
-          <LogoutIcon />
-        </Pressable>
-
         {/* floating pill */}
         <View style={styles.pill}>
           {state.routes.map((route: any, index: number) => {
@@ -153,14 +131,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-  },
-  logoutBtn: {
-    width: 36,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 2,
   },
   pill: {
     flex: 1,
