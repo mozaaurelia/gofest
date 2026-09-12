@@ -29,7 +29,7 @@ export default function HomeNavbar() {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 20, paddingTop: 28, paddingBottom: 20 },
+  row: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 20, paddingTop: 16, paddingBottom: 10 },
   iconButton: { width: 36, height: 36, alignItems: "center", justifyContent: "center" },
   logoRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   wordmark: { fontSize: 24, fontWeight: "800", color: DARK_TEXT },

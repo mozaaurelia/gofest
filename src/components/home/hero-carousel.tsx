@@ -33,6 +33,8 @@ export default function HeroCarousel() {
 
   const count = HERO_EVENTS.length;
   const [activeIndex, setActiveIndex] = useState(0);
+  const cardHeight = cardWidth * 1.2;
+  const carouselHeight = cardHeight + 48; // card + caption + padding
 
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
@@ -107,11 +109,11 @@ export default function HeroCarousel() {
         <HomeNavbar />
 
         <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.carouselWrap, parallaxStyle]}>
+          <Animated.View style={[styles.carouselWrap, { height: carouselHeight }, parallaxStyle]}>
             {HERO_EVENTS.map((item, index) => (
               <Animated.View
                 key={item.id}
-                style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "center" }}
+                style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "flex-start", paddingTop: 2 }}
               >
                 <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
               </Animated.View>
@@ -134,7 +136,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1 },
-  carouselWrap: { flex: 1, overflow: "hidden", paddingTop: 12, paddingBottom: 44 },
+  carouselWrap: { overflow: "hidden", paddingTop: 8, paddingBottom: 16 },
   dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#C2C8D0" },
   dotActive: { width: 18, backgroundColor: gfColors.teal },
