@@ -8,6 +8,7 @@ import DetailPoster from "../../components/concert-detail/detail-poster";
 import PromoBanner from "../../components/concert-detail/promo-banner";
 import DetailInfoBox from "../../components/concert-detail/detail-info-box";
 import DetailList from "../../components/concert-detail/detail-list";
+import FloatingNav from "../../components/navigation/floating-nav";
 import { gfColors } from "../../constants/gf-theme";
 
 export default function ConcertDetailScreen() {
@@ -20,7 +21,7 @@ export default function ConcertDetailScreen() {
     <View style={styles.container}>
       <DetailHeader title={concert.title} />
 
-      <ScrollView bounces contentContainerStyle={styles.scrollContent}>
+      <ScrollView bounces contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <DetailPoster from={concert.posterFrom} to={concert.posterTo} image={concert.image} />
 
         <View style={styles.headline}>
@@ -41,13 +42,15 @@ export default function ConcertDetailScreen() {
           </SafeAreaView>
         </View>
       </ScrollView>
+
+      <FloatingNav />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: gfColors.bg },
-  scrollContent: { flexGrow: 1 },
+  scrollContent: { flexGrow: 1, paddingBottom: 110 },
   headline: { paddingHorizontal: 20, paddingTop: 18 },
   headlineRow: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
   headlineSub: { fontSize: 16, color: gfColors.textMuted, fontWeight: "600" },
