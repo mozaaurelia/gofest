@@ -8,11 +8,12 @@ type DetailListItemProps = {
   iconBg: string;
   title: string;
   subtitle: string;
+  onPress?: () => void;
 };
 
-export default function DetailListItem({ icon, iconBg, title, subtitle }: DetailListItemProps) {
+export default function DetailListItem({ icon, iconBg, title, subtitle, onPress }: DetailListItemProps) {
   return (
-    <Pressable style={styles.row}>
+    <Pressable onPress={onPress} style={styles.row}>
       <View style={[styles.iconBox, { backgroundColor: iconBg }]}>{icon}</View>
       <View style={styles.textWrap}>
         <Text style={styles.title}>{title}</Text>

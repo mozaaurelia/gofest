@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
 import Svg, { Path, Rect, Circle } from "react-native-svg";
 import DetailListItem from "./detail-list-item";
 import { gfColors } from "../../constants/gf-theme";
@@ -7,6 +8,7 @@ import { gfColors } from "../../constants/gf-theme";
 const ICON_SIZE = 18;
 
 export default function DetailList() {
+  const { id } = useLocalSearchParams<{ id: string }>();
   return (
     <View style={styles.wrap}>
       <DetailListItem
@@ -20,6 +22,11 @@ export default function DetailList() {
         iconBg="rgba(143,209,79,0.12)"
         title="Denah Kursi"
         subtitle="Lihat dan cari kursi kamu"
+        onPress={() => {
+          const targetId = Array.isArray(id) ? id[0] : (id as string | undefined);
+          if (targetId) router.push({ pathname: "/seat-map/[id]", params: { id: targetId } } as any);
+          else router.push({ pathname: "/seat-map/[id]", params: { id: "h1" } } as any);
+        }}
       />
       <DetailListItem
         icon={<Svg viewBox="0 0 24 24" width={ICON_SIZE} height={ICON_SIZE} fill="none"><Rect x="3" y="9" width="18" height="6" rx="2" stroke={gfColors.green} strokeWidth={1.8} /><Path d="M8 9v6M16 9v6" stroke={gfColors.green} strokeWidth={1.8} strokeLinecap="round" /></Svg>}
