@@ -8,9 +8,16 @@ import DayEventsPanel from "../../components/calendar/day-events-panel";
 import { getEventsForDate } from "../../constants/calendar-data";
 import { gfColors } from "../../constants/gf-theme";
 
+function getTodayISO(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 export default function KalenderScreen() {
-  const [mode, setMode] = useState<CalendarViewMode>("list");
-  const [selectedDate, setSelectedDate] = useState("2026-09-10");
+  const [mode, setMode] = useState<CalendarViewMode>("grid");
+  const [selectedDate, setSelectedDate] = useState(() => getTodayISO());
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -22,7 +29,7 @@ export default function KalenderScreen() {
         <View style={styles.gridContainer}>
           <MonthGrid selectedDateISO={selectedDate} onSelectDate={setSelectedDate} />
           <DayEventsPanel
-            dateLabel={`${selectedDate.split("-")[2]} Sep`}
+            dateLabel={`${parseInt(selectedDate.split("-")[2], 10)} ${MONTH_SHORT[parseInt(selectedDate.split("-")[1], 10) - 1]}`}
             events={getEventsForDate(selectedDate)}
           />
         </View>

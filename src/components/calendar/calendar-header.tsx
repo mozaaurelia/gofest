@@ -13,7 +13,7 @@ type CalendarHeaderProps = {
 export default function CalendarHeader({ mode, onToggleMode }: CalendarHeaderProps) {
   return (
     <View style={styles.row}>
-      <Text style={styles.title}>Kalender Event</Text>
+      <Text style={styles.title}>Event Calendar</Text>
       <Pressable onPress={onToggleMode} style={styles.iconButton}>
         {mode === "list" ? <GridIcon /> : <ListIcon />}
       </Pressable>
