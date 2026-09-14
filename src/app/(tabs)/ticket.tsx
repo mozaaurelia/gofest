@@ -153,11 +153,13 @@ const styles = StyleSheet.create({
   tabWrap: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 0, backgroundColor: gfColors.bg },
   tabPill: {
     flexDirection: "row",
-    gap: 24,
     borderBottomWidth: 1,
     borderBottomColor: "#EEF0F3",
   },
   tabBtn: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     paddingBottom: 10,
     paddingTop: 2,
     borderBottomWidth: 2,
