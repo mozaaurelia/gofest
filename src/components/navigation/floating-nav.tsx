@@ -11,10 +11,10 @@ type TabName = "home" | "kalender" | "ticket" | "profile";
 type TabConfig = { name: TabName; href: string };
 
 const TABS: TabConfig[] = [
-  { name: "home", href: "/" },
-  { name: "kalender", href: "/kalender" },
-  { name: "ticket", href: "/ticket" },
-  { name: "profile", href: "/profile" },
+  { name: "home", href: "/(tabs)" },
+  { name: "kalender", href: "/(tabs)/kalender" },
+  { name: "ticket", href: "/(tabs)/ticket" },
+  { name: "profile", href: "/(tabs)/profile" },
 ];
 
 function TabIcon({ name, color }: { name: TabName; color: string }) {
@@ -58,9 +58,15 @@ export default function FloatingNav() {
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
 
-  function isActive(href: string): boolean {
-    if (href === "/") return pathname === "/" || pathname === "/index";
-    return pathname === href || pathname.startsWith(href + "/");
+  function isActive(tab: TabConfig): boolean {
+    const p = pathname ?? "";
+    // di dalam (tabs), pathname adalah "/" , "/kalender", "/ticket", "/profile" (group di-strip)
+    // plus handle "/(tabs)" variant saat push dari stack luar
+    if (tab.name === "home") return p === "/" || p === "/(tabs)" || p === "/(tabs)/" || p === "/index";
+    if (tab.name === "kalender") return p === "/kalender" || p === "/(tabs)/kalender";
+    if (tab.name === "ticket") return p === "/ticket" || p === "/(tabs)/ticket";
+    if (tab.name === "profile") return p === "/profile" || p === "/(tabs)/profile";
+    return false;
   }
 
   return (
@@ -68,7 +74,7 @@ export default function FloatingNav() {
       <View style={styles.row}>
         <View style={styles.pill}>
           {TABS.map((tab) => {
-            const active = isActive(tab.href);
+            const active = isActive(tab);
             return (
               <Pressable
                 key={tab.name}

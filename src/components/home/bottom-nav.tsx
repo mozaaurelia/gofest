@@ -5,23 +5,31 @@ import Svg, { Path } from "react-native-svg";
 import { gfColors } from "../../constants/gf-theme";
 
 const TABS = [
-  { key: "home", href: "/home" },
-  { key: "calendar", href: "/calendar" },
-  { key: "tickets", href: "/tickets" },
-  { key: "profile", href: "/profile" },
+  { key: "home", href: "/(tabs)" },
+  { key: "calendar", href: "/(tabs)/kalender" },
+  { key: "tickets", href: "/(tabs)/ticket" },
+  { key: "profile", href: "/(tabs)/profile" },
 ] as const;
 
 export default function BottomNav() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
+
+  function isActive(tab: (typeof TABS)[number]): boolean {
+    if (tab.key === "home") return pathname === "/" || pathname === "/(tabs)" || pathname === "/(tabs)/";
+    if (tab.key === "calendar") return pathname === "/kalender" || pathname === "/(tabs)/kalender";
+    if (tab.key === "tickets") return pathname === "/ticket" || pathname === "/(tabs)/ticket";
+    if (tab.key === "profile") return pathname === "/profile" || pathname === "/(tabs)/profile";
+    return false;
+  }
 
   return (
     <View style={styles.wrap}>
       {TABS.map((tab) => {
-        const isActive = pathname === tab.href;
+        const active = isActive(tab);
         return (
           <Pressable key={tab.key} onPress={() => router.push(tab.href as any)} style={styles.item}>
-            <View style={[styles.iconWrap, isActive && styles.iconWrapActive]}>
-              <TabGlyph tab={tab.key} active={isActive} />
+            <View style={[styles.iconWrap, active && styles.iconWrapActive]}>
+              <TabGlyph tab={tab.key} active={active} />
             </View>
           </Pressable>
         );

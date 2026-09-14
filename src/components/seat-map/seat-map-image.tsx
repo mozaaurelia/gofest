@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 type SeatMapImageProps = {
@@ -7,9 +7,15 @@ type SeatMapImageProps = {
 };
 
 export default function SeatMapImage({ image }: SeatMapImageProps) {
+  const { width: screenWidth } = useWindowDimensions();
+  // samakan proporsi referensi [Image 1]: poster vertikal tinggi
+  // lebar = full width minus padding wrap (20*2), tinggi mengikuti ratio portrait 1 : 1.42 seperti contoh NCT127
+  const horizontalPadding = 20;
+  const cardWidth = screenWidth - horizontalPadding * 2;
+
   return (
     <View style={styles.wrap}>
-      <View style={styles.card}>
+      <View style={[styles.card, { width: cardWidth, height: cardWidth * 1.42 }]}>
         {image ? (
           <Image source={image} style={styles.image} resizeMode="cover" />
         ) : (
@@ -33,12 +39,13 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     backgroundColor: "#FFFFFF",
+    alignItems: "center",
   },
   card: {
-    height: 220,
     borderRadius: 16,
     overflow: "hidden",
     backgroundColor: "#111827",
+    // width & height di-set dinamis dari screenWidth biar portrait panjang-lebar sama kayak referensi
   },
   image: {
     width: "100%",
