@@ -1,38 +1,25 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Platform, StyleSheet, Text, View, useWindowDimensions, TextInput, Pressable } from "react-native";
 import type { PointerEvent } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Circle, Path } from "react-native-svg";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   runOnJS,
-  interpolate,
   interpolateColor,
   withTiming,
   withSpring,
-  withRepeat,
   Easing,
 } from "react-native-reanimated";
 import { HERO_EVENTS } from "../../constants/home-data";
 import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
+import MetallicBackground from "../ui/metallic-background";
 import { gfColors } from "../../constants/gf-theme";
 
 const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
 const ITEM_SPACING = 28;
-
-// === BACKGROUND METALIK BERKILAU MENYALA ===
-// Base silk-metal: abu-putih terang dominan, 5-stop brushed dengan kontras specular jelas
-const METALLIC_BASE = ["#F2F3F4", "#FFFFFF", "#DADCE0", "#FFFFFF", "#ECEEF0"] as const;
-const METALLIC_BASE_STOPS = [0, 0.24, 0.48, 0.72, 1] as const;
-// Silk sheen horizontal - strip highlight terang menyala (berbeda arah dari base diagonal)
-const SILK_HORIZONTAL = ["rgba(255,255,255,0)", "rgba(255,255,255,0.92)", "rgba(255,255,255,0)"] as const;
-// Brushed vertical subtle - menambah kesan serat logam
-const SILK_VERTICAL = ["rgba(255,255,255,0)", "rgba(255,255,255,0.52)", "rgba(255,255,255,0)"] as const;
-// Sweep shine - highlight diagonal yang akan di-animate bergerak
-const SWEEP_GRADIENT = ["rgba(255,255,255,0)", "rgba(255,255,255,0.88)", "rgba(255,255,255,0)"] as const;
 
 const DARK_TEXT = "#1B222D";
 const MUTED_TEXT = "#5A6572";
@@ -84,12 +71,6 @@ export default function HeroCarousel() {
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
   const parallaxX = useSharedValue(0);
-  // shimmer untuk kilau metalik yang hidup/bergerak terus
-  const shimmer = useSharedValue(0);
-
-  useEffect(() => {
-    shimmer.value = withRepeat(withTiming(1, { duration: 2200, easing: Easing.inOut(Easing.ease) }), -1, true);
-  }, []);
 
   // Web: strip card ikut posisi kursor tanpa perlu drag — lebih sensitif & smooth
   const webPointerProps =
@@ -144,28 +125,6 @@ export default function HeroCarousel() {
     backgroundColor: interpolateColor(translateX.value, tintInputRange, tintOutputRange),
   }));
 
-  // Shimmer sweep - kilau diagonal yang bergerak hidup (silk shine)
-  const sweepStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: interpolate(shimmer.value, [0, 1], [-width * 0.9, width * 0.9]) },
-      { skewX: "-14deg" },
-    ],
-    opacity: interpolate(shimmer.value, [0, 0.5, 1], [0.55, 1, 0.55]),
-  }));
-
-  const sweepStyle2 = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: interpolate(shimmer.value, [0, 1], [width * 0.7, -width * 0.7]) },
-      { skewX: "-14deg" },
-    ],
-    opacity: interpolate(shimmer.value, [0, 0.5, 1], [0.35, 0.65, 0.35]),
-  }));
-
-  // Pulse halus pada highlight horizontal biar terasa menyala (breathing)
-  const pulseStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(shimmer.value, [0, 1], [0.42, 0.68]),
-  }));
-
   const panGesture = Gesture.Pan()
     // Lebih sensitif: sedikit geser langsung aktif, tidak harus tekan kuat
     .activeOffsetX([-6, 6])
@@ -208,59 +167,9 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        {/* Layer 1 - base metalik silk diagonal 5-stop terang (abu-putih dominan, kontras specular) */}
-        <LinearGradient
-          colors={METALLIC_BASE}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          locations={METALLIC_BASE_STOPS as any}
-          style={StyleSheet.absoluteFill}
-          pointerEvents="none"
-        />
-
-        {/* Layer 2 - silk sheen horizontal - strip highlight menyala (opacity di-animate biar breathing) */}
-        <Animated.View style={[StyleSheet.absoluteFill, pulseStyle]} pointerEvents="none">
-          <LinearGradient
-            colors={SILK_HORIZONTAL}
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1, y: 0.5 }}
-            locations={[0, 0.46, 1]}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-
-        {/* Layer 2b - brushed vertical subtle */}
-        <LinearGradient
-          colors={SILK_VERTICAL}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          locations={[0, 0.5, 1]}
-          style={[StyleSheet.absoluteFill, { opacity: 0.28 }]}
-          pointerEvents="none"
-        />
-
-        {/* Layer 3 - sweep shine diagonal yang bergerak (kilau hidup seperti refleksi logam) */}
-        <Animated.View style={[styles.sweepWrap, sweepStyle]} pointerEvents="none">
-          <LinearGradient
-            colors={SWEEP_GRADIENT}
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1, y: 0.5 }}
-            locations={[0, 0.5, 1]}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-
-        {/* Layer 3b - sweep kedua lebih tipis & offset untuk kesan silk double reflection */}
-        <Animated.View style={[styles.sweepWrapNarrow, sweepStyle2]} pointerEvents="none">
-          <LinearGradient
-            colors={["rgba(255,255,255,0)", "rgba(255,255,255,0.62)", "rgba(255,255,255,0)"]}
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1, y: 0.5 }}
-            style={StyleSheet.absoluteFill}
-          />
-        </Animated.View>
-
-        {/* Layer 4 - tint aksen poster (smooth interpolateColor, tipis 0.16 biar metalik tetap dominan) */}
+        {/* Background metalik berkilau menyala - shared component dengan halaman concert */}
+        <MetallicBackground />
+        {/* Tint aksen poster - smooth interpolateColor mengikuti poster aktif */}
         <Animated.View style={[StyleSheet.absoluteFill, { opacity: 0.16 }, tintStyle]} pointerEvents="none" />
 
         <HomeNavbar />
@@ -341,20 +250,6 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1, overflow: "hidden" },
-  sweepWrap: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    width: "62%",
-  },
-  sweepWrapNarrow: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    right: 0,
-    width: "42%",
-  },
   searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 16, marginBottom: 20 },
   searchBox: {
     flex: 1,
