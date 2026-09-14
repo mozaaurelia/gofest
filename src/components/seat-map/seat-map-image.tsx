@@ -8,14 +8,13 @@ type SeatMapImageProps = {
 
 export default function SeatMapImage({ image }: SeatMapImageProps) {
   const { width: screenWidth } = useWindowDimensions();
-  // samakan proporsi referensi [Image 1]: poster vertikal tinggi
-  // lebar = full width minus padding wrap (20*2), tinggi mengikuti ratio portrait 1 : 1.42 seperti contoh NCT127
-  const horizontalPadding = 20;
+  // dikecilkan dikit biar tidak dempet: beri margin lebih lega, ratio sedikit dipendekin dari 1.42 -> 1.35
+  const horizontalPadding = 28;
   const cardWidth = screenWidth - horizontalPadding * 2;
 
   return (
     <View style={styles.wrap}>
-      <View style={[styles.card, { width: cardWidth, height: cardWidth * 1.42 }]}>
+      <View style={[styles.card, { width: cardWidth, height: cardWidth * 1.35 }]}>
         {image ? (
           <Image source={image} style={styles.image} resizeMode="cover" />
         ) : (
