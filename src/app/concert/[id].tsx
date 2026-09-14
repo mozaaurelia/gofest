@@ -19,7 +19,7 @@ export default function ConcertDetailScreen() {
 
   return (
     <View style={styles.container}>
-      <DetailHeader title={concert.title} />
+      <DetailHeader title={concert.title} concertId={concert.id} />
 
       <ScrollView bounces contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <DetailPoster from={concert.posterFrom} to={concert.posterTo} image={concert.image} />

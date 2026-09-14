@@ -6,10 +6,52 @@ import { router } from "expo-router";
 import Svg, { Rect } from "react-native-svg";
 import { gfColors } from "../../constants/gf-theme";
 import { CALENDAR_EVENTS, CalendarEvent } from "../../constants/calendar-data";
+import { CONCERT_DETAILS } from "../../constants/concert-detail-data";
+import { useSavedTickets } from "../../context/saved-tickets-context";
 
-// mock: tiket yang sudah dibeli vs yang di-save user
+// mock: tiket yang sudah dibeli (statis), yang disimpan diambil dari context save
 const PURCHASED = CALENDAR_EVENTS.slice(0, 3);
-const SAVED = [CALENDAR_EVENTS[1], CALENDAR_EVENTS[3]];
+
+function concertToCalendarEvent(c: (typeof CONCERT_DETAILS)[number]): CalendarEvent {
+  const parts = c.date.split(" ");
+  const day = parts[0] ?? "10";
+  const monthRaw = parts[1] ?? "Sep";
+  const year = parts[2] ?? "2026";
+  const monthMap: Record<string, string> = {
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    Mei: "05",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Agu: "08",
+    Aug: "08",
+    Sep: "09",
+    Okt: "10",
+    Oct: "10",
+    Nov: "11",
+    Des: "12",
+    Dec: "12",
+  };
+  const monthNum = monthMap[monthRaw] ?? "09";
+  const dateISO = `${year}-${monthNum}-${day.padStart(2, "0")}`;
+  return {
+    id: c.id,
+    name: c.title,
+    venue: c.address.split(",")[0] ?? c.title,
+    city: c.address.split(",").pop()?.trim() ?? "Jakarta",
+    dateISO,
+    day,
+    month: monthRaw,
+    time: c.timeRange.split(" ")[0] ?? "19:00",
+    posterFrom: c.posterFrom,
+    posterTo: c.posterTo,
+    markerColor: c.posterTo,
+    image: c.image,
+  };
+}
 
 const DAY_LABEL: Record<string, string> = {
   "2026-09-10": "THU",
@@ -21,10 +63,25 @@ type TabKey = "purchased" | "saved";
 
 export default function TicketScreen() {
   const [activeTab, setActiveTab] = useState<TabKey>("purchased");
+  const { savedIds } = useSavedTickets();
 
-  const data: CalendarEvent[] = activeTab === "purchased" ? PURCHASED : SAVED;
+  const savedEvents = useMemo(() => {
+    const result: CalendarEvent[] = [];
+    savedIds.forEach((id) => {
+      const cal = CALENDAR_EVENTS.find((e) => e.id === id);
+      if (cal) {
+        result.push(cal);
+        return;
+      }
+      const concert = CONCERT_DETAILS.find((c) => c.id === id);
+      if (concert) result.push(concertToCalendarEvent(concert));
+    });
+    return result;
+  }, [savedIds]);
 
-  const seenDates = useMemo(() => new Set<string>(), [activeTab]);
+  const data: CalendarEvent[] = activeTab === "purchased" ? PURCHASED : savedEvents;
+
+  const seenDates = useMemo(() => new Set<string>(), [activeTab, savedEvents]);
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
+import { useSavedTickets } from "../../context/saved-tickets-context";
 
-type DetailHeaderProps = { title: string };
+type DetailHeaderProps = { title: string; concertId?: string };
 
-export default function DetailHeader({ title }: DetailHeaderProps) {
-  const [saved, setSaved] = useState(false);
+export default function DetailHeader({ title, concertId }: DetailHeaderProps) {
+  const { isSaved, toggle } = useSavedTickets();
+  const saved = concertId ? isSaved(concertId) : false;
 
   return (
     <View style={styles.row}>
@@ -20,7 +22,7 @@ export default function DetailHeader({ title }: DetailHeaderProps) {
 
       <View style={styles.rightRow}>
         <Pressable
-          onPress={() => setSaved((v) => !v)}
+          onPress={() => concertId && toggle(concertId)}
           hitSlop={8}
           style={[styles.iconButton, saved && styles.iconButtonActive]}
         >
