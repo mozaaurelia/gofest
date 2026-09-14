@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CalendarHeader, { CalendarViewMode } from "../components/calendar/calendar-header";
 import EventTimelineList from "../components/calendar/event-timeline-list";
@@ -26,13 +26,18 @@ export default function CalendarScreen() {
       {mode === "list" ? (
         <EventTimelineList />
       ) : (
-        <View style={styles.gridContainer}>
+        <ScrollView
+          bounces
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.gridScrollContent}
+          style={styles.gridScroll}
+        >
           <MonthGrid selectedDateISO={selectedDate} onSelectDate={setSelectedDate} />
           <DayEventsPanel
             dateLabel={`${parseInt(selectedDate.split("-")[2], 10)} ${MONTH_SHORT[parseInt(selectedDate.split("-")[1], 10) - 1]}`}
             events={getEventsForDate(selectedDate)}
           />
-        </View>
+        </ScrollView>
       )}
 
       <BottomNav />
@@ -42,5 +47,6 @@ export default function CalendarScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: gfColors.bg },
-  gridContainer: { flex: 1, paddingBottom: 100 },
+  gridScroll: { flex: 1 },
+  gridScrollContent: { flexGrow: 1, paddingBottom: 120 },
 });

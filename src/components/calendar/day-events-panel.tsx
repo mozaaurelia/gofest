@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { CalendarEvent } from "../../constants/calendar-data";
 import EventTimelineItem from "./event-timeline-item";
@@ -35,18 +35,18 @@ export default function DayEventsPanel({ dateLabel, events }: DayEventsPanelProp
           </View>
         </View>
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.eventList}>
+        <View style={styles.eventList}>
           {events.map((event, i) => (
             <EventTimelineItem key={event.id} event={event} showDateBadge={false} isLast={i === events.length - 1} />
           ))}
-        </ScrollView>
+        </View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, borderTopWidth: 1, borderTopColor: "#E5E7EB", paddingTop: 12, backgroundColor: gfColors.bg },
+  wrap: { borderTopWidth: 1, borderTopColor: "#E5E7EB", paddingTop: 12, backgroundColor: gfColors.bg },
   dragHandle: {
     alignSelf: "center",
     width: 44,
