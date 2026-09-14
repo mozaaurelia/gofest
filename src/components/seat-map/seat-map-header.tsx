@@ -185,11 +185,6 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingHorizontal: 6,
     paddingBottom: 24,
-    shadowColor: "#0F2A4D",
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
-    elevation: 16,
   },
   handleBar: {
     alignSelf: "center",
