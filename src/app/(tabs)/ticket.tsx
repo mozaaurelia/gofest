@@ -48,17 +48,13 @@ export default function TicketScreen() {
             onPress={() => setActiveTab("purchased")}
             style={[styles.tabBtn, activeTab === "purchased" && styles.tabBtnActive]}
           >
-            <Text style={[styles.tabText, activeTab === "purchased" && styles.tabTextActive]}>
-              Dibeli · {PURCHASED.length}
-            </Text>
+            <Text style={[styles.tabText, activeTab === "purchased" && styles.tabTextActive]}>Dibeli</Text>
           </Pressable>
           <Pressable
             onPress={() => setActiveTab("saved")}
             style={[styles.tabBtn, activeTab === "saved" && styles.tabBtnActive]}
           >
-            <Text style={[styles.tabText, activeTab === "saved" && styles.tabTextActive]}>
-              Disimpan · {SAVED.length}
-            </Text>
+            <Text style={[styles.tabText, activeTab === "saved" && styles.tabTextActive]}>Disimpan</Text>
           </Pressable>
         </View>
       </View>
