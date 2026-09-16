@@ -37,16 +37,6 @@ export default function DetailList() {
           else router.push({ pathname: "/wristband/[id]", params: { id: "h1" } } as any);
         }}
       />
-      <DetailListItem
-        icon={<Svg viewBox="0 0 24 24" width={ICON_SIZE} height={ICON_SIZE} fill="none"><Circle cx="12" cy="12" r="9" stroke={ICON_COLOR} strokeWidth={1.8} /><Path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 1.5-2 1.7-2 3.2M12 16.5h.01" stroke={ICON_COLOR} strokeWidth={1.8} strokeLinecap="round" /></Svg>}
-        title="Ada Pertanyaan?"
-        subtitle="Jawaban cepat buat pertanyaanmu"
-      />
-      <DetailListItem
-        icon={<Svg viewBox="0 0 24 24" width={ICON_SIZE} height={ICON_SIZE} fill="none"><Path d="M3 11v2a1 1 0 0 0 1 1h2l9 4V6l-9 4H4a1 1 0 0 0-1 1Z" stroke={ICON_COLOR} strokeWidth={1.8} strokeLinejoin="round" /><Path d="M19 9a4 4 0 0 1 0 6" stroke={ICON_COLOR} strokeWidth={1.8} strokeLinecap="round" /></Svg>}
-        title="Panduan Event"
-        subtitle="Hal yang perlu disiapin sebelum hari-H"
-      />
     </View>
   );
 }
