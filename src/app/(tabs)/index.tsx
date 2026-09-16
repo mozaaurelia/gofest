@@ -1,15 +1,5 @@
-import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import HeroCarousel from "../../components/home/hero-carousel";
+import HomeScreen from "@/screens/home/HomeScreen";
 
-export default function HomeScreen() {
-  return (
-    <SafeAreaView style={styles.safe}>
-      <HeroCarousel />
-    </SafeAreaView>
-  );
+export default function HomeRoute() {
+  return <HomeScreen />;
 }
-
-const styles = StyleSheet.create({
-  safe: { flex: 1 },
-});
