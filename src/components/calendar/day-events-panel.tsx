@@ -46,13 +46,13 @@ export default function DayEventsPanel({ dateLabel, events }: DayEventsPanelProp
 }
 
 const styles = StyleSheet.create({
-  wrap: { borderTopWidth: 1, borderTopColor: "#E5E7EB", paddingTop: 12, backgroundColor: gfColors.bg },
+  wrap: { borderTopWidth: 1, borderTopColor: "#E2E5EA", paddingTop: 12, backgroundColor: gfColors.bg },
   dragHandle: {
     alignSelf: "center",
     width: 44,
     height: 4,
     borderRadius: 99,
-    backgroundColor: "#E5E7EB",
+    backgroundColor: "#E2E5EA",
     marginBottom: 16,
   },
   dateLabel: { fontSize: 15, fontWeight: "700", color: gfColors.text, paddingHorizontal: 20, marginBottom: 18 },

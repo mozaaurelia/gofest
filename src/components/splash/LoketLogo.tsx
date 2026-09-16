@@ -32,7 +32,7 @@ export default function LoketLogo({ size = 88 }: Props) {
         {/* L cutout - navy hole */}
         <Path
           d="M33.2 18.5 V68.8 H69 V55.2 H46.8 V18.5 H33.2 Z"
-          fill="#0F2342"
+          fill="#1B222D"
           opacity={1}
         />
         {/* inner L inner edge highlight subtle */}

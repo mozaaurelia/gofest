@@ -39,7 +39,7 @@ export default function TicketQtyPicker({ value, onChange, max = 6 }: Props) {
                   <Text style={[styles.optionText, value === opt && styles.optionTextActive]}>{opt} tiket</Text>
                   {value === opt ? (
                     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-                      <Path d="M5 13l4 4L19 7" stroke="#1D4ED8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                      <Path d="M5 13l4 4L19 7" stroke="#2FA8C0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                     </Svg>
                   ) : null}
                 </Pressable>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 14,
     borderWidth: 1,
-    borderColor: "#E5E7EB",
+    borderColor: "#E2E5EA",
     borderRadius: 8,
     backgroundColor: "#FFFFFF",
     gap: 12,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     paddingHorizontal: 16,
   },
-  handle: { alignSelf: "center", width: 36, height: 4, borderRadius: 2, backgroundColor: "#E5E7EB", marginBottom: 12 },
+  handle: { alignSelf: "center", width: 36, height: 4, borderRadius: 2, backgroundColor: "#E2E5EA", marginBottom: 12 },
   sheetTitle: { fontSize: 14, fontWeight: "800", color: "#111827", marginBottom: 8, textAlign: "center" },
   optionRow: {
     flexDirection: "row",
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#F3F4F6",
   },
-  optionActive: { backgroundColor: "#EFF6FF" },
+  optionActive: { backgroundColor: "#F0F2F4" },
   optionText: { fontSize: 14, color: "#374151" },
-  optionTextActive: { fontWeight: "700", color: "#1D4ED8" },
+  optionTextActive: { fontWeight: "700", color: "#2FA8C0" },
 });

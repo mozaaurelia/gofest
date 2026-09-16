@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   overlayDate: {
     fontSize: 10,
-    color: "#E5E7EB",
+    color: "#E2E5EA",
     marginTop: 2,
   },
   overlayVenue: {

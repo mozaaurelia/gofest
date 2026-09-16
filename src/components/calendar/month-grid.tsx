@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   dayTextMuted: { color: "#9CA3AF", fontWeight: "400" },
   dayTextSelected: { fontWeight: "700", color: gfColors.text },
   indicatorRow: { height: 4, alignItems: "center", justifyContent: "center" },
-  todayBar: { width: 16, height: 4, borderRadius: 99, backgroundColor: "#2563EB" },
+  todayBar: { width: 16, height: 4, borderRadius: 99, backgroundColor: "#2FA8C0" },
   eventBar: { width: 16, height: 4, borderRadius: 99, backgroundColor: "#F97316" },
   emptyBar: { width: 16, height: 4 },
 });

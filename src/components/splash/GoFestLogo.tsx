@@ -14,8 +14,7 @@ export default function GoFestLogo({ size = 72 }: Props) {
       <Svg viewBox="0 0 60 76" width={size} height={height} fill="none">
         <Defs>
           <LinearGradient id="goFestTicketGrad" x1="0%" y1="5%" x2="100%" y2="95%">
-            <Stop offset="0%" stopColor="#18A2C0" />
-            <Stop offset="52%" stopColor="#2FB8A6" />
+            <Stop offset="0%" stopColor="#2FA8C0" />
             <Stop offset="100%" stopColor="#8FD14F" />
           </LinearGradient>
         </Defs>

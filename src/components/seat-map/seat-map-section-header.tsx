@@ -18,9 +18,9 @@ export default function SeatMapSectionHeader({ title }: SeatMapSectionHeaderProp
       <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
         <Path
           d="M12 21s-6.5-5.9-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.1-6.5 11-6.5 11Z"
-          stroke="#2563EB"
+          stroke="#2FA8C0"
           strokeWidth={1.8}
-          fill="#2563EB"
+          fill="#2FA8C0"
           fillOpacity={0.9}
         />
         <Circle cx="12" cy="10" r="2.2" fill="#FFFFFF" />
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 22,
     borderRadius: 99,
-    backgroundColor: "#1D4ED8",
+    backgroundColor: "#2FA8C0",
   },
   title: {
     fontSize: 16,

@@ -11,8 +11,8 @@ function WristbandIllustration() {
   // small wristband icon like in reference (colorful stripes)
   return (
     <Svg viewBox="0 0 28 18" width={28} height={18}>
-      <Rect x={2} y={7} width={24} height={6} rx={3} fill="#E5E7EB" stroke="#D1D5DB" strokeWidth={0.8} />
-      <Rect x={4} y={7.5} width={3} height={5} rx={1} fill="#3B82F6" />
+      <Rect x={2} y={7} width={24} height={6} rx={3} fill="#E2E5EA" stroke="#D1D5DB" strokeWidth={0.8} />
+      <Rect x={4} y={7.5} width={3} height={5} rx={1} fill="#2FA8C0" />
       <Rect x={7.8} y={7.5} width={3} height={5} rx={1} fill="#FACC15" />
       <Rect x={11.6} y={7.5} width={3} height={5} rx={1} fill="#F43F5E" />
       <Rect x={15.4} y={7.5} width={3} height={5} rx={1} fill="#8B5CF6" />

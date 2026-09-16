@@ -9,7 +9,7 @@ type Props = {
 export default function SplashBackground({ children }: Props) {
   return (
     <LinearGradient
-      colors={["#0F2342", "#12274A", "#0F2342"]}
+      colors={["#1B222D", "#1B222D", "#1B222D"]}
       locations={[0, 0.5, 1]}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
+    borderTopColor: "#E2E5EA",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.06,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   qty: { fontSize: 12, color: "#9CA3AF", fontWeight: "500" },
   price: { fontSize: 16, fontWeight: "800", color: "#111827" },
   btn: {
-    backgroundColor: "#1D4ED8",
+    backgroundColor: "#2FA8C0",
     paddingHorizontal: 26,
     height: 44,
     borderRadius: 10,
