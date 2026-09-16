@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "@/constants/gf-theme";
-import Svg, { Path, Rect, Circle, Ellipse } from "react-native-svg";
+import Svg, { Rect, Circle } from "react-native-svg";
 
 type Props = {
   title?: string;
@@ -25,10 +25,7 @@ function WristbandIllustration() {
 export default function WristbandSectionHeader({ title = "Wristband Redemption" }: Props) {
   return (
     <View style={styles.row}>
-      <View style={styles.left}>
-        <View style={styles.bar} />
-        <Text style={styles.title}>{title}</Text>
-      </View>
+      <Text style={styles.title}>{title}</Text>
       <WristbandIllustration />
     </View>
   );
@@ -42,17 +39,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     backgroundColor: "#FFFFFF",
-  },
-  left: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  bar: {
-    width: 4,
-    height: 28,
-    borderRadius: 99,
-    backgroundColor: "#1D4ED8",
   },
   title: {
     fontSize: 16,
