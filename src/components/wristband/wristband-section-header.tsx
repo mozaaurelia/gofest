@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "@/constants/gf-theme";
 import Svg, { Rect, Circle } from "react-native-svg";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   title?: string;
@@ -22,10 +23,12 @@ function WristbandIllustration() {
   );
 }
 
-export default function WristbandSectionHeader({ title = "Wristband Redemption" }: Props) {
+export default function WristbandSectionHeader({ title }: Props) {
+  const { t } = useTranslation();
+  const display = title ?? t("wristband.section");
   return (
     <View style={styles.row}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{display}</Text>
       <WristbandIllustration />
     </View>
   );

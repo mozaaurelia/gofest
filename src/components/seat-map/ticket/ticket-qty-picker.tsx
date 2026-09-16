@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   value: number;
@@ -10,6 +11,7 @@ type Props = {
 
 export default function TicketQtyPicker({ value, onChange, max = 5 }: Props) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   // 1-5 sesuai request (0 tetap ada untuk reset)
   const options = Array.from({ length: max + 1 }, (_, i) => i);
 
@@ -26,7 +28,7 @@ export default function TicketQtyPicker({ value, onChange, max = 5 }: Props) {
         <Pressable style={styles.overlay} onPress={() => setOpen(false)}>
           <View style={styles.sheet}>
             <View style={styles.handle} />
-            <Text style={styles.sheetTitle}>Pilih jumlah tiket</Text>
+            <Text style={styles.sheetTitle}>{t("ticket.chooseQty")}</Text>
             <ScrollView style={{ maxHeight: 280 }}>
               {options.map((opt) => (
                 <Pressable
@@ -37,7 +39,9 @@ export default function TicketQtyPicker({ value, onChange, max = 5 }: Props) {
                   }}
                   style={[styles.optionRow, value === opt && styles.optionActive]}
                 >
-                  <Text style={[styles.optionText, value === opt && styles.optionTextActive]}>{opt} tiket</Text>
+                  <Text style={[styles.optionText, value === opt && styles.optionTextActive]}>
+                    {opt} {t("ticket.ticket")}
+                  </Text>
                   {value === opt ? (
                     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
                       <Path d="M5 13l4 4L19 7" stroke="#2FA8C0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />

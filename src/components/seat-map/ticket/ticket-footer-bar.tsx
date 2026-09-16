@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { formatRupiah } from "@/constants/ticket-sale-data";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   totalQty: number;
@@ -9,14 +10,17 @@ type Props = {
 };
 
 export default function TicketFooterBar({ totalQty, totalPrice, onPress }: Props) {
+  const { t } = useTranslation();
   return (
     <View style={styles.wrap}>
       <View style={styles.left}>
-        <Text style={styles.qty}>Jumlah ({totalQty} tiket)</Text>
+        <Text style={styles.qty}>
+          {t("ticket.qty")} ({totalQty} {t("ticket.ticket")})
+        </Text>
         <Text style={styles.price}>{formatRupiah(totalPrice)}</Text>
       </View>
       <Pressable onPress={onPress} style={({ pressed }) => [styles.btn, pressed && { opacity: 0.9 }]}>
-        <Text style={styles.btnText}>Pesan Sekarang</Text>
+        <Text style={styles.btnText}>{t("ticket.orderNow")}</Text>
       </Pressable>
     </View>
   );

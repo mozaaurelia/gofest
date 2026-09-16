@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TicketSaleItem, formatRupiah } from "@/constants/ticket-sale-data";
+import { useTranslation } from "@/context/language-context";
 import TicketQtyPicker from "./ticket-qty-picker";
 
 type Props = {
@@ -15,6 +16,7 @@ function Dot() {
 }
 
 export default function TicketOptionCard({ item, qty, onChangeQty }: Props) {
+  const { t } = useTranslation();
   return (
     <View style={styles.card}>
       {/* notches left/right */}
@@ -25,12 +27,14 @@ export default function TicketOptionCard({ item, qty, onChangeQty }: Props) {
         <Text style={styles.category}>{item.category}</Text>
 
         <View style={styles.bullets}>
-          {item.features.map((f, i) => (
-            <View key={i} style={styles.bulletRow}>
-              <Dot />
-              <Text style={styles.bulletText}>{f}</Text>
-            </View>
-          ))}
+          <View style={styles.bulletRow}>
+            <Dot />
+            <Text style={styles.bulletText}>{t("ticket.seated")}</Text>
+          </View>
+          <View style={styles.bulletRow}>
+            <Dot />
+            <Text style={styles.bulletText}>{t("ticket.priceExclude")}</Text>
+          </View>
         </View>
 
         <View style={styles.deadlineRow}>
@@ -38,7 +42,7 @@ export default function TicketOptionCard({ item, qty, onChangeQty }: Props) {
             <Path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" fill="#2FA8C0" />
             <Path d="M12 7v5l3 2" stroke="#FFFFFF" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" />
           </Svg>
-          <Text style={styles.deadline}>{item.deadline}</Text>
+          <Text style={styles.deadline}>{t("ticket.deadline")}</Text>
         </View>
       </View>
 
