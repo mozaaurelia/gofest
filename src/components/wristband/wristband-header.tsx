@@ -1,59 +1,56 @@
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
-import { gfColors } from "../../constants/gf-theme";
+import { gfColors } from "@/constants/gf-theme";
 
-type SeatMapHeaderProps = {
+type Props = {
   title: string;
   subtitle: string;
 };
 
-const DRAWER_ITEMS: { title: string; subtitle: string; icon: React.ReactNode }[] = [
+const DRAWER_ITEMS: { title: string; subtitle: string; icon: React.ReactNode; route: string }[] = [
   {
     title: "Ticket Sales Info",
     subtitle: "Ticket schedule & how to purchase",
     icon: <TicketSalesIcon />,
+    route: "/concert/h1",
   },
   {
     title: "Seat Map",
     subtitle: "View and find your seat with ease",
     icon: <SeatMapIcon />,
+    route: "/seat-map/h1",
   },
   {
     title: "Wristband Redemption",
     subtitle: "Redeem your wristband beforehand to avoid any delay",
     icon: <WristbandIcon />,
+    route: "/wristband/h1",
   },
   {
     title: "Got Questions?",
     subtitle: "Quick answers to your questions",
     icon: <QuestionIcon />,
+    route: "/concert/h1",
   },
   {
     title: "Event Guide",
     subtitle: "Things to know before the event day",
     icon: <EventGuideIcon />,
+    route: "/concert/h1",
   },
 ];
 
-export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
+export default function WristbandHeader({ title, subtitle }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const targetId = Array.isArray(id) ? id[0] : (id as string | undefined) ?? "h1";
 
   return (
     <>
       <View style={styles.container}>
         <Pressable onPress={() => router.back()} hitSlop={8} style={styles.iconButton}>
           <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
-            <Path
-              d="M15 18l-6-6 6-6"
-              stroke={gfColors.text}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <Path d="M15 18l-6-6 6-6" stroke={gfColors.text} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
           </Svg>
         </Pressable>
 
@@ -83,17 +80,8 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
                 key={item.title}
                 onPress={() => {
                   setMenuOpen(false);
-                  if (item.title === "Wristband Redemption") {
-                    // @ts-ignore
-                    router.push({ pathname: "/wristband/[id]", params: { id: targetId } });
-                  } else if (item.title === "Seat Map") {
-                    // @ts-ignore
-                    router.push({ pathname: "/seat-map/[id]", params: { id: targetId } });
-                  } else {
-                    // default to concert detail
-                    // @ts-ignore
-                    router.push({ pathname: "/concert/[id]", params: { id: targetId } });
-                  }
+                  // @ts-ignore
+                  router.push(item.route);
                 }}
                 style={styles.drawerRow}
               >
@@ -111,7 +99,6 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
   );
 }
 
-// ---- Icon Svg pakai pola yang biasa dipakai (react-native-svg, bukan stiker) ----
 function TicketSalesIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
@@ -164,38 +151,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 12,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
     borderBottomColor: "#EEF0F3",
   },
-  iconButton: {
-    width: 36,
-    height: 36,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  titleWrap: {
-    flex: 1,
-    marginHorizontal: 8,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: "800",
-    color: gfColors.text,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 11.5,
-    color: "#9AA3B2",
-    marginTop: 2,
-    textAlign: "center",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(15,42,77,0.32)",
-    justifyContent: "flex-end",
-  },
+  iconButton: { width: 36, height: 36, alignItems: "center", justifyContent: "center" },
+  titleWrap: { flex: 1, marginHorizontal: 8 },
+  title: { fontSize: 14, fontWeight: "800", color: gfColors.text },
+  subtitle: { fontSize: 11.5, color: "#9AA3B2", marginTop: 2 },
+  modalOverlay: { flex: 1, backgroundColor: "rgba(15,42,77,0.32)", justifyContent: "flex-end" },
   drawer: {
     width: "100%",
     backgroundColor: "#FFFFFF",
@@ -205,14 +169,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingBottom: 24,
   },
-  handleBar: {
-    alignSelf: "center",
-    width: 36,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: "#E5E7EB",
-    marginBottom: 10,
-  },
+  handleBar: { alignSelf: "center", width: 36, height: 4, borderRadius: 2, backgroundColor: "#E5E7EB", marginBottom: 10 },
   drawerRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -230,10 +187,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  drawerTitle: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: "700",
-    color: gfColors.text,
-  },
+  drawerTitle: { flex: 1, fontSize: 15, fontWeight: "700", color: gfColors.text },
 });

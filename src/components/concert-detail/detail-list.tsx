@@ -31,6 +31,11 @@ export default function DetailList() {
         icon={<Svg viewBox="0 0 24 24" width={ICON_SIZE} height={ICON_SIZE} fill="none"><Rect x="3" y="9" width="18" height="6" rx="2" stroke={ICON_COLOR} strokeWidth={1.8} /><Path d="M8 9v6M16 9v6" stroke={ICON_COLOR} strokeWidth={1.8} strokeLinecap="round" /></Svg>}
         title="Penukaran Wristband"
         subtitle="Tukar wristband dulu biar nggak antre"
+        onPress={() => {
+          const targetId = Array.isArray(id) ? id[0] : (id as string | undefined);
+          if (targetId) router.push({ pathname: "/wristband/[id]", params: { id: targetId } } as any);
+          else router.push({ pathname: "/wristband/[id]", params: { id: "h1" } } as any);
+        }}
       />
       <DetailListItem
         icon={<Svg viewBox="0 0 24 24" width={ICON_SIZE} height={ICON_SIZE} fill="none"><Circle cx="12" cy="12" r="9" stroke={ICON_COLOR} strokeWidth={1.8} /><Path d="M9.5 9a2.5 2.5 0 0 1 5 .5c0 1.5-2 1.7-2 3.2M12 16.5h.01" stroke={ICON_COLOR} strokeWidth={1.8} strokeLinecap="round" /></Svg>}
