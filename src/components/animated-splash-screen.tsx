@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import LoketLogo from "./splash/LoketLogo";
-import LoketWordmark from "./splash/LoketWordmark";
-import SplashBackground from "./splash/SplashBackground";
-import { useLoketSplashAnimation } from "./splash/useLoketSplashAnimation";
+import GoFestLogo from "./splash/GoFestLogo";
+import GoFestWordmark from "./splash/GoFestWordmark";
+import GoFestSplashBackground from "./splash/GoFestSplashBackground";
+import { useGoFestSplashAnimation } from "./splash/useGoFestSplashAnimation";
 
 type AnimatedSplashScreenProps = {
   onFinish: () => void;
@@ -12,7 +12,7 @@ type AnimatedSplashScreenProps = {
 
 export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenProps) {
   const { bgOpacity, logoOpacity, logoScale, wordmarkOpacity, wordmarkTranslateY, exitOpacity, exitScale } =
-    useLoketSplashAnimation(onFinish);
+    useGoFestSplashAnimation(onFinish);
 
   const containerStyle = useAnimatedStyle(() => ({
     opacity: bgOpacity.value * exitOpacity.value,
@@ -30,15 +30,15 @@ export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenP
 
   return (
     <Animated.View style={[styles.root, containerStyle]}>
-      <SplashBackground>
+      <GoFestSplashBackground>
         <Animated.View style={[styles.logoWrap, logoStyle]}>
-          <LoketLogo size={104} />
+          <GoFestLogo size={78} />
         </Animated.View>
 
         <Animated.View style={[styles.wordmarkWrap, wordmarkStyle]}>
-          <LoketWordmark size={22} />
+          <GoFestWordmark size={36} />
         </Animated.View>
-      </SplashBackground>
+      </GoFestSplashBackground>
     </Animated.View>
   );
 }

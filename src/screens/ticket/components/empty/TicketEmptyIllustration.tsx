@@ -36,7 +36,7 @@ export default function TicketEmptyIllustration({ width = 340, height = 260 }: P
           {/* tail */}
           <Path d="M108 102 L122 118 L108 108 Z" fill="#FFD966" />
           {/* ticket inside */}
-          <G rotation={-12} origin="92,78">
+          <G transform="rotate(-12 92 78)">
             <Rect x={72} y={62} width={42} height={28} rx={4} fill="#8EC9F5" stroke="#4A8FD6" strokeWidth={1.2} />
             {/* perforation */}
             <Circle cx={72} cy={76} r={3.2} fill="#FFD966" />
@@ -116,7 +116,7 @@ export default function TicketEmptyIllustration({ width = 340, height = 260 }: P
         <Ellipse cx={182} cy={136.5} rx={2} ry={2.4} fill="#FF6B6B" opacity={0.9} />
 
         {/* phone on ground */}
-        <G rotation={-18} origin="194,190">
+        <G transform="rotate(-18 194 190)">
           <Rect x={160} y={176} width={68} height={38} rx={6} fill="#3AA0FF" stroke="#0F2E5E" strokeWidth={1.2} />
           <Rect x={165} y={181} width={58} height={28} rx={4} fill="#FFFFFF" />
           <Rect x={182} y={191} width={22} height={12} rx={2} fill="#3AA0FF" />
