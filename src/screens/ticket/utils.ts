@@ -1,7 +1,8 @@
 import { CALENDAR_EVENTS, CalendarEvent } from "@/constants/calendar-data";
 import { CONCERT_DETAILS } from "@/constants/concert-detail-data";
 
-export const PURCHASED: CalendarEvent[] = CALENDAR_EVENTS.slice(0, 3);
+// Empty by default so empty-state (like reference) shows. Ganti ke CALENDAR_EVENTS.slice(0,3) jika mau demo dengan data.
+export const PURCHASED: CalendarEvent[] = [];
 
 export const DAY_LABEL: Record<string, string> = {
   "2026-09-10": "THU",
