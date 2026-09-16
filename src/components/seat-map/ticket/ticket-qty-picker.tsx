@@ -8,8 +8,9 @@ type Props = {
   max?: number;
 };
 
-export default function TicketQtyPicker({ value, onChange, max = 6 }: Props) {
+export default function TicketQtyPicker({ value, onChange, max = 5 }: Props) {
   const [open, setOpen] = useState(false);
+  // 1-5 sesuai request (0 tetap ada untuk reset)
   const options = Array.from({ length: max + 1 }, (_, i) => i);
 
   return (

@@ -46,7 +46,7 @@ export default function TicketOptionCard({ item, qty, onChangeQty }: Props) {
 
       <View style={styles.bottom}>
         <Text style={styles.price}>{formatRupiah(item.price)}</Text>
-        <TicketQtyPicker value={qty} onChange={onChangeQty} max={6} />
+        <TicketQtyPicker value={qty} onChange={onChangeQty} max={5} />
       </View>
     </View>
   );
