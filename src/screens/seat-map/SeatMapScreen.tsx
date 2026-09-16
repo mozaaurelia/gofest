@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,10 +9,12 @@ import SeatMapSectionHeader from "@/components/seat-map/seat-map-section-header"
 import SeatMapCategorySection from "@/components/seat-map/seat-map-category-section";
 import SeatMapBenefitSection from "@/components/seat-map/seat-map-benefit-section";
 import SeatMapImage from "@/components/seat-map/seat-map-image";
+import SeatMapFullscreenViewer from "@/components/seat-map/seat-map-fullscreen-viewer";
 
 export default function SeatMapScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const concert = getConcertDetailById(id);
+  const [viewerVisible, setViewerVisible] = useState(false);
 
   const title = concert ? `${concert.title} in Jakarta` : "T.O.P PRE-STUDIO 2026 in Jakarta";
   const subtitle = concert ? `${concert.date} • ${concert.address}` : "19 Sep 2026 • Istora Senayan, Tanah Abang, Jakarta ...";
@@ -30,8 +32,11 @@ export default function SeatMapScreen() {
 
         <SeatMapBenefitSection />
 
-        <SeatMapImage image={concert?.image} />
+        {/* Photocard image — tap to open fullscreen like reference BIGBANG Seat Map */}
+        <SeatMapImage image={concert?.image} onPress={() => setViewerVisible(true)} />
       </ScrollView>
+
+      <SeatMapFullscreenViewer visible={viewerVisible} onClose={() => setViewerVisible(false)} image={concert?.image} />
     </SafeAreaView>
   );
 }

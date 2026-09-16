@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 type SeatMapImageProps = {
   image?: any;
+  onPress?: () => void;
 };
 
-export default function SeatMapImage({ image }: SeatMapImageProps) {
+export default function SeatMapImage({ image, onPress }: SeatMapImageProps) {
   const { width: screenWidth } = useWindowDimensions();
   // dikecilkan dikit biar tidak dempet: beri margin lebih lega, ratio sedikit dipendekin dari 1.42 -> 1.35
   const horizontalPadding = 28;
@@ -14,7 +15,10 @@ export default function SeatMapImage({ image }: SeatMapImageProps) {
 
   return (
     <View style={styles.wrap}>
-      <View style={[styles.card, { width: cardWidth, height: cardWidth * 1.35 }]}>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [styles.card, { width: cardWidth, height: cardWidth * 1.35 }, pressed && { opacity: 0.92 }]}
+      >
         {image ? (
           <Image source={image} style={styles.image} resizeMode="cover" />
         ) : (
@@ -26,7 +30,11 @@ export default function SeatMapImage({ image }: SeatMapImageProps) {
           <Text style={styles.overlayDate}>2026. 09. 19 (SAT) 7PM</Text>
           <Text style={styles.overlayVenue}>ISTORA SENAYAN</Text>
         </View>
-      </View>
+        {/* tap hint — subtle */}
+        <View style={styles.tapHint} pointerEvents="none">
+          <Text style={styles.tapHintText}>Tap untuk memperbesar</Text>
+        </View>
+      </Pressable>
       <Text style={styles.caption}>* Seat map denah kursi untuk referensi — kategori sesuai daftar di atas</Text>
     </View>
   );
@@ -91,5 +99,20 @@ const styles = StyleSheet.create({
     color: "#9AA3B2",
     marginTop: 8,
     textAlign: "center",
+  },
+  tapHint: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "rgba(0,0,0,0.42)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  tapHintText: {
+    fontSize: 10,
+    fontWeight: "600",
+    color: "#FFFFFF",
+    letterSpacing: 0.2,
   },
 });
