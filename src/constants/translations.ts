@@ -63,6 +63,7 @@ export const translations: Record<Language, Dict> = {
     // Ticket empty
     "ticket.empty.purchased.title": "Oops, belum ada tiket aktif",
     "ticket.empty.purchased.subtitle": "Semua tiket event kamu dari LOKÉT ada di sini. Butuh bantuan dengan tiketmu?",
+    "ticket.empty.purchased.action": "Pesan Tiket Sekarang",
     "ticket.empty.saved.title": "Oops, belum ada tiket disimpan",
     "ticket.empty.saved.subtitle": "Tiket yang kamu simpan akan muncul di sini. Tap ikon bookmark di event mana pun untuk menyimpannya.",
     "ticket.helpCenter": "Pusat Bantuan",
@@ -162,6 +163,7 @@ export const translations: Record<Language, Dict> = {
     "ticket.orderAlertMsg": "You ordered {qty} tickets • Total {price}",
     "ticket.empty.purchased.title": "Oops, no active tickets yet",
     "ticket.empty.purchased.subtitle": "All your event tickets from LOKÉT are right here. Need any help with your tickets?",
+    "ticket.empty.purchased.action": "Find Tickets Now",
     "ticket.empty.saved.title": "Oops, no saved tickets yet",
     "ticket.empty.saved.subtitle": "Tickets you bookmark will appear here. Tap the bookmark icon on any event to save it.",
     "ticket.helpCenter": "Help Center",

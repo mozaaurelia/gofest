@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, Linking, ScrollView, StyleSheet, View } from "react-native";
+import { router } from "expo-router";
 import type { TicketTabKey } from "./TicketTabs";
 import TicketEmptyBackground from "./empty/TicketEmptyBackground";
 import TicketEmptyIllustration from "./empty/TicketEmptyIllustration";
@@ -23,6 +24,10 @@ export default function TicketEmptyState({ activeTab }: Props) {
       .catch(() => Alert.alert(t("ticket.helpCenter"), t("ticket.empty.purchased.subtitle")));
   };
 
+  const isPurchased = activeTab === "purchased";
+  const actionLabel = isPurchased ? t("ticket.empty.purchased.action") : t("ticket.helpCenter");
+  const handleAction = isPurchased ? () => router.push("/(tabs)" as any) : handleHelp;
+
   return (
     <TicketEmptyBackground>
       <ScrollView
@@ -35,7 +40,7 @@ export default function TicketEmptyState({ activeTab }: Props) {
         </View>
         <TicketEmptyContent title={title} subtitle={subtitle} />
         <View style={styles.actionWrap}>
-          <TicketEmptyActions label={t("ticket.helpCenter")} onPress={handleHelp} />
+          <TicketEmptyActions label={actionLabel} onPress={handleAction} />
         </View>
       </ScrollView>
     </TicketEmptyBackground>
