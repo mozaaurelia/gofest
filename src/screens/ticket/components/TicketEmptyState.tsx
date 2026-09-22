@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Linking, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import type { TicketTabKey } from "./TicketTabs";
 import TicketEmptyBackground from "./empty/TicketEmptyBackground";
@@ -17,16 +17,8 @@ export default function TicketEmptyState({ activeTab }: Props) {
   const title = activeTab === "saved" ? t("ticket.empty.saved.title") : t("ticket.empty.purchased.title");
   const subtitle = activeTab === "saved" ? t("ticket.empty.saved.subtitle") : t("ticket.empty.purchased.subtitle");
 
-  const handleHelp = () => {
-    const url = "https://help.loket.com";
-    Linking.canOpenURL(url)
-      .then((ok) => (ok ? Linking.openURL(url) : Alert.alert(t("ticket.helpCenter"), t("ticket.empty.purchased.subtitle"))))
-      .catch(() => Alert.alert(t("ticket.helpCenter"), t("ticket.empty.purchased.subtitle")));
-  };
-
-  const isPurchased = activeTab === "purchased";
-  const actionLabel = isPurchased ? t("ticket.empty.purchased.action") : t("ticket.helpCenter");
-  const handleAction = isPurchased ? () => router.push("/(tabs)" as any) : handleHelp;
+  const actionLabel = activeTab === "purchased" ? t("ticket.empty.purchased.action") : t("ticket.empty.saved.action");
+  const handleAction = () => router.push("/(tabs)" as any);
 
   return (
     <TicketEmptyBackground>
