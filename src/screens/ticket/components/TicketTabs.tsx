@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 export type TicketTabKey = "purchased" | "saved";
 
@@ -10,14 +11,15 @@ type Props = {
 };
 
 export default function TicketTabs({ activeTab, onChange }: Props) {
+  const { t } = useTranslation();
   return (
     <View style={styles.tabWrap}>
       <View style={styles.tabPill}>
         <Pressable onPress={() => onChange("purchased")} style={[styles.tabBtn, activeTab === "purchased" && styles.tabBtnActive]}>
-          <Text style={[styles.tabText, activeTab === "purchased" && styles.tabTextActive]}>Dibeli</Text>
+          <Text style={[styles.tabText, activeTab === "purchased" && styles.tabTextActive]}>{t("tabs.purchased")}</Text>
         </Pressable>
         <Pressable onPress={() => onChange("saved")} style={[styles.tabBtn, activeTab === "saved" && styles.tabBtnActive]}>
-          <Text style={[styles.tabText, activeTab === "saved" && styles.tabTextActive]}>Disimpan</Text>
+          <Text style={[styles.tabText, activeTab === "saved" && styles.tabTextActive]}>{t("tabs.saved")}</Text>
         </Pressable>
       </View>
     </View>

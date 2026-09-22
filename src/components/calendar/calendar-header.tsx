@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Rect, Path } from "react-native-svg";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 export type CalendarViewMode = "list" | "grid";
 
@@ -11,9 +12,10 @@ type CalendarHeaderProps = {
 };
 
 export default function CalendarHeader({ mode, onToggleMode }: CalendarHeaderProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.row}>
-      <Text style={styles.title}>Event Calendar</Text>
+      <Text style={styles.title}>{t("calendar.title")}</Text>
       <Pressable onPress={onToggleMode} style={styles.iconButton}>
         {mode === "list" ? <GridIcon /> : <ListIcon />}
       </Pressable>

@@ -5,32 +5,22 @@ import TicketEmptyBackground from "./empty/TicketEmptyBackground";
 import TicketEmptyIllustration from "./empty/TicketEmptyIllustration";
 import TicketEmptyContent from "./empty/TicketEmptyContent";
 import TicketEmptyActions from "./empty/TicketEmptyActions";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   activeTab: TicketTabKey;
 };
 
-function getCopy(activeTab: TicketTabKey) {
-  if (activeTab === "saved") {
-    return {
-      title: "Oops, no saved tickets yet",
-      subtitle: "Tickets you bookmark will appear here. Tap the bookmark icon on any event to save it.",
-    };
-  }
-  return {
-    title: "Oops, no active tickets yet",
-    subtitle: "All your event tickets from LOKÉT are right here. Need any help with your tickets?",
-  };
-}
-
 export default function TicketEmptyState({ activeTab }: Props) {
-  const { title, subtitle } = getCopy(activeTab);
+  const { t } = useTranslation();
+  const title = activeTab === "saved" ? t("ticket.empty.saved.title") : t("ticket.empty.purchased.title");
+  const subtitle = activeTab === "saved" ? t("ticket.empty.saved.subtitle") : t("ticket.empty.purchased.subtitle");
 
   const handleHelp = () => {
     const url = "https://help.loket.com";
     Linking.canOpenURL(url)
-      .then((ok) => (ok ? Linking.openURL(url) : Alert.alert("Help Center", "Hubungi bantuan di help.loket.com")))
-      .catch(() => Alert.alert("Help Center", "Hubungi bantuan di help.loket.com"));
+      .then((ok) => (ok ? Linking.openURL(url) : Alert.alert(t("ticket.helpCenter"), t("ticket.empty.purchased.subtitle"))))
+      .catch(() => Alert.alert(t("ticket.helpCenter"), t("ticket.empty.purchased.subtitle")));
   };
 
   return (
@@ -45,7 +35,7 @@ export default function TicketEmptyState({ activeTab }: Props) {
         </View>
         <TicketEmptyContent title={title} subtitle={subtitle} />
         <View style={styles.actionWrap}>
-          <TicketEmptyActions label="Help Center" onPress={handleHelp} />
+          <TicketEmptyActions label={t("ticket.helpCenter")} onPress={handleHelp} />
         </View>
       </ScrollView>
     </TicketEmptyBackground>

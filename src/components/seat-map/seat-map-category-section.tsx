@@ -1,14 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "../../constants/gf-theme";
-import { SEAT_CATEGORIES, SEAT_MAP_COPY } from "../../constants/seat-map-data";
+import { SEAT_CATEGORIES } from "../../constants/seat-map-data";
+import { useTranslation } from "@/context/language-context";
 import SeatMapBulletItem from "./seat-map-bullet-item";
 
 export default function SeatMapCategorySection() {
+  const { t } = useTranslation();
   return (
     <View style={styles.wrap}>
-      <Text style={styles.heading}>{SEAT_MAP_COPY.categoryTitle}</Text>
-      <Text style={styles.sub}>{SEAT_MAP_COPY.categorySubtitle}</Text>
+      <Text style={styles.heading}>{t("seatmap.categoryTitle")}</Text>
+      <Text style={styles.sub}>{t("seatmap.categorySubtitle")}</Text>
 
       <View style={styles.list}>
         {SEAT_CATEGORIES.map((cat) => (

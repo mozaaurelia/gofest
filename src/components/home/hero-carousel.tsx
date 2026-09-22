@@ -17,6 +17,7 @@ import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
 import MetallicBackground from "../ui/metallic-background";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
 const ITEM_SPACING = 28;
@@ -30,23 +31,15 @@ export default function HeroCarousel() {
   const snapInterval = cardWidth + ITEM_SPACING;
   const sidePadding = (width - cardWidth) / 2;
 
-  const [lang, setLang] = useState<"id" | "en">("id");
-  const t = useMemo(
-    () =>
-      lang === "id"
-        ? {
-            searchPlaceholder: "Cari konser, artis, venue...",
-            hint: "Geser buat lihat event lain",
-            empty: "Tidak ada event ditemukan",
-            emptySub: "Coba kata kunci lain",
-          }
-        : {
-            searchPlaceholder: "Search concerts, artists, venue...",
-            hint: "Swipe to see other events",
-            empty: "No events found",
-            emptySub: "Try another keyword",
-          },
-    [lang]
+  const { language, setLanguage, t } = useTranslation();
+  const homeT = useMemo(
+    () => ({
+      searchPlaceholder: t("home.searchPlaceholder"),
+      hint: t("home.hint"),
+      empty: t("home.empty"),
+      emptySub: t("home.emptySub"),
+    }),
+    [t, language]
   );
 
   const [query, setQuery] = useState("");
@@ -184,7 +177,7 @@ export default function HeroCarousel() {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder={t.searchPlaceholder}
+              placeholder={homeT.searchPlaceholder}
               placeholderTextColor={MUTED_TEXT}
               style={styles.searchInput}
               returnKeyType="search"
@@ -199,24 +192,24 @@ export default function HeroCarousel() {
             )}
           </View>
 
-          {/* Button ganti bahasa di sebelah kanan search bar */}
+          {/* Button ganti bahasa di sebelah kanan search bar — pakai LanguageContext global agar sinkron semua halaman */}
           <Pressable
-            onPress={() => setLang((v) => (v === "id" ? "en" : "id"))}
-            style={[styles.langBtn, lang === "en" && styles.langBtnActive]}
+            onPress={() => setLanguage(language === "id" ? "en" : "id")}
+            style={[styles.langBtn, language === "en" && styles.langBtnActive]}
           >
             <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
-              <Circle cx="12" cy="12" r="9" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.6} />
-              <Path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.4} strokeLinecap="round" />
-              <Path d="M4.5 8.5h15M4.5 15.5h15" stroke={lang === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.2} strokeLinecap="round" opacity={0.9} />
+              <Circle cx="12" cy="12" r="9" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.6} />
+              <Path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.4} strokeLinecap="round" />
+              <Path d="M4.5 8.5h15M4.5 15.5h15" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.2} strokeLinecap="round" opacity={0.9} />
             </Svg>
-            <Text style={[styles.langText, lang === "en" && styles.langTextActive]}>{lang.toUpperCase()}</Text>
+            <Text style={[styles.langText, language === "en" && styles.langTextActive]}>{language.toUpperCase()}</Text>
           </Pressable>
         </View>
 
         {count === 0 ? (
           <View style={styles.emptyWrap}>
-            <Text style={styles.emptyText}>{t.empty}</Text>
-            <Text style={styles.emptySub}>{t.emptySub}</Text>
+            <Text style={styles.emptyText}>{homeT.empty}</Text>
+            <Text style={styles.emptySub}>{homeT.emptySub}</Text>
           </View>
         ) : (
           <GestureDetector gesture={panGesture}>
@@ -240,7 +233,7 @@ export default function HeroCarousel() {
         </View>
 
         <View style={styles.hintWrap}>
-          <Text style={styles.hint}>{count === 0 ? " " : t.hint}</Text>
+          <Text style={styles.hint}>{count === 0 ? " " : homeT.hint}</Text>
         </View>
       </View>
     </GestureHandlerRootView>

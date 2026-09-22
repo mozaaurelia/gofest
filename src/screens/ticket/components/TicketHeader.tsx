@@ -1,15 +1,17 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   onActionPress?: () => void;
 };
 
 export default function TicketHeader({ onActionPress }: Props) {
+  const { t } = useTranslation();
   return (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>My Tickets</Text>
+      <Text style={styles.headerTitle}>{t("header.myTickets")}</Text>
       <Pressable onPress={onActionPress} hitSlop={10} style={styles.actionBtn}>
         <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
           <Rect x="3" y="4" width="18" height="16" rx={3.2} stroke="#1B3A5E" strokeWidth={1.7} />

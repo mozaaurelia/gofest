@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { CALENDAR_EVENTS } from "../../constants/calendar-data";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MONTH_NAMES = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
 
 type MonthGridProps = {
@@ -23,6 +23,16 @@ function getTodayISO(): string {
 type Cell = { day: number; monthOffset: -1 | 0 | 1; dateISO: string };
 
 export default function MonthGrid({ selectedDateISO, onSelectDate }: MonthGridProps) {
+  const { t } = useTranslation();
+  const WEEKDAYS = [
+    t("calendar.weekdays.mon"),
+    t("calendar.weekdays.tue"),
+    t("calendar.weekdays.wed"),
+    t("calendar.weekdays.thu"),
+    t("calendar.weekdays.fri"),
+    t("calendar.weekdays.sat"),
+    t("calendar.weekdays.sun"),
+  ];
   const [cursor, setCursor] = useState(new Date(2026, 8, 1)); // September 2026 default biar mirip screenshot
 
   const year = cursor.getFullYear();

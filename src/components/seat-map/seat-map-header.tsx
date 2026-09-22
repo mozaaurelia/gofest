@@ -3,44 +3,25 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 type SeatMapHeaderProps = {
   title: string;
   subtitle: string;
 };
 
-const DRAWER_ITEMS: { title: string; subtitle: string; icon: React.ReactNode }[] = [
-  {
-    title: "Ticket Sales Info",
-    subtitle: "Ticket schedule & how to purchase",
-    icon: <TicketSalesIcon />,
-  },
-  {
-    title: "Seat Map",
-    subtitle: "View and find your seat with ease",
-    icon: <SeatMapIcon />,
-  },
-  {
-    title: "Wristband Redemption",
-    subtitle: "Redeem your wristband beforehand to avoid any delay",
-    icon: <WristbandIcon />,
-  },
-  {
-    title: "Got Questions?",
-    subtitle: "Quick answers to your questions",
-    icon: <QuestionIcon />,
-  },
-  {
-    title: "Event Guide",
-    subtitle: "Things to know before the event day",
-    icon: <EventGuideIcon />,
-  },
-];
-
 export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { id } = useLocalSearchParams<{ id: string }>();
   const targetId = Array.isArray(id) ? id[0] : (id as string | undefined) ?? "h1";
+  const { t } = useTranslation();
+  const drawerItems: { title: string; icon: React.ReactNode }[] = [
+    { title: t("detail.ticketInfo.title"), icon: <TicketSalesIcon /> },
+    { title: t("detail.seatMap.title"), icon: <SeatMapIcon /> },
+    { title: t("detail.wristband.title"), icon: <WristbandIcon /> },
+    { title: "Got Questions?", icon: <QuestionIcon /> },
+    { title: "Event Guide", icon: <EventGuideIcon /> },
+  ];
 
   return (
     <>
@@ -78,15 +59,15 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
           <Pressable style={StyleSheet.absoluteFill} onPress={() => setMenuOpen(false)} />
           <View style={styles.drawer}>
             <View style={styles.handleBar} />
-            {DRAWER_ITEMS.map((item) => (
+            {drawerItems.map((item) => (
               <Pressable
                 key={item.title}
                 onPress={() => {
                   setMenuOpen(false);
-                  if (item.title === "Wristband Redemption") {
+                  if (item.title === t("detail.wristband.title")) {
                     // @ts-ignore
                     router.push({ pathname: "/wristband/[id]", params: { id: targetId } });
-                  } else if (item.title === "Seat Map") {
+                  } else if (item.title === t("detail.seatMap.title")) {
                     // @ts-ignore
                     router.push({ pathname: "/seat-map/[id]", params: { id: targetId } });
                   } else {

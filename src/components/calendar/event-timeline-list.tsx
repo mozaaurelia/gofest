@@ -3,14 +3,16 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { CALENDAR_EVENTS } from "../../constants/calendar-data";
 import EventTimelineItem from "./event-timeline-item";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 export default function EventTimelineList() {
+  const { t } = useTranslation();
   const seenDates = new Set<string>();
 
   return (
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      <Text style={styles.sectionTitle}>Event pilihan buat kamu</Text>
-      <Text style={styles.sectionSubtitle}>Ditemukan khusus buat selera kamu</Text>
+      <Text style={styles.sectionTitle}>{t("calendar.sectionTitle")}</Text>
+      <Text style={styles.sectionSubtitle}>{t("calendar.sectionSubtitle")}</Text>
 
       {CALENDAR_EVENTS.map((event, i) => {
         const showDateBadge = !seenDates.has(event.dateISO);

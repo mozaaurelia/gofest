@@ -4,6 +4,7 @@ import Svg, { Circle, Path } from "react-native-svg";
 import { CalendarEvent } from "../../constants/calendar-data";
 import EventTimelineItem from "./event-timeline-item";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 type DayEventsPanelProps = {
   dateLabel: string;
@@ -11,6 +12,7 @@ type DayEventsPanelProps = {
 };
 
 export default function DayEventsPanel({ dateLabel, events }: DayEventsPanelProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.wrap}>
       <View style={styles.dragHandle} />
@@ -30,8 +32,8 @@ export default function DayEventsPanel({ dateLabel, events }: DayEventsPanelProp
             </View>
           </View>
           <View style={styles.emptyTextWrap}>
-            <Text style={styles.emptyTitle}>No event on this date</Text>
-            <Text style={styles.emptySubtitle}>Try browsing other dates</Text>
+            <Text style={styles.emptyTitle}>{t("calendar.noEventTitle")}</Text>
+            <Text style={styles.emptySubtitle}>{t("calendar.noEventSubtitle")}</Text>
           </View>
         </View>
       ) : (

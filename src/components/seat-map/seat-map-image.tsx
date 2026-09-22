@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "@/context/language-context";
 
 type SeatMapImageProps = {
   image?: any;
@@ -9,6 +10,7 @@ type SeatMapImageProps = {
 
 export default function SeatMapImage({ image, onPress }: SeatMapImageProps) {
   const { width: screenWidth } = useWindowDimensions();
+  const { t } = useTranslation();
   // dikecilkan dikit biar tidak dempet: beri margin lebih lega, ratio sedikit dipendekin dari 1.42 -> 1.35
   const horizontalPadding = 28;
   const cardWidth = screenWidth - horizontalPadding * 2;
@@ -32,10 +34,10 @@ export default function SeatMapImage({ image, onPress }: SeatMapImageProps) {
         </View>
         {/* tap hint — subtle */}
         <View style={styles.tapHint} pointerEvents="none">
-          <Text style={styles.tapHintText}>Tap untuk memperbesar</Text>
+          <Text style={styles.tapHintText}>{t("seatmap.tapHint")}</Text>
         </View>
       </Pressable>
-      <Text style={styles.caption}>* Seat map denah kursi untuk referensi — kategori sesuai daftar di atas</Text>
+      <Text style={styles.caption}>{t("seatmap.caption")}</Text>
     </View>
   );
 }

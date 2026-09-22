@@ -5,6 +5,7 @@ import { gfColors } from "@/constants/gf-theme";
 import { CALENDAR_EVENTS, CalendarEvent } from "@/constants/calendar-data";
 import { CONCERT_DETAILS } from "@/constants/concert-detail-data";
 import { useSavedTickets } from "@/context/saved-tickets-context";
+import { useTranslation } from "@/context/language-context";
 
 import TicketHeader from "./components/TicketHeader";
 import TicketTabs, { TicketTabKey } from "./components/TicketTabs";
@@ -15,6 +16,7 @@ import { PURCHASED, concertToCalendarEvent } from "./utils";
 export default function TicketScreen() {
   const [activeTab, setActiveTab] = useState<TicketTabKey>("purchased");
   const { savedIds } = useSavedTickets();
+  const { t } = useTranslation();
 
   const savedEvents = useMemo(() => {
     const result: CalendarEvent[] = [];
@@ -48,11 +50,9 @@ export default function TicketScreen() {
       ) : (
         <>
           <View style={styles.headingBlock}>
-            <Text style={styles.heading}>Handpicked events just for you</Text>
+            <Text style={styles.heading}>{t("tabs.handpicked")}</Text>
             <Text style={styles.subHeading}>
-              {activeTab === "purchased"
-                ? "Tiket yang sudah kamu beli — tinggal tunjukkan saat masuk"
-                : "Event yang kamu simpan — beli kapan pun sebelum kehabisan"}
+              {activeTab === "purchased" ? t("tabs.purchased.heading") : t("tabs.saved.heading")}
             </Text>
           </View>
 

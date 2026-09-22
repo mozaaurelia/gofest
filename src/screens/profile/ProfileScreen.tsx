@@ -71,12 +71,12 @@ export default function ProfileScreen() {
           <Pressable style={styles.modalCard} onPress={(e) => e.stopPropagation()}>
             <View style={styles.handle} />
             <Text style={styles.modalTitle}>{t("common.language")}</Text>
-            <Text style={styles.modalSub}>Pilih bahasa — akan diterapkan ke semua halaman</Text>
+            <Text style={styles.modalSub}>{t("common.languageSubtitle")}</Text>
             <View style={{ marginTop: 16 }}>
               <LanguageSwitcher />
             </View>
             <Pressable onPress={() => setLangOpen(false)} style={styles.closeBtn}>
-              <Text style={styles.closeText}>Tutup</Text>
+              <Text style={styles.closeText}>{t("common.close")}</Text>
             </Pressable>
           </Pressable>
         </Pressable>

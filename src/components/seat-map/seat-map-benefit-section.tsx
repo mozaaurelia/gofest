@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "../../constants/gf-theme";
-import { SEAT_BENEFITS, SEAT_MAP_COPY } from "../../constants/seat-map-data";
+import { SEAT_BENEFITS } from "../../constants/seat-map-data";
+import { useTranslation } from "@/context/language-context";
 import SeatMapBenefitGroup from "./seat-map-benefit-group";
 
 export default function SeatMapBenefitSection() {
+  const { t } = useTranslation();
   return (
     <View style={styles.wrap}>
-      <Text style={styles.heading}>{SEAT_MAP_COPY.benefitTitle}</Text>
+      <Text style={styles.heading}>{t("seatmap.benefitTitle")}</Text>
 
       {SEAT_BENEFITS.map((group) => (
         <SeatMapBenefitGroup key={group.title} group={group} />
