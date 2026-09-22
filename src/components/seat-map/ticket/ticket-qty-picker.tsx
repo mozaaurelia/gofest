@@ -40,10 +40,10 @@ export default function TicketQtyPicker({ value, onChange, max = 5 }: Props) {
         onPress={handlePlus}
         disabled={!canPlus}
         android_ripple={{ color: "transparent" }}
-        style={({ pressed }) => [styles.btn, styles.btnPlus, !canPlus && styles.btnDisabled, pressed && canPlus && styles.btnPressed]}
+        style={({ pressed }) => [styles.btn, !canPlus && styles.btnDisabled, pressed && canPlus && styles.btnPressed]}
       >
         <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
-          <Path d="M12 5v14M5 12h14" stroke={canPlus ? "#FFFFFF" : "#9CA3AF"} strokeWidth={2} strokeLinecap="round" />
+          <Path d="M12 5v14M5 12h14" stroke={canPlus ? "#111827" : "#9CA3AF"} strokeWidth={2} strokeLinecap="round" />
         </Svg>
       </Pressable>
     </View>
@@ -67,9 +67,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
-  },
-  btnPlus: {
-    backgroundColor: "#2FA8C0",
   },
   btnDisabled: {
     backgroundColor: "#F3F4F6",
