@@ -26,7 +26,12 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
   return (
     <>
       <View style={styles.container}>
-        <Pressable onPress={() => router.back()} hitSlop={8} style={styles.iconButton}>
+        <Pressable
+          onPress={() => router.back()}
+          hitSlop={8}
+          android_ripple={{ color: "transparent" }}
+          style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+        >
           <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
             <Path
               d="M15 18l-6-6 6-6"
@@ -47,7 +52,12 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
           </Text>
         </View>
 
-        <Pressable onPress={() => setMenuOpen(true)} hitSlop={8} style={styles.iconButton}>
+        <Pressable
+          onPress={() => setMenuOpen(true)}
+          hitSlop={8}
+          android_ripple={{ color: "transparent" }}
+          style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+        >
           <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
             <Path d="M4 6h16M4 12h16M4 18h16" stroke={gfColors.text} strokeWidth={2} strokeLinecap="round" />
           </Svg>
@@ -62,6 +72,7 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
             {drawerItems.map((item) => (
               <Pressable
                 key={item.title}
+                android_ripple={{ color: "transparent" }}
                 onPress={() => {
                   setMenuOpen(false);
                   if (item.title === t("detail.wristband.title")) {
@@ -76,7 +87,7 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
                     router.push({ pathname: "/concert/[id]", params: { id: targetId } });
                   }
                 }}
-                style={styles.drawerRow}
+                style={({ pressed }) => [styles.drawerRow, pressed && { backgroundColor: "#F9FAFB", opacity: 1 }]}
               >
                 <View style={styles.drawerIconWrap}>{item.icon}</View>
                 <Text style={styles.drawerTitle}>{item.title}</Text>
@@ -154,6 +165,18 @@ const styles = StyleSheet.create({
     height: 36,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "transparent",
+    borderWidth: 0,
+    // hilangkan shadow/border biru tipis saat pressed — pakai transparent ripple + opacity saja
+    shadowColor: "transparent",
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 0,
+  },
+  iconButtonPressed: {
+    opacity: 0.6,
+    backgroundColor: "transparent",
   },
   titleWrap: {
     flex: 1,
