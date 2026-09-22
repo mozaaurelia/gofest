@@ -18,9 +18,6 @@ export default function SeatMapHeader({ title, subtitle }: SeatMapHeaderProps) {
   const drawerItems: { title: string; icon: React.ReactNode }[] = [
     { title: t("detail.ticketInfo.title"), icon: <TicketSalesIcon /> },
     { title: t("detail.seatMap.title"), icon: <SeatMapIcon /> },
-    { title: t("detail.wristband.title"), icon: <WristbandIcon /> },
-    { title: "Got Questions?", icon: <QuestionIcon /> },
-    { title: "Event Guide", icon: <EventGuideIcon /> },
   ];
 
   return (
