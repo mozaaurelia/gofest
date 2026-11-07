@@ -45,7 +45,7 @@ export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenP
 
 const styles = StyleSheet.create({
   root: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     zIndex: 999,
     elevation: 999,
   },

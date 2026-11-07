@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
 import { gfColors } from "@/constants/gf-theme";
@@ -44,7 +44,11 @@ export default function SeatMapScreen() {
       Alert.alert(t("ticket.chooseTicketAlertTitle"), t("ticket.chooseTicketAlertMsg"));
       return;
     }
-    Alert.alert(t("ticket.orderAlertTitle"), t("ticket.orderAlertMsg", { qty: String(totalQty), price: totalPrice.toLocaleString("id-ID") }));
+    const targetId = concert?.id ?? (Array.isArray(id) ? id[0] : (id as string)) ?? "h1";
+    router.push({
+      pathname: "/boarding-pass/[id]",
+      params: { id: targetId, qty: String(totalQty), price: String(totalPrice) },
+    } as any);
   };
 
   return (
