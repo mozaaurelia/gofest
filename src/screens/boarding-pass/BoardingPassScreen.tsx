@@ -29,7 +29,7 @@ export default function BoardingPassScreen() {
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} bounces={false}>
           <BoardingPassCard
             code={`AB ${id ?? "4723211"}`.toUpperCase()}
-            aircraft="AIRBUS"
+            aircraft="gofest"
             fromCode={fromCode}
             fromCity={fromCity}
             toCode={toCode}

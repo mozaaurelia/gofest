@@ -23,7 +23,7 @@ type Props = {
 
 export default function BoardingPassCard({
   code = "AB 4723211",
-  aircraft = "AIRBUS",
+  aircraft = "gofest",
   fromCode = "CDG",
   fromCity = "Paris, France",
   toCode = "JFK",
