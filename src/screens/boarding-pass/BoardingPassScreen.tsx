@@ -6,6 +6,28 @@ import { getConcertDetailById } from "@/constants/concert-detail-data";
 import { BoardingPassCard, BoardingPassHeader } from "@/components/boarding-pass";
 import { gfColors } from "@/constants/gf-theme";
 
+function toMinutes(time: string) {
+  const [h, m] = time.split(":").map(Number);
+  return h * 60 + m;
+}
+
+function formatClock(totalMinutes: number) {
+  const normalized = ((totalMinutes % 1440) + 1440) % 1440;
+  const h = Math.floor(normalized / 60);
+  const m = normalized % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+// Ambil jam mulai/selesai dari data konser, contoh: "19:00 - 22:00 WIB"
+function getShowTimes(timeRange?: string) {
+  if (!timeRange) return null;
+  const match = timeRange.match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
+  if (!match) return null;
+  const start = `${match[1].padStart(2, "0")}:${match[2]}`;
+  const end = `${match[3].padStart(2, "0")}:${match[4]}`;
+  return { boarding: formatClock(toMinutes(start) - 30), start, end };
+}
+
 export default function BoardingPassScreen() {
   const { id, qty, price } = useLocalSearchParams<{ id: string; qty: string; price: string }>();
   const concert = getConcertDetailById(id);
@@ -18,6 +40,7 @@ export default function BoardingPassScreen() {
   const toCode = "JKT";
   const toCity = "Jakarta, Indonesia";
   const dateLabel = concert ? concert.date : "March 12, Tue";
+  const showTimes = getShowTimes(concert?.timeRange);
   const passenger = "moza";
   // Seat diambil dari kategori — mock 1C, gate 37 seperti contoh
   const seat = totalQty > 1 ? `${totalQty} Seats • 1C` : "1C";
@@ -34,9 +57,9 @@ export default function BoardingPassScreen() {
             fromCity={fromCity}
             toCode={toCode}
             toCity={toCity}
-            boardingTime="02:20 AM"
-            departure="03:00 AM"
-            arrival="11:15 AM"
+            boardingTime={showTimes?.boarding ?? "02:20 AM"}
+            departure={showTimes?.start ?? "03:00 AM"}
+            arrival={showTimes?.end ?? "11:15 AM"}
             date={dateLabel}
             clazz={totalQty > 1 ? `${totalQty} Tickets` : "Economy"}
             passenger={passenger}
