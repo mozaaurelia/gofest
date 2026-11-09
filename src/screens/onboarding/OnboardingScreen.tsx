@@ -5,7 +5,6 @@ import Svg, { Path } from "react-native-svg";
 import {
   OnboardingActions,
   OnboardingFooter,
-  OnboardingHeader,
   OnboardingMerchIllustration,
   OnboardingPaymentIllustration,
   OnboardingTitle,
@@ -52,7 +51,6 @@ export default function OnboardingScreen() {
     return (
       <View style={styles.rootDark}>
         <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
-          <OnboardingHeader title="TIX Concert" onSkip={() => setStep(3)} />
           <View style={styles.paymentIllustWrap}>
             <OnboardingPaymentIllustration />
           </View>
