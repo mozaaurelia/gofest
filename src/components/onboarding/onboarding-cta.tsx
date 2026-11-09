@@ -8,9 +8,18 @@ type Props = {
   onPrimaryPress: () => void;
   secondaryLabel: string;
   onSecondaryPress: () => void;
+  variant?: "dark" | "light";
 };
 
-export default function OnboardingCta({ primaryLabel, onPrimaryPress, secondaryLabel, onSecondaryPress }: Props) {
+export default function OnboardingCta({
+  primaryLabel,
+  onPrimaryPress,
+  secondaryLabel,
+  onSecondaryPress,
+  variant = "dark",
+}: Props) {
+  const isLight = variant === "light";
+
   return (
     <View style={styles.wrap}>
       <Pressable onPress={onPrimaryPress} accessibilityRole="button" accessibilityLabel={primaryLabel}>
@@ -32,7 +41,7 @@ export default function OnboardingCta({ primaryLabel, onPrimaryPress, secondaryL
         accessibilityLabel={secondaryLabel}
         style={({ pressed }) => [styles.secondaryBtn, pressed && styles.pressed]}
       >
-        <Text style={styles.secondaryText}>{secondaryLabel}</Text>
+        <Text style={[styles.secondaryText, isLight && styles.secondaryTextLight]}>{secondaryLabel}</Text>
       </Pressable>
     </View>
   );
@@ -44,5 +53,6 @@ const styles = StyleSheet.create({
   primaryText: { fontSize: 15, fontWeight: "700", color: "#10151D" },
   secondaryBtn: { paddingVertical: 14, alignItems: "center" },
   secondaryText: { fontSize: 14, fontWeight: "600", color: "rgba(255,255,255,0.85)" },
+  secondaryTextLight: { color: gfColors.textMuted },
   pressed: { opacity: 0.85 },
 });

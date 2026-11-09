@@ -88,20 +88,22 @@ export default function OnboardingScreen() {
   }
 
   return (
-    <View style={styles.rootDark}>
-      <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+    <View style={styles.rootLight}>
+      <SafeAreaView style={styles.safeLight} edges={["top", "bottom"]}>
         <View style={styles.illustWrap}>
           <OnboardingVipIllustration />
         </View>
         <OnboardingTitle
           title={t("onboarding.vip.title")}
           subtitle={t("onboarding.vip.subtitle")}
+          variant="light"
         />
         <OnboardingCta
           primaryLabel={t("onboarding.vip.register")}
           onPrimaryPress={() => router.replace("/auth/register" as any)}
           secondaryLabel={t("onboarding.vip.explore")}
           onSecondaryPress={() => router.replace("/(tabs)" as any)}
+          variant="light"
         />
       </SafeAreaView>
     </View>
@@ -109,8 +111,6 @@ export default function OnboardingScreen() {
 }
 
 const styles = StyleSheet.create({
-  rootDark: { flex: 1, backgroundColor: "#232E58" },
-  safeDark: { flex: 1, backgroundColor: "#232E58" },
   rootLight: { flex: 1, backgroundColor: "#FFFFFF" },
   safeLight: { flex: 1, backgroundColor: "#FFFFFF" },
   illustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
