@@ -50,9 +50,15 @@ export default function SeatMapScreen() {
       return;
     }
     const targetId = concert?.id ?? (Array.isArray(id) ? id[0] : (id as string)) ?? "h1";
+    const selected = TICKET_SALE_ITEMS.find((it) => (quantities[it.id] ?? 0) > 0);
     router.push({
-      pathname: "/boarding-pass/[id]",
-      params: { id: targetId, qty: String(totalQty), price: String(totalPrice) },
+      pathname: "/payment/[id]",
+      params: {
+        id: targetId,
+        qty: String(totalQty),
+        price: String(totalPrice),
+        category: selected?.category ?? "FESTIVAL",
+      },
     } as any);
   };
 
