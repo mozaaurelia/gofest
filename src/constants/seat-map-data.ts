@@ -1,46 +1,46 @@
 export type SeatCategory = {
-  label: string;
+  labelKey: string;
 };
 
 export type BenefitItem = string;
 
 export type BenefitGroup = {
-  title: string;
-  items: BenefitItem[];
+  titleKey: string;
+  itemKeys: BenefitItem[];
 };
 
 export const SEAT_CATEGORIES: SeatCategory[] = [
-  { label: "VIP (seating)" },
-  { label: "Cat 1 (seating)" },
-  { label: "Cat 2 (seating)" },
-  { label: "Cat 3 (seating)" },
-  { label: "Cat 4 (seating)" },
+  { labelKey: "seatmap.category.vip" },
+  { labelKey: "seatmap.category.cat1" },
+  { labelKey: "seatmap.category.cat2" },
+  { labelKey: "seatmap.category.cat3" },
+  { labelKey: "seatmap.category.cat4" },
 ];
 
 export const SEAT_BENEFITS: BenefitGroup[] = [
   {
-    title: "VIP",
-    items: [
-      "Send-Off: All ticket holders (ALL)",
-      "Soundcheck: All ticket holders (ALL)",
-      "Group Photo (1:10): Raffle system (RAFFLE)",
-      "Signed Poster: Raffle system (RAFFLE)",
-      "Signed Polaroid: Raffle system (RAFFLE)",
-      "VIP Laminated Pass & Lanyard: All ticket holders (ALL)",
-      "Photocard: All ticket holders (ALL)",
+    titleKey: "seatmap.benefit.group.vip",
+    itemKeys: [
+      "seatmap.benefit.sendOff",
+      "seatmap.benefit.soundcheck",
+      "seatmap.benefit.groupPhoto",
+      "seatmap.benefit.signedPoster",
+      "seatmap.benefit.signedPolaroid",
+      "seatmap.benefit.laminatedPass",
+      "seatmap.benefit.photocard",
     ],
   },
   {
-    title: "CAT 1",
-    items: [
-      "Signed Poster: Raffle system (RAFFLE)",
-      "Signed Polaroid: Raffle system (RAFFLE)",
-      "Photocard: All ticket holders (ALL)",
+    titleKey: "seatmap.benefit.group.cat1",
+    itemKeys: [
+      "seatmap.benefit.signedPoster",
+      "seatmap.benefit.signedPolaroid",
+      "seatmap.benefit.photocard",
     ],
   },
   {
-    title: "CAT 2, CAT 3, & CAT 4",
-    items: ["Photocard: All ticket holders (ALL)"],
+    titleKey: "seatmap.benefit.group.cat234",
+    itemKeys: ["seatmap.benefit.photocard"],
   },
 ];
 

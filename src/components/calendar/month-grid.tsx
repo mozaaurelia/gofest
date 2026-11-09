@@ -4,8 +4,7 @@ import Svg, { Path } from "react-native-svg";
 import { CALENDAR_EVENTS } from "../../constants/calendar-data";
 import { gfColors } from "../../constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
-
-const MONTH_NAMES = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+import { MONTH_KEYS } from "@/utils/date-labels";
 
 type MonthGridProps = {
   selectedDateISO: string;
@@ -84,7 +83,7 @@ export default function MonthGrid({ selectedDateISO, onSelectDate }: MonthGridPr
           </Svg>
         </Pressable>
         <Text style={styles.monthLabel}>
-          {MONTH_NAMES[month]} {year}
+          {t(MONTH_KEYS[month])} {year}
         </Text>
         <Pressable onPress={() => goToMonth(1)} style={styles.navButton} hitSlop={8}>
           <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">

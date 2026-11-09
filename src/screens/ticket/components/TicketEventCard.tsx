@@ -4,6 +4,8 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { gfColors } from "@/constants/gf-theme";
 import type { CalendarEvent } from "@/constants/calendar-data";
+import { useTranslation } from "@/context/language-context";
+import { dayShortKey, monthShortKey } from "@/utils/date-labels";
 import { DAY_LABEL } from "../utils";
 
 type Props = {
@@ -13,14 +15,17 @@ type Props = {
 };
 
 export default function TicketEventCard({ event, isFirstOfDate, isLast }: Props) {
+  const { t } = useTranslation();
+  const dayLabel = DAY_LABEL[event.dateISO];
+  const monthLabel = t(monthShortKey(event.month));
   return (
     <View style={styles.row}>
       <View style={styles.dateCol}>
         {isFirstOfDate ? (
           <View style={styles.dateBadge}>
-            <Text style={styles.dateMonth}>{event.month.toUpperCase()}</Text>
+            <Text style={styles.dateMonth}>{monthLabel.toUpperCase()}</Text>
             <Text style={styles.dateDay}>{event.day}</Text>
-            <Text style={styles.dateWeek}>{DAY_LABEL[event.dateISO] ?? ""}</Text>
+            <Text style={styles.dateWeek}>{dayLabel ? t(dayShortKey(dayLabel)) : ""}</Text>
           </View>
         ) : (
           <View style={styles.dateBadgeSpacer} />
@@ -38,7 +43,7 @@ export default function TicketEventCard({ event, isFirstOfDate, isLast }: Props)
             {event.name}
           </Text>
           <Text style={styles.cardMeta}>
-            {event.day}-{event.day} {event.month} 2026 • {event.time} WIB
+            {event.day} {monthLabel} 2026 • {event.time} WIB
           </Text>
           <Text style={styles.cardVenue} numberOfLines={1}>
             {event.venue}, {event.city}

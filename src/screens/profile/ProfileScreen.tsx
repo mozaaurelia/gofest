@@ -109,23 +109,23 @@ export default function ProfileScreen() {
           {/* 4 quick actions seperti contoh Top up etc — pakai warna app */}
           <View style={styles.qaGrid}>
             <QuickAction icon={<LanguageIcon />} label={t("profile.language")} onPress={() => setLangOpen(true)} />
-            <QuickAction icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), "Help Center")} />
-            <QuickAction icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), "About LOKÉT")} />
+            <QuickAction icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), t("profile.helpCenterBody"))} />
+            <QuickAction icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), t("profile.aboutBody"))} />
             <QuickAction icon={<RatingIcon />} label={t("profile.giveRating")} onPress={() => Alert.alert(t("profile.giveRating"), "v1.13.7")} />
           </View>
 
           {/* GENERAL list seperti contoh */}
-          <Text style={styles.generalTitle}>GENERAL</Text>
+          <Text style={styles.generalTitle}>{t("profile.general")}</Text>
           <View style={styles.generalCard}>
             <AccountMenuItem icon={<LanguageIcon />} label={t("profile.language")} onPress={() => setLangOpen(true)} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), "Help Center")} />
+            <AccountMenuItem icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), t("profile.helpCenterBody"))} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), "About LOKÉT")} />
+            <AccountMenuItem icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), t("profile.aboutBody"))} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<TermsIcon />} label={t("profile.terms")} onPress={() => Alert.alert(t("profile.terms"), "Terms and Conditions")} />
+            <AccountMenuItem icon={<TermsIcon />} label={t("profile.terms")} onPress={() => Alert.alert(t("profile.terms"), t("profile.termsBody"))} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<PrivacyIcon />} label={t("profile.privacy")} onPress={() => Alert.alert(t("profile.privacy"), "Privacy Policy")} />
+            <AccountMenuItem icon={<PrivacyIcon />} label={t("profile.privacy")} onPress={() => Alert.alert(t("profile.privacy"), t("profile.privacyBody"))} />
             <View style={styles.divider} />
             <AccountMenuItem icon={<RatingIcon />} label={t("profile.giveRating")} value="v1.13.7" onPress={() => Alert.alert(t("profile.giveRating"), "v1.13.7")} />
           </View>

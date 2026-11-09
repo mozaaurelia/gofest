@@ -12,7 +12,7 @@ export default function SeatMapBenefitSection() {
       <Text style={styles.heading}>{t("seatmap.benefitTitle")}</Text>
 
       {SEAT_BENEFITS.map((group) => (
-        <SeatMapBenefitGroup key={group.title} group={group} />
+        <SeatMapBenefitGroup key={group.titleKey} group={group} />
       ))}
     </View>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "../../constants/gf-theme";
 import { BenefitGroup } from "../../constants/seat-map-data";
+import { useTranslation } from "@/context/language-context";
 import SeatMapBulletItem from "./seat-map-bullet-item";
 
 type SeatMapBenefitGroupProps = {
@@ -9,12 +10,13 @@ type SeatMapBenefitGroupProps = {
 };
 
 export default function SeatMapBenefitGroup({ group }: SeatMapBenefitGroupProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.wrap}>
-      <Text style={styles.title}>{group.title}</Text>
+      <Text style={styles.title}>{t(group.titleKey)}</Text>
       <View style={styles.list}>
-        {group.items.map((item) => (
-          <SeatMapBulletItem key={item} text={item} />
+        {group.itemKeys.map((itemKey) => (
+          <SeatMapBulletItem key={itemKey} text={t(itemKey)} />
         ))}
       </View>
     </View>

@@ -3,12 +3,15 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   title?: string;
 };
 
-export default function BoardingPassHeader({ title = "Boarding pass" }: Props) {
+export default function BoardingPassHeader({ title }: Props) {
+  const { t } = useTranslation();
+  const displayTitle = title ?? t("boarding.title");
   return (
     <View style={styles.wrap}>
       <Pressable
@@ -21,7 +24,7 @@ export default function BoardingPassHeader({ title = "Boarding pass" }: Props) {
         </Svg>
       </Pressable>
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{displayTitle}</Text>
 
       <View style={styles.right}>
         <Pressable

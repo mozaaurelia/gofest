@@ -5,6 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
 import { BoardingPassCard, BoardingPassHeader } from "@/components/boarding-pass";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { eventAddress, eventDate } from "@/utils/event-i18n";
 
 function toMinutes(time: string) {
   const [h, m] = time.split(":").map(Number);
@@ -30,6 +32,7 @@ function getShowTimes(timeRange?: string) {
 
 export default function BoardingPassScreen() {
   const { id, qty, price } = useLocalSearchParams<{ id: string; qty: string; price: string }>();
+  const { t } = useTranslation();
   const concert = getConcertDetailById(id);
   const totalQty = qty ? parseInt(String(qty), 10) : 1;
 
@@ -39,11 +42,11 @@ export default function BoardingPassScreen() {
   const fromCity = concert ? concert.address.split(",")[0] : "Paris, France";
   const toCode = "JKT";
   const toCity = "Jakarta, Indonesia";
-  const dateLabel = concert ? concert.date : "March 12, Tue";
+  const dateLabel = concert ? eventDate(t, concert) : "March 12, Tue";
   const showTimes = getShowTimes(concert?.timeRange);
   const passenger = "moza";
   // Seat diambil dari kategori — mock 1C, gate 37 seperti contoh
-  const seat = totalQty > 1 ? `${totalQty} Seats • 1C` : "1C";
+  const seat = totalQty > 1 ? t("boarding.seats", { qty: totalQty }) : "1C";
 
   return (
     <View style={styles.root}>
@@ -61,7 +64,7 @@ export default function BoardingPassScreen() {
             departure={showTimes?.start ?? "03:00 AM"}
             arrival={showTimes?.end ?? "11:15 AM"}
             date={dateLabel}
-            clazz={totalQty > 1 ? `${totalQty} Tickets` : "Economy"}
+            clazz={totalQty > 1 ? t("boarding.classTickets", { qty: totalQty }) : t("boarding.classEconomy")}
             passenger={passenger}
             terminal="1"
             gate="37"
@@ -71,21 +74,21 @@ export default function BoardingPassScreen() {
           {/* info tambahan total */}
           <View style={styles.summary}>
             <Text style={styles.summaryText}>
-              {totalQty} tiket • {price ? `Rp. ${Number(price).toLocaleString("id-ID")}` : ""}
+              {t("boarding.summary", { qty: totalQty })} • {price ? `Rp. ${Number(price).toLocaleString("id-ID")}` : ""}
             </Text>
             {concert ? (
               <Text style={styles.summarySub} numberOfLines={2}>
-                {concert.title} — {concert.address}
+                {concert.title} — {eventAddress(t, concert)}
               </Text>
             ) : null}
           </View>
 
           <View style={styles.actions}>
             <Pressable onPress={() => router.replace("/(tabs)" as any)} style={({ pressed }) => [styles.btnPrimary, pressed && { opacity: 0.85 }]}>
-              <Text style={styles.btnPrimaryText}>Kembali ke Home</Text>
+              <Text style={styles.btnPrimaryText}>{t("boarding.backHome")}</Text>
             </Pressable>
             <Pressable onPress={() => router.back()} style={({ pressed }) => [styles.btnGhost, pressed && { opacity: 0.7 }]}>
-              <Text style={styles.btnGhostText}>Lihat Tiket Lain</Text>
+              <Text style={styles.btnGhostText}>{t("boarding.otherTickets")}</Text>
             </Pressable>
           </View>
         </ScrollView>

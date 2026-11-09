@@ -3,47 +3,48 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   title: string;
   subtitle: string;
 };
 
-const DRAWER_ITEMS: { title: string; subtitle: string; icon: React.ReactNode; route: string }[] = [
-  {
-    title: "Ticket Sales Info",
-    subtitle: "Ticket schedule & how to purchase",
-    icon: <TicketSalesIcon />,
-    route: "/concert/h1",
-  },
-  {
-    title: "Seat Map",
-    subtitle: "View and find your seat with ease",
-    icon: <SeatMapIcon />,
-    route: "/seat-map/h1",
-  },
-  {
-    title: "Wristband Redemption",
-    subtitle: "Redeem your wristband beforehand to avoid any delay",
-    icon: <WristbandIcon />,
-    route: "/wristband/h1",
-  },
-  {
-    title: "Got Questions?",
-    subtitle: "Quick answers to your questions",
-    icon: <QuestionIcon />,
-    route: "/concert/h1",
-  },
-  {
-    title: "Event Guide",
-    subtitle: "Things to know before the event day",
-    icon: <EventGuideIcon />,
-    route: "/concert/h1",
-  },
-];
-
 export default function WristbandHeader({ title, subtitle }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
+  const drawerItems: { title: string; subtitle: string; icon: React.ReactNode; route: string }[] = [
+    {
+      title: t("detail.ticketInfo.title"),
+      subtitle: t("detail.ticketInfo.subtitle"),
+      icon: <TicketSalesIcon />,
+      route: "/concert/h1",
+    },
+    {
+      title: t("detail.seatMap.title"),
+      subtitle: t("detail.seatMap.subtitle"),
+      icon: <SeatMapIcon />,
+      route: "/seat-map/h1",
+    },
+    {
+      title: t("detail.wristband.title"),
+      subtitle: t("detail.wristband.subtitle"),
+      icon: <WristbandIcon />,
+      route: "/wristband/h1",
+    },
+    {
+      title: t("wristband.menu.questions"),
+      subtitle: t("wristband.menu.questionsSub"),
+      icon: <QuestionIcon />,
+      route: "/concert/h1",
+    },
+    {
+      title: t("wristband.menu.eventGuide"),
+      subtitle: t("wristband.menu.eventGuideSub"),
+      icon: <EventGuideIcon />,
+      route: "/concert/h1",
+    },
+  ];
 
   return (
     <>
@@ -75,7 +76,7 @@ export default function WristbandHeader({ title, subtitle }: Props) {
           <Pressable style={StyleSheet.absoluteFill} onPress={() => setMenuOpen(false)} />
           <View style={styles.drawer}>
             <View style={styles.handleBar} />
-            {DRAWER_ITEMS.map((item) => (
+            {drawerItems.map((item) => (
               <Pressable
                 key={item.title}
                 onPress={() => {

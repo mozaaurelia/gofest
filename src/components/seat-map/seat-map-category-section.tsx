@@ -14,7 +14,7 @@ export default function SeatMapCategorySection() {
 
       <View style={styles.list}>
         {SEAT_CATEGORIES.map((cat) => (
-          <SeatMapBulletItem key={cat.label} text={cat.label} />
+          <SeatMapBulletItem key={cat.labelKey} text={t(cat.labelKey)} />
         ))}
       </View>
     </View>

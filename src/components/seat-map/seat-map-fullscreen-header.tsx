@@ -1,13 +1,16 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { useTranslation } from "@/context/language-context";
 
 type Props = {
   onBack: () => void;
   title?: string;
 };
 
-export default function SeatMapFullscreenHeader({ onBack, title = "Seat & Venue Map" }: Props) {
+export default function SeatMapFullscreenHeader({ onBack, title }: Props) {
+  const { t } = useTranslation();
+  const displayTitle = title ?? t("header.seatVenueMap");
   return (
     <View style={styles.header}>
       <Pressable onPress={onBack} hitSlop={12} style={styles.backBtn}>
@@ -17,7 +20,7 @@ export default function SeatMapFullscreenHeader({ onBack, title = "Seat & Venue 
         </Svg>
       </Pressable>
       <Text style={styles.title} numberOfLines={1}>
-        {title}
+        {displayTitle}
       </Text>
       <View style={styles.rightSpacer} />
     </View>

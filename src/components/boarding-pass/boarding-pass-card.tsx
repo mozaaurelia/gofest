@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 import BoardingPassBarcode from "./boarding-pass-barcode";
 
 type Props = {
@@ -38,6 +39,7 @@ export default function BoardingPassCard({
   gate = "37",
   seat = "1C",
 }: Props) {
+  const { t } = useTranslation();
   return (
     <View style={styles.card}>
       {/* notches kiri kanan seperti contoh */}
@@ -66,15 +68,15 @@ export default function BoardingPassCard({
         {/* 3 columns */}
         <View style={styles.threeCol}>
           <View style={styles.col}>
-            <Text style={styles.label}>Boarding time</Text>
+            <Text style={styles.label}>{t("boarding.boardingTime")}</Text>
             <Text style={styles.value}>{boardingTime}</Text>
           </View>
           <View style={styles.col}>
-            <Text style={styles.label}>Departure</Text>
+            <Text style={styles.label}>{t("boarding.departure")}</Text>
             <Text style={styles.value}>{departure}</Text>
           </View>
           <View style={styles.col}>
-            <Text style={styles.label}>Arrival</Text>
+            <Text style={styles.label}>{t("boarding.arrival")}</Text>
             <Text style={styles.value}>{arrival}</Text>
           </View>
         </View>
@@ -82,18 +84,18 @@ export default function BoardingPassCard({
         {/* date / class */}
         <View style={styles.twoCol}>
           <View style={styles.col2}>
-            <Text style={styles.label}>Date</Text>
+            <Text style={styles.label}>{t("boarding.date")}</Text>
             <Text style={styles.valueSmall}>{date}</Text>
           </View>
           <View style={styles.col2}>
-            <Text style={styles.label}>Class</Text>
+            <Text style={styles.label}>{t("boarding.class")}</Text>
             <Text style={styles.valueSmall}>{clazz}</Text>
           </View>
         </View>
 
         {/* passenger */}
         <View style={styles.passengerBlock}>
-          <Text style={styles.label}>Passenger</Text>
+          <Text style={styles.label}>{t("boarding.passenger")}</Text>
           <Text style={styles.passengerName}>{passenger}</Text>
         </View>
 
@@ -106,15 +108,15 @@ export default function BoardingPassCard({
         {/* footer terminal gate seat */}
         <View style={styles.footerRow}>
           <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>Terminal</Text>
+            <Text style={styles.footerLabel}>{t("boarding.terminal")}</Text>
             <Text style={styles.footerValue}>{terminal}</Text>
           </View>
           <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>Gate</Text>
+            <Text style={styles.footerLabel}>{t("boarding.gate")}</Text>
             <Text style={styles.footerValue}>{gate}</Text>
           </View>
           <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>Seat</Text>
+            <Text style={styles.footerLabel}>{t("boarding.seat")}</Text>
             <Text style={styles.footerValue}>{seat}</Text>
           </View>
         </View>

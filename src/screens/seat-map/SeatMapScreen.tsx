@@ -6,6 +6,7 @@ import { getConcertDetailById } from "@/constants/concert-detail-data";
 import { gfColors } from "@/constants/gf-theme";
 import { TICKET_SALE_ITEMS } from "@/constants/ticket-sale-data";
 import { useTranslation } from "@/context/language-context";
+import { eventAddress, eventDate } from "@/utils/event-i18n";
 import SeatMapHeader from "@/components/seat-map/seat-map-header";
 import SeatMapSectionHeader from "@/components/seat-map/seat-map-section-header";
 import SeatMapCategorySection from "@/components/seat-map/seat-map-category-section";
@@ -21,8 +22,12 @@ export default function SeatMapScreen() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { t } = useTranslation();
 
-  const title = concert ? `${concert.title} in Jakarta` : "T.O.P PRE-STUDIO 2026 in Jakarta";
-  const subtitle = concert ? `${concert.date} • ${concert.address}` : "19 Sep 2026 • Istora Senayan, Tanah Abang, Jakarta ...";
+  const title = concert
+    ? t("seatmap.eventTitle", { title: concert.title, city: "Jakarta" })
+    : t("seatmap.eventTitle", { title: "T.O.P PRE-STUDIO 2026", city: "Jakarta" });
+  const subtitle = concert
+    ? `${eventDate(t, concert)} • ${eventAddress(t, concert)}`
+    : "19 Sep 2026 • Istora Senayan, Tanah Abang, Jakarta ...";
 
   const handleQtyChange = (tid: string, v: number) => {
     setQuantities((prev) => ({ ...prev, [tid]: v }));

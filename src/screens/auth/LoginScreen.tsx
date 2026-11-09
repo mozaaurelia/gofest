@@ -9,11 +9,13 @@ import AuthInput from "@/components/auth/auth-input";
 import AuthButton from "@/components/auth/auth-button";
 import AuthSwitchLink from "@/components/auth/auth-switch-link";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const canSubmit =
     email.includes("@") &&
@@ -31,38 +33,38 @@ export default function LoginScreen() {
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>
-          Welcome back
+          {t("auth.welcomeBack")}
         </Animated.Text>
         <Animated.Text entering={FadeInDown.duration(500).delay(180)} style={styles.subtitle}>
-          Sign in to keep finding your favorite fests
+          {t("auth.loginSubtitle")}
         </Animated.Text>
 
         <Animated.View entering={FadeInDown.duration(500).delay(260)} style={styles.form}>
           <AuthInput
-            label="Email"
+            label={t("auth.email")}
             icon="mail"
-            placeholder="you@email.com"
+            placeholder={t("auth.emailPlaceholder")}
             keyboardType="email-address"
             autoCapitalize="none"
             value={email}
             onChangeText={setEmail}
           />
           <AuthInput
-            label="Password"
+            label={t("auth.password")}
             icon="lock"
             isPassword
-            placeholder="Password"
+            placeholder={t("auth.passwordPlaceholder")}
             value={password}
             onChangeText={setPassword}
           />
 
-          <Text style={styles.forgot}>Forgot password?</Text>
+          <Text style={styles.forgot}>{t("auth.forgot")}</Text>
 
-          <AuthButton label="Sign In" onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
+          <AuthButton label={t("auth.signIn")} onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(340)}>
-          <AuthSwitchLink question="Don't have an account?" actionLabel="Register here" href="/auth/register" />
+          <AuthSwitchLink question={t("auth.noAccount")} actionLabel={t("auth.registerHere")} href="/auth/register" />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

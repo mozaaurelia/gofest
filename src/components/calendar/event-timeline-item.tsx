@@ -4,6 +4,8 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { CalendarEvent } from "../../constants/calendar-data";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { monthShortKey } from "@/utils/date-labels";
 
 type EventTimelineItemProps = {
   event: CalendarEvent;
@@ -12,12 +14,13 @@ type EventTimelineItemProps = {
 };
 
 export default function EventTimelineItem({ event, showDateBadge, isLast }: EventTimelineItemProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.row}>
       <View style={styles.dateCol}>
         {showDateBadge ? (
           <View style={styles.dateBadge}>
-            <Text style={styles.month}>{event.month.toUpperCase()}</Text>
+            <Text style={styles.month}>{t(monthShortKey(event.month)).toUpperCase()}</Text>
             <Text style={styles.day}>{event.day}</Text>
           </View>
         ) : (

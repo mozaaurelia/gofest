@@ -11,6 +11,7 @@ import AuthGenderSelect from "@/components/auth/auth-gender-select";
 import AuthButton from "@/components/auth/auth-button";
 import AuthSwitchLink from "@/components/auth/auth-switch-link";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
 
 export default function RegisterScreen() {
   const [firstName, setFirstName] = useState("");
@@ -20,6 +21,7 @@ export default function RegisterScreen() {
   const [birthDate, setBirthDate] = useState({ day: "", month: "", year: "" });
   const [gender, setGender] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const canSubmit =
     firstName.trim() !== "" &&
@@ -40,35 +42,35 @@ export default function RegisterScreen() {
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>
-          Create a new account
+          {t("auth.createAccount")}
         </Animated.Text>
         <Animated.Text entering={FadeInDown.duration(500).delay(180)} style={styles.subtitle}>
-          Join now and find your favorite concerts
+          {t("auth.registerSubtitle")}
         </Animated.Text>
 
         <Animated.View entering={FadeInDown.duration(500).delay(260)} style={styles.form}>
           <View style={styles.nameRow}>
             <View style={styles.nameField}>
-              <AuthInput label="First Name *" icon="user" placeholder="First name" value={firstName} onChangeText={setFirstName} />
+              <AuthInput label={t("auth.firstName")} icon="user" placeholder={t("auth.firstNamePlaceholder")} value={firstName} onChangeText={setFirstName} />
             </View>
             <View style={styles.nameField}>
-              <AuthInput label="Last Name" icon="user" placeholder="Last name" value={lastName} onChangeText={setLastName} />
+              <AuthInput label={t("auth.lastName")} icon="user" placeholder={t("auth.lastNamePlaceholder")} value={lastName} onChangeText={setLastName} />
             </View>
           </View>
 
-          <AuthInput label="Email *" icon="mail" placeholder="you@email.com" keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
-          <AuthInput label="Password *" icon="lock" isPassword placeholder="Password" value={password} onChangeText={setPassword} />
+          <AuthInput label={t("auth.emailRequired")} icon="mail" placeholder={t("auth.emailPlaceholder")} keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
+          <AuthInput label={t("auth.passwordRequired")} icon="lock" isPassword placeholder={t("auth.passwordPlaceholder")} value={password} onChangeText={setPassword} />
 
-          <AuthDatePicker label="Date of Birth *" onValueChange={setBirthDate} />
-          <AuthGenderSelect label="Gender *" value={gender} onChange={setGender} />
+          <AuthDatePicker label={t("auth.dob")} onValueChange={setBirthDate} />
+          <AuthGenderSelect label={t("auth.gender")} value={gender} onChange={setGender} />
 
           <View style={{ marginTop: 4 }}>
-            <AuthButton label="Sign Up" onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
+            <AuthButton label={t("auth.signUp")} onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
           </View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(340)}>
-          <AuthSwitchLink question="Already have an account?" actionLabel="Sign in here" href="/auth/login" />
+          <AuthSwitchLink question={t("auth.haveAccount")} actionLabel={t("auth.signInHere")} href="/auth/login" />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

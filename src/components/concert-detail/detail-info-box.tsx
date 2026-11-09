@@ -3,15 +3,18 @@ import { StyleSheet, Text, View } from "react-native";
 import Svg, { Rect, Path, Circle } from "react-native-svg";
 import { ConcertDetail } from "../../constants/concert-detail-data";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { eventAddress, eventDate } from "@/utils/event-i18n";
 
 type DetailInfoBoxProps = { concert: ConcertDetail };
 
 export default function DetailInfoBox({ concert }: DetailInfoBoxProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.box}>
-      <Row icon={<CalendarIcon />} text={concert.date} />
+      <Row icon={<CalendarIcon />} text={eventDate(t, concert)} />
       <Row icon={<ClockIcon />} text={concert.timeRange} />
-      <Row icon={<PinIcon />} text={concert.address} />
+      <Row icon={<PinIcon />} text={eventAddress(t, concert)} />
     </View>
   );
 }

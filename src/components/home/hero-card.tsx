@@ -5,6 +5,8 @@ import { router } from "expo-router";
 import Animated, { SharedValue, interpolate, useAnimatedStyle, Extrapolate } from "react-native-reanimated";
 import { HeroEvent } from "../../constants/home-data";
 import { gfColors } from "../../constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { eventDateFull, eventSubtitle, eventTour } from "@/utils/event-i18n";
 
 type HeroCardProps = {
   event: HeroEvent;
@@ -15,7 +17,10 @@ type HeroCardProps = {
 };
 
 export default function HeroCard({ event, index, scrollX, snapInterval, cardWidth }: HeroCardProps) {
+  const { t } = useTranslation();
   const cardHeight = cardWidth * 1.2; // height lebih pendek biar sedang
+  const subtitle = eventSubtitle(t, event);
+  const tour = eventTour(t, event);
 
   const animatedStyle = useAnimatedStyle(() => {
     const center = -index * snapInterval;
@@ -37,16 +42,16 @@ export default function HeroCard({ event, index, scrollX, snapInterval, cardWidt
           <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,0,0,0.28)" }]} />
 
           <View style={styles.info}>
-            <Text style={styles.date}>{event.date}</Text>
+            <Text style={styles.date}>{eventDateFull(t, event)}</Text>
             <Text style={styles.title}>{event.title}</Text>
             <Text style={styles.venue}>{event.venue}</Text>
           </View>
         </View>
 
         <View style={styles.caption}>
-          {event.subtitle ? <Text style={styles.captionMuted}>{event.subtitle} </Text> : null}
+          {subtitle ? <Text style={styles.captionMuted}>{subtitle} </Text> : null}
           <Text style={styles.captionTitle}>{event.title}</Text>
-          {event.tour ? <Text style={styles.captionTour}> [{event.tour}]</Text> : null}
+          {tour ? <Text style={styles.captionTour}> [{tour}]</Text> : null}
         </View>
       </Animated.View>
     </Pressable>

@@ -8,17 +8,20 @@ import MonthGrid from "@/components/calendar/month-grid";
 import DayEventsPanel from "@/components/calendar/day-events-panel";
 import { getEventsForDate } from "@/constants/calendar-data";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { MONTH_SHORT_KEYS } from "@/utils/date-labels";
 
 function getTodayISO(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 
-const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_SHORT = MONTH_SHORT_KEYS;
 
 export default function KalenderScreen() {
   const [mode, setMode] = useState<CalendarViewMode>("grid");
   const [selectedDate, setSelectedDate] = useState(() => getTodayISO());
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -35,7 +38,7 @@ export default function KalenderScreen() {
         >
           <MonthGrid selectedDateISO={selectedDate} onSelectDate={setSelectedDate} />
           <DayEventsPanel
-            dateLabel={`${parseInt(selectedDate.split("-")[2], 10)} ${MONTH_SHORT[parseInt(selectedDate.split("-")[1], 10) - 1]}`}
+            dateLabel={`${parseInt(selectedDate.split("-")[2], 10)} ${t(MONTH_SHORT[parseInt(selectedDate.split("-")[1], 10) - 1])}`}
             events={getEventsForDate(selectedDate)}
           />
         </ScrollView>

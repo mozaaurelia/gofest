@@ -18,6 +18,7 @@ import HomeNavbar from "./home-navbar";
 import MetallicBackground from "../ui/metallic-background";
 import { gfColors } from "../../constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
+import { eventDateFull, eventSubtitle, eventTour } from "@/utils/event-i18n";
 
 const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
 const ITEM_SPACING = 28;
@@ -39,22 +40,26 @@ export default function HeroCarousel() {
       empty: t("home.empty"),
       emptySub: t("home.emptySub"),
     }),
-    [t, language]
+    [t]
   );
 
   const [query, setQuery] = useState("");
   const filteredEvents = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return HERO_EVENTS;
-    return HERO_EVENTS.filter(
-      (e) =>
+    return HERO_EVENTS.filter((e) => {
+      const subtitle = eventSubtitle(t, e) ?? "";
+      const tour = eventTour(t, e) ?? "";
+      const date = eventDateFull(t, e);
+      return (
         e.title.toLowerCase().includes(q) ||
-        (e.subtitle && e.subtitle.toLowerCase().includes(q)) ||
-        (e.tour && e.tour.toLowerCase().includes(q)) ||
+        subtitle.toLowerCase().includes(q) ||
+        tour.toLowerCase().includes(q) ||
         e.venue.toLowerCase().includes(q) ||
-        e.date.toLowerCase().includes(q)
-    );
-  }, [query]);
+        date.toLowerCase().includes(q)
+      );
+    });
+  }, [query, t]);
 
   const count = filteredEvents.length;
   const [activeIndex, setActiveIndex] = useState(0);

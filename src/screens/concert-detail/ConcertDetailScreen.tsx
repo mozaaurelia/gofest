@@ -10,12 +10,18 @@ import DetailInfoBox from "@/components/concert-detail/detail-info-box";
 import DetailList from "@/components/concert-detail/detail-list";
 import FloatingNav from "@/components/navigation/floating-nav";
 import { gfColors } from "@/constants/gf-theme";
+import { useTranslation } from "@/context/language-context";
+import { eventSubtitle, eventTour } from "@/utils/event-i18n";
 
 export default function ConcertDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const concert = getConcertDetailById(id);
+  const { t } = useTranslation();
 
   if (!concert) return null;
+
+  const subtitle = eventSubtitle(t, concert);
+  const tour = eventTour(t, concert);
 
   return (
     <View style={styles.container}>
@@ -26,9 +32,9 @@ export default function ConcertDetailScreen() {
 
         <View style={styles.headline}>
           <View style={styles.headlineRow}>
-            {concert.subtitle ? <Text style={styles.headlineSub}>{concert.subtitle} </Text> : null}
+            {subtitle ? <Text style={styles.headlineSub}>{subtitle} </Text> : null}
             <Text style={styles.headlineTitle}>{concert.title}</Text>
-            {concert.tour ? <Text style={styles.headlineTour}> [{concert.tour}]</Text> : null}
+            {tour ? <Text style={styles.headlineTour}> [{tour}]</Text> : null}
           </View>
         </View>
 
