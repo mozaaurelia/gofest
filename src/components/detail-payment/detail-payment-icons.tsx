@@ -6,28 +6,6 @@ type IconProps = {
   color?: string;
 };
 
-export function CheckIcon({ size = 18, color = "#FFFFFF" }: IconProps) {
-  return (
-    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none">
-      <Path
-        d="M5.5 12.5l4.2 4.2L18.5 8"
-        stroke={color}
-        strokeWidth={2.8}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
-}
-
-export function ChevronRightIcon({ size = 16, color = "#AEB6C2" }: IconProps) {
-  return (
-    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none">
-      <Path d="M9.5 6l6 6-6 6" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-    </Svg>
-  );
-}
-
 export function TicketCheckIcon({ size = 34, color = "#7DD3FC" }: IconProps) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" style={{ transform: [{ rotate: "-8deg" }] }}>

@@ -4,10 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
 import {
-  ACTIVE_PAYMENT_STEP,
   DETAIL_PAYMENT_FALLBACK_EVENT,
   PAYMENT_CUSTOMER,
-  PAYMENT_STEPS,
 } from "@/constants/detail-payment-data";
 import { calcPaymentSummary, PAYMENT_FEES } from "@/constants/payment-data";
 import usePaymentTimer from "@/hooks/use-payment-timer";
@@ -16,7 +14,6 @@ import {
   DetailPaymentBottomBar,
   DetailPaymentBrandFooter,
   DetailPaymentMethodCard,
-  DetailPaymentSteps,
   DetailPaymentSummary,
   DetailPaymentTicketCard,
 } from "@/components/detail-payment";
@@ -65,9 +62,8 @@ export default function DetailPaymentScreen() {
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={[1]}
+        stickyHeaderIndices={[0]}
       >
-        <DetailPaymentSteps steps={PAYMENT_STEPS} activeIndex={ACTIVE_PAYMENT_STEP} />
         <PaymentTimerBar time={formatted} />
 
         <View style={styles.body}>

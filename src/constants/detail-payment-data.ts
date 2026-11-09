@@ -9,10 +9,6 @@ export type PaymentCustomer = {
   gender: string;
 };
 
-export const PAYMENT_STEPS = ["Pilih Tiket", "Data Pelanggan", "Pembayaran", "Bayar"] as const;
-
-export const ACTIVE_PAYMENT_STEP = PAYMENT_STEPS.length - 1;
-
 export const PAYMENT_CUSTOMER: PaymentCustomer = {
   name: "guehruer hehehehr",
   email: "mozaaurel05@gmail.com",
