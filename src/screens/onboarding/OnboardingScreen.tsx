@@ -23,16 +23,17 @@ export default function OnboardingScreen() {
 
   if (step === 1) {
     return (
-      <View style={styles.rootDark}>
-        <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+      <View style={styles.rootLight}>
+        <SafeAreaView style={styles.safeLight} edges={["top", "bottom"]}>
           <View style={styles.illustWrap}>
             <OnboardingMerchIllustration />
           </View>
           <OnboardingTitle
             title={t("onboarding.merch.title")}
             subtitle={t("onboarding.merch.subtitle")}
+            variant="light"
           />
-          <OnboardingFooter currentStep={1} totalSteps={TOTAL_STEPS} onNext={() => setStep(2)} />
+          <OnboardingFooter currentStep={1} totalSteps={TOTAL_STEPS} onNext={() => setStep(2)} variant="light" />
         </SafeAreaView>
       </View>
     );
@@ -106,5 +107,7 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   rootDark: { flex: 1, backgroundColor: "#232E58" },
   safeDark: { flex: 1, backgroundColor: "#232E58" },
+  rootLight: { flex: 1, backgroundColor: "#FFFFFF" },
+  safeLight: { flex: 1, backgroundColor: "#FFFFFF" },
   illustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
 });

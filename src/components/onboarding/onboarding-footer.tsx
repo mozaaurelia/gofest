@@ -10,11 +10,13 @@ type Props = {
   totalSteps: number;
   onBack?: () => void;
   onNext: () => void;
+  variant?: "dark" | "light";
 };
 
-export default function OnboardingFooter({ currentStep, totalSteps, onBack, onNext }: Props) {
+export default function OnboardingFooter({ currentStep, totalSteps, onBack, onNext, variant = "dark" }: Props) {
   const { t } = useTranslation();
   const backDisabled = !onBack;
+  const isLight = variant === "light";
 
   return (
     <View style={styles.wrap}>
@@ -23,13 +25,19 @@ export default function OnboardingFooter({ currentStep, totalSteps, onBack, onNe
         disabled={backDisabled}
         accessibilityRole="button"
         accessibilityLabel={t("onboarding.back")}
-        style={({ pressed }) => [styles.backBtn, backDisabled && styles.backBtnDisabled, pressed && styles.pressed]}
+        accessibilityState={{ disabled: backDisabled }}
+        style={({ pressed }) => [
+          styles.backBtn,
+          isLight && styles.backBtnLight,
+          backDisabled && styles.backBtnDisabled,
+          pressed && styles.pressed,
+        ]}
       >
-        <Text style={styles.backText}>{t("onboarding.back")}</Text>
+        <Text style={[styles.backText, isLight && styles.backTextLight]}>{t("onboarding.back")}</Text>
       </Pressable>
 
       <View style={styles.dots}>
-        <OnboardingDots total={totalSteps} activeStep={currentStep} />
+        <OnboardingDots total={totalSteps} activeStep={currentStep} variant={variant} />
       </View>
 
       <Pressable onPress={onNext} accessibilityRole="button" accessibilityLabel={t("onboarding.next")}>
@@ -67,8 +75,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  backBtnLight: { borderColor: "rgba(27,34,45,0.35)" },
   backBtnDisabled: { opacity: 0.4 },
   backText: { fontSize: 12, fontWeight: "700", letterSpacing: 1, color: "#FFFFFF", textTransform: "uppercase" },
+  backTextLight: { color: gfColors.text },
   dots: { flex: 1, alignItems: "center" },
   nextBtn: {
     minWidth: 108,
