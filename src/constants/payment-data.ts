@@ -52,7 +52,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
 
 export const PAYMENT_FEES = {
   protection: 10000,
-  platform: 600,
+  platform: 15987,
 };
 
 export function calcPaymentSummary(basePrice: number) {

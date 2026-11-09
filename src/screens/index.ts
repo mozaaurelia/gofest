@@ -7,6 +7,7 @@ export { default as ProfileScreen } from "./profile/ProfileScreen";
 export { default as MenuScreen } from "./menu/MenuScreen";
 export { default as EventGuideScreen } from "./event-guide/EventGuideScreen";
 export { default as PaymentScreen } from "./payment/PaymentScreen";
+export { default as DetailPaymentScreen } from "./detail-payment/DetailPaymentScreen";
 export { default as CalendarScreen } from "./calendar/CalendarScreen";
 export { default as LoginScreen } from "./auth/LoginScreen";
 export { default as RegisterScreen } from "./auth/RegisterScreen";

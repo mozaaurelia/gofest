@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import GoFestLogo from "@/components/splash/GoFestLogo";
 
-function LoketMark() {
+function GoFestMark() {
   return (
     <View style={styles.logoRow}>
-      <View style={styles.logoMark}>
-        <Text style={styles.logoLetter}>L</Text>
+      <GoFestLogo size={34} />
+      <View style={styles.wordmarkRow}>
+        <Text style={styles.wordmarkGo}>go</Text>
+        <Text style={styles.wordmarkFest}>Fest!</Text>
       </View>
-      <Text style={styles.logoText}>LOKÉT</Text>
     </View>
   );
 }
@@ -16,8 +18,8 @@ export default function PaymentBrandFooter() {
   return (
     <View style={styles.wrap}>
       <Text style={styles.title}>Dip Persembahkan oleh</Text>
-      <LoketMark />
-      <Text style={styles.copyright}>© 2026 LOKÉT. Hak cipta dilindungi Undang-undang</Text>
+      <GoFestMark />
+      <Text style={styles.copyright}>© 2026 goFest!. Hak cipta dilindungi Undang-undang</Text>
     </View>
   );
 }
@@ -39,27 +41,24 @@ const styles = StyleSheet.create({
   logoRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
     marginTop: 16,
   },
-  logoMark: {
-    width: 30,
-    height: 30,
-    borderRadius: 7,
-    backgroundColor: "#142C4A",
+  wordmarkRow: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
   },
-  logoLetter: {
-    fontSize: 20,
+  wordmarkGo: {
+    fontSize: 30,
     fontWeight: "900",
-    color: "#FFFFFF",
-  },
-  logoText: {
-    fontSize: 26,
-    fontWeight: "900",
-    letterSpacing: 1,
+    letterSpacing: 0.2,
     color: "#142C4A",
+  },
+  wordmarkFest: {
+    fontSize: 30,
+    fontWeight: "900",
+    letterSpacing: 0.2,
+    color: "#2FA8C0",
   },
   copyright: {
     marginTop: 14,

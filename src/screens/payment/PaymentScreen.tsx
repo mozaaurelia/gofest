@@ -27,7 +27,7 @@ export default function PaymentScreen() {
   const basePrice = Math.max(0, Number(price) || 0);
   const ticketCategory = typeof category === "string" && category ? category : "FESTIVAL";
   const { localTax, adminFee, total } = calcPaymentSummary(basePrice);
-  const { formatted } = usePaymentTimer();
+  const { formatted, secondsLeft } = usePaymentTimer();
 
   const targetId = Array.isArray(id) ? id[0] : id;
 
@@ -41,8 +41,14 @@ export default function PaymentScreen() {
 
   const handlePay = () => {
     router.push({
-      pathname: "/boarding-pass/[id]",
-      params: { id: targetId ?? "h1", qty: String(ticketQty), price: String(total) },
+      pathname: "/detail-payment/[id]",
+      params: {
+        id: targetId ?? "h1",
+        qty: String(ticketQty),
+        price: String(basePrice),
+        category: ticketCategory,
+        timer: String(secondsLeft),
+      },
     } as any);
   };
 
