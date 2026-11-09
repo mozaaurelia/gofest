@@ -5,8 +5,9 @@ import Svg, { Path } from "react-native-svg";
 import {
   OnboardingActions,
   OnboardingFooter,
-  OnboardingIllustration,
+  OnboardingHeader,
   OnboardingMerchIllustration,
+  OnboardingPaymentIllustration,
   OnboardingTitle,
   OnboardingTransferIllustration,
   OnboardingWave,
@@ -50,31 +51,22 @@ export default function OnboardingScreen() {
   if (step === 2) {
     return (
       <View style={styles.rootDark}>
-        <SafeAreaView style={styles.safeDark} edges={["top"]}>
-          <View style={styles.topRow}>
-            <OnboardingBackButton onPress={() => setStep(1)} />
-            <OnboardingProgress step={2} variant="dark" />
-            <Pressable onPress={() => setStep(3)} style={styles.nextBtn} hitSlop={8}>
-              <Text style={styles.nextText}>Next</Text>
-            </Pressable>
+        <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+          <OnboardingHeader title="TIX Concert" onSkip={() => setStep(3)} />
+          <View style={styles.paymentIllustWrap}>
+            <OnboardingPaymentIllustration />
           </View>
-          <View style={styles.joinTitleWrap}>
-            <Text style={styles.joinTitle}>Join The Countless</Text>
-            <Text style={styles.joinTitle}>Xperiences</Text>
-          </View>
-          <View style={styles.illustWrap}>
-            <OnboardingIllustration />
-          </View>
+          <OnboardingTitle
+            title={t("onboarding.payment.title")}
+            subtitle={t("onboarding.payment.subtitle")}
+          />
+          <OnboardingFooter
+            currentStep={2}
+            totalSteps={3}
+            onBack={() => setStep(1)}
+            onNext={() => setStep(3)}
+          />
         </SafeAreaView>
-        <OnboardingWave />
-        <View style={styles.bottomDark}>
-          <Pressable onPress={() => setStep(3)} style={({ pressed }) => [styles.arrowBtnDark, pressed && styles.pressed]}>
-            <Svg viewBox="0 0 24 24" width={20} height={20} fill="none">
-              <Path d="M5 12h14M13 6l6 6-6 6" stroke="#FFFFFF" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-            </Svg>
-          </Pressable>
-          <View style={styles.homeIndicator} />
-        </View>
       </View>
     );
   }
@@ -107,20 +99,16 @@ export default function OnboardingScreen() {
 
 const styles = StyleSheet.create({
   merchIllustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12, paddingTop: 8 },
-  arrowBtnDark: { width: 52, height: 52, borderRadius: 26, backgroundColor: "#1E4ED8", alignItems: "center", justifyContent: "center", alignSelf: "center", marginTop: 16 },
+  paymentIllustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
   pressed: { opacity: 0.85 },
   rootDark: { flex: 1, backgroundColor: "#232E58" },
   safeDark: { flex: 1, backgroundColor: "#232E58" },
   topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 4 },
   backBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
   topSpacer: { width: 56 },
-  nextBtn: { paddingHorizontal: 16, paddingVertical: 8 },
-  nextText: { fontSize: 13, color: "rgba(255,255,255,0.85)", fontWeight: "500" },
-  joinTitleWrap: { alignItems: "center", gap: 4, marginTop: 10, paddingHorizontal: 16 },
   joinTitle: { fontSize: 28, fontWeight: "800", color: "#FFFFFF", textAlign: "center" },
   finalTitleWrap: { alignItems: "center", gap: 6, marginTop: 18, paddingHorizontal: 24 },
   finalSub: { fontSize: 12, color: "rgba(255,255,255,0.72)", textAlign: "center", lineHeight: 18, marginTop: 8 },
-  illustWrap: { flex: 1, justifyContent: "flex-end", marginTop: 12 },
   finalIllustWrap: { flex: 1, justifyContent: "center", paddingHorizontal: 16, marginTop: 8 },
   bottomDark: { backgroundColor: "#FFFFFF", paddingBottom: 8 },
   homeIndicator: { alignSelf: "center", width: 120, height: 4, borderRadius: 2, backgroundColor: "#111827", marginTop: 12, marginBottom: 4 },
