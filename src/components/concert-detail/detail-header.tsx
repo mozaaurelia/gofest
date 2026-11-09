@@ -2,17 +2,34 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSavedTickets } from "../../context/saved-tickets-context";
 
 type DetailHeaderProps = { title: string; concertId?: string };
 
 export default function DetailHeader({ title, concertId }: DetailHeaderProps) {
   const { isSaved, toggle } = useSavedTickets();
+  const insets = useSafeAreaInsets();
   const saved = concertId ? isSaved(concertId) : false;
 
+  const handleBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.replace("/");
+  };
+
   return (
-    <View style={styles.row}>
-      <Pressable onPress={() => router.back()} style={styles.iconButton}>
+    <View style={[styles.row, { paddingTop: insets.top + 8 }]}>
+      <Pressable
+        onPress={handleBack}
+        hitSlop={12}
+        accessibilityRole="button"
+        accessibilityLabel="Back"
+        android_ripple={{ color: "transparent" }}
+        style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+      >
         <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
           <Path d="M15 6l-6 6 6 6" stroke="#FFFFFF" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
         </Svg>
@@ -56,6 +73,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12, paddingTop: 8,
   },
   iconButton: { width: 36, height: 36, borderRadius: 18, alignItems: "center", justifyContent: "center" },
+  iconButtonPressed: { backgroundColor: "rgba(255,255,255,0.18)", opacity: 0.7 },
   iconButtonActive: { backgroundColor: "rgba(255,255,255,0.18)" },
   rightRow: { flexDirection: "row", alignItems: "center", gap: 2 },
   title: { flex: 1, marginHorizontal: 8, fontSize: 14, fontWeight: "700", color: "#FFFFFF", textAlign: "center" },
