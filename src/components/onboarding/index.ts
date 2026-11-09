@@ -1,9 +1,8 @@
-export { default as OnboardingTransferIllustration } from "./onboarding-transfer-illustration";
 export { default as OnboardingMerchIllustration } from "./onboarding-merch-illustration";
 export { default as OnboardingPaymentIllustration } from "./onboarding-payment-illustration";
+export { default as OnboardingLiveEventIllustration } from "./onboarding-live-event-illustration";
+export { default as OnboardingVipIllustration } from "./onboarding-vip-illustration";
 export { default as OnboardingTitle } from "./onboarding-title";
-export { default as OnboardingActions } from "./onboarding-actions";
-export { default as OnboardingWave } from "./onboarding-wave";
-export { default as OnboardingProgress } from "./onboarding-progress";
 export { default as OnboardingDots } from "./onboarding-dots";
 export { default as OnboardingFooter } from "./onboarding-footer";
+export { default as OnboardingCta } from "./onboarding-cta";

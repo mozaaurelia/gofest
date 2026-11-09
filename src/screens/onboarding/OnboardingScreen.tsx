@@ -1,30 +1,21 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Svg, { Path } from "react-native-svg";
+import { router } from "expo-router";
 import {
-  OnboardingActions,
+  OnboardingCta,
   OnboardingFooter,
+  OnboardingLiveEventIllustration,
   OnboardingMerchIllustration,
   OnboardingPaymentIllustration,
   OnboardingTitle,
-  OnboardingTransferIllustration,
-  OnboardingWave,
-  OnboardingProgress,
+  OnboardingVipIllustration,
 } from "@/components/onboarding";
 import { useTranslation } from "@/context/language-context";
 
-type OnboardingStep = 1 | 2 | 3;
+type OnboardingStep = 1 | 2 | 3 | 4;
 
-function OnboardingBackButton({ onPress }: { onPress: () => void }) {
-  return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]} hitSlop={8} accessibilityLabel="Back" accessibilityRole="button">
-      <Svg viewBox="0 0 24 24" width={20} height={20} fill="none">
-        <Path d="M19 12H5M11 18l-6-6 6-6" stroke="#FFFFFF" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-      </Svg>
-    </Pressable>
-  );
-}
+const TOTAL_STEPS = 4;
 
 export default function OnboardingScreen() {
   const [step, setStep] = useState<OnboardingStep>(1);
@@ -34,14 +25,14 @@ export default function OnboardingScreen() {
     return (
       <View style={styles.rootDark}>
         <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
-          <View style={styles.merchIllustWrap}>
+          <View style={styles.illustWrap}>
             <OnboardingMerchIllustration />
           </View>
           <OnboardingTitle
             title={t("onboarding.merch.title")}
             subtitle={t("onboarding.merch.subtitle")}
           />
-          <OnboardingFooter currentStep={1} totalSteps={3} onNext={() => setStep(2)} />
+          <OnboardingFooter currentStep={1} totalSteps={TOTAL_STEPS} onNext={() => setStep(2)} />
         </SafeAreaView>
       </View>
     );
@@ -51,7 +42,7 @@ export default function OnboardingScreen() {
     return (
       <View style={styles.rootDark}>
         <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
-          <View style={styles.paymentIllustWrap}>
+          <View style={styles.illustWrap}>
             <OnboardingPaymentIllustration />
           </View>
           <OnboardingTitle
@@ -60,7 +51,7 @@ export default function OnboardingScreen() {
           />
           <OnboardingFooter
             currentStep={2}
-            totalSteps={3}
+            totalSteps={TOTAL_STEPS}
             onBack={() => setStep(1)}
             onNext={() => setStep(3)}
           />
@@ -69,45 +60,51 @@ export default function OnboardingScreen() {
     );
   }
 
+  if (step === 3) {
+    return (
+      <View style={styles.rootDark}>
+        <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+          <View style={styles.illustWrap}>
+            <OnboardingLiveEventIllustration />
+          </View>
+          <OnboardingTitle
+            title={t("onboarding.live.title")}
+            subtitle={t("onboarding.live.subtitle")}
+          />
+          <OnboardingFooter
+            currentStep={3}
+            totalSteps={TOTAL_STEPS}
+            onBack={() => setStep(2)}
+            onNext={() => setStep(4)}
+          />
+        </SafeAreaView>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.rootDark}>
-      <SafeAreaView style={styles.safeDark} edges={["top"]}>
-        <View style={styles.topRow}>
-          <OnboardingBackButton onPress={() => setStep(2)} />
-          <OnboardingProgress step={3} variant="dark" />
-          <View style={styles.topSpacer} />
+      <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+        <View style={styles.illustWrap}>
+          <OnboardingVipIllustration />
         </View>
-        <View style={styles.finalTitleWrap}>
-          <Text style={styles.joinTitle}>Your Tickets,</Text>
-          <Text style={styles.joinTitle}>Your Moments</Text>
-          <Text style={styles.finalSub}>Keep every Go Fest experience close at hand.</Text>
-        </View>
-        <View style={styles.finalIllustWrap}>
-          <OnboardingTransferIllustration />
-        </View>
+        <OnboardingTitle
+          title={t("onboarding.vip.title")}
+          subtitle={t("onboarding.vip.subtitle")}
+        />
+        <OnboardingCta
+          primaryLabel={t("onboarding.vip.register")}
+          onPrimaryPress={() => router.replace("/auth/register" as any)}
+          secondaryLabel={t("onboarding.vip.explore")}
+          onSecondaryPress={() => router.replace("/(tabs)" as any)}
+        />
       </SafeAreaView>
-      <OnboardingWave />
-      <View style={styles.bottomDark}>
-        <OnboardingActions />
-        <View style={styles.homeIndicator} />
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  merchIllustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12, paddingTop: 8 },
-  paymentIllustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
-  pressed: { opacity: 0.85 },
   rootDark: { flex: 1, backgroundColor: "#232E58" },
   safeDark: { flex: 1, backgroundColor: "#232E58" },
-  topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingRight: 4 },
-  backBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
-  topSpacer: { width: 56 },
-  joinTitle: { fontSize: 28, fontWeight: "800", color: "#FFFFFF", textAlign: "center" },
-  finalTitleWrap: { alignItems: "center", gap: 6, marginTop: 18, paddingHorizontal: 24 },
-  finalSub: { fontSize: 12, color: "rgba(255,255,255,0.72)", textAlign: "center", lineHeight: 18, marginTop: 8 },
-  finalIllustWrap: { flex: 1, justifyContent: "center", paddingHorizontal: 16, marginTop: 8 },
-  bottomDark: { backgroundColor: "#FFFFFF", paddingBottom: 8 },
-  homeIndicator: { alignSelf: "center", width: 120, height: 4, borderRadius: 2, backgroundColor: "#111827", marginTop: 12, marginBottom: 4 },
+  illustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
 });

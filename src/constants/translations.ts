@@ -17,6 +17,14 @@ export const translations: Record<Language, Dict> = {
     "onboarding.payment.title": "Pembayaran Cepat & Aman!",
     "onboarding.payment.subtitle":
       "Dapatkan akses stage-front lebih mudah. Amankan tempatmu sekarang!",
+    "onboarding.live.title": "Lebih seru dengan GO FEST LIVE EVENTS!",
+    "onboarding.live.subtitle":
+      "Siap-siap, jadilah bagian dari lautan manusia dan momen tak terlupakan!",
+    "onboarding.vip.title": "GO FEST VIP Concert, akses tak terbatas!",
+    "onboarding.vip.subtitle":
+      "Nikmati akses lounge VIP, Meet & Greet artis, dan hadiah eksklusif!",
+    "onboarding.vip.register": "Daftar",
+    "onboarding.vip.explore": "Jelajahi GO FEST Concert",
     "onboarding.back": "Kembali",
     "onboarding.next": "Lanjut",
     // Detail list (concert page)
@@ -134,6 +142,14 @@ export const translations: Record<Language, Dict> = {
     "onboarding.payment.title": "Fast & Secure Payment!",
     "onboarding.payment.subtitle":
       "Get stage-front access with ease. Secure your spot now!",
+    "onboarding.live.title": "More fun with GO FEST LIVE EVENTS!",
+    "onboarding.live.subtitle":
+      "Get ready to be part of the crowd and make unforgettable memories!",
+    "onboarding.vip.title": "GO FEST VIP Concert, unlimited access!",
+    "onboarding.vip.subtitle":
+      "Enjoy VIP lounge access, artist Meet & Greet, and exclusive gifts!",
+    "onboarding.vip.register": "Sign Up",
+    "onboarding.vip.explore": "Explore GO FEST Concert",
     "onboarding.back": "Back",
     "onboarding.next": "Next",
     "detail.ticketInfo.title": "Ticket Sales Info",
