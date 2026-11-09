@@ -10,23 +10,6 @@ export const translations: Record<Language, Dict> = {
     "common.en": "EN",
     "common.close": "Tutup",
     "common.languageSubtitle": "Pilih bahasa — akan diterapkan ke semua halaman",
-    // Onboarding
-    "onboarding.merch.title": "Audio, visual, dan suvenir eksklusif",
-    "onboarding.merch.subtitle":
-      "Rasakan gelegar suara dan keajaiban panggung. Temukan merchandise spesial!",
-    "onboarding.payment.title": "Pembayaran Cepat & Aman!",
-    "onboarding.payment.subtitle":
-      "Dapatkan akses stage-front lebih mudah. Amankan tempatmu sekarang!",
-    "onboarding.live.title": "Lebih seru dengan GO FEST LIVE EVENTS!",
-    "onboarding.live.subtitle":
-      "Siap-siap, jadilah bagian dari lautan manusia dan momen tak terlupakan!",
-    "onboarding.vip.title": "GO FEST VIP Concert, akses tak terbatas!",
-    "onboarding.vip.subtitle":
-      "Nikmati akses lounge VIP, Meet & Greet artis, dan hadiah eksklusif!",
-    "onboarding.vip.register": "Daftar",
-    "onboarding.vip.explore": "Jelajahi GO FEST Concert",
-    "onboarding.back": "Kembali",
-    "onboarding.next": "Lanjut",
     // Detail list (concert page)
     "detail.ticketInfo.title": "Info Penjualan Tiket",
     "detail.ticketInfo.subtitle": "Jadwal & cara pembelian tiket",
