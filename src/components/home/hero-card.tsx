@@ -2,11 +2,13 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import Animated, { SharedValue, interpolate, useAnimatedStyle, Extrapolate } from "react-native-reanimated";
+import Animated, {
+  Extrapolate,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 import { HeroEvent } from "../../constants/home-data";
-import { gfColors } from "../../constants/gf-theme";
-import { useTranslation } from "@/context/language-context";
-import { eventDateFull, eventSubtitle, eventTour } from "@/utils/event-i18n";
 
 type HeroCardProps = {
   event: HeroEvent;
@@ -16,43 +18,55 @@ type HeroCardProps = {
   cardWidth: number;
 };
 
-export default function HeroCard({ event, index, scrollX, snapInterval, cardWidth }: HeroCardProps) {
-  const { t } = useTranslation();
-  const cardHeight = cardWidth * 1.2; // height lebih pendek biar sedang
-  const subtitle = eventSubtitle(t, event);
-  const tour = eventTour(t, event);
+const CARD_ASPECT = 1.31;
+const SIDE_ROTATE = 10;
+const SIDE_SCALE = 0.93;
+const SIDE_OPACITY = 0.9;
 
-  const animatedStyle = useAnimatedStyle(() => {
+export default function HeroCard({ event, index, scrollX, snapInterval, cardWidth }: HeroCardProps) {
+  const cardHeight = cardWidth * CARD_ASPECT;
+
+  const cardStyle = useAnimatedStyle(() => {
     const center = -index * snapInterval;
     const inputRange = [center - snapInterval, center, center + snapInterval];
 
-    const scale = interpolate(scrollX.value, inputRange, [0.93, 1, 0.93], Extrapolate.CLAMP);
-    const opacity = interpolate(scrollX.value, inputRange, [0.7, 1, 0.7], Extrapolate.CLAMP);
-    const rotate = interpolate(scrollX.value, inputRange, [4, 0, -4], Extrapolate.CLAMP);
+    const scale = interpolate(scrollX.value, inputRange, [SIDE_SCALE, 1, SIDE_SCALE], Extrapolate.CLAMP);
+    const rotate = interpolate(scrollX.value, inputRange, [SIDE_ROTATE, 0, -SIDE_ROTATE], Extrapolate.CLAMP);
+    const opacity = interpolate(scrollX.value, inputRange, [SIDE_OPACITY, 1, SIDE_OPACITY], Extrapolate.CLAMP);
 
-    return { transform: [{ translateX: scrollX.value }, { scale }, { rotate: `${rotate}deg` }], opacity };
+    return {
+      opacity,
+      transform: [{ translateX: scrollX.value }, { scale }, { rotate: `${rotate}deg` }],
+    };
+  });
+
+  const captionStyle = useAnimatedStyle(() => {
+    const center = -index * snapInterval;
+    const inputRange = [center - snapInterval * 0.55, center, center + snapInterval * 0.55];
+    return {
+      opacity: interpolate(scrollX.value, inputRange, [0, 1, 0], Extrapolate.CLAMP),
+    };
   });
 
   return (
-    <Pressable onPress={() => router.push(`/concert/${event.id}`)}>
-      <Animated.View style={[styles.group, { width: cardWidth }, animatedStyle]}>
-        <View style={[styles.card, { width: cardWidth, height: cardHeight }]}>
-          {/* Poster dari assets/images */}
-          <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" />
-          <View style={[StyleSheet.absoluteFill, { backgroundColor: "rgba(0,0,0,0.28)" }]} />
-
-          <View style={styles.info}>
-            <Text style={styles.date}>{eventDateFull(t, event)}</Text>
-            <Text style={styles.title}>{event.title}</Text>
-            <Text style={styles.venue}>{event.venue}</Text>
+    <Pressable
+      style={{ width: cardWidth }}
+      accessibilityRole="button"
+      accessibilityLabel={event.title}
+      onPress={() => router.push(`/concert/${event.id}`)}
+    >
+      <Animated.View style={[styles.group, { width: cardWidth }, cardStyle]}>
+        <View style={[styles.frame, { width: cardWidth, height: cardHeight }]}>
+          <View style={styles.posterClip}>
+            <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" transition={220} />
           </View>
         </View>
 
-        <View style={styles.caption}>
-          {subtitle ? <Text style={styles.captionMuted}>{subtitle} </Text> : null}
-          <Text style={styles.captionTitle}>{event.title}</Text>
-          {tour ? <Text style={styles.captionTour}> [{tour}]</Text> : null}
-        </View>
+        <Animated.View style={[styles.captionWrap, captionStyle]}>
+          <Text style={styles.caption} numberOfLines={2}>
+            {event.title}
+          </Text>
+        </Animated.View>
       </Animated.View>
     </Pressable>
   );
@@ -60,30 +74,28 @@ export default function HeroCard({ event, index, scrollX, snapInterval, cardWidt
 
 const styles = StyleSheet.create({
   group: { alignItems: "center" },
-  card: {
-    borderRadius: 20,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "#FFFFFF",
+  frame: {
+    borderRadius: 28,
+    padding: 6,
+    backgroundColor: "#FFFFFF",
     shadowColor: "#000000",
-    shadowOpacity: 0.18,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 8,
+    shadowOpacity: 0.26,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 12,
   },
-  info: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 14,
-    backgroundColor: "rgba(0,0,0,0.25)",
+  posterClip: {
+    flex: 1,
+    borderRadius: 22,
+    overflow: "hidden",
+    backgroundColor: "#101014",
   },
-  date: { fontSize: 9, fontWeight: "700", color: "#FFFFFF", opacity: 0.85, letterSpacing: 0.5 },
-  title: { fontSize: 15, fontWeight: "800", color: "#FFFFFF", marginTop: 3 },
-  venue: { fontSize: 10.5, color: "#FFFFFF", opacity: 0.85, marginTop: 2 },
-  caption: { flexDirection: "row", marginTop: 9, paddingHorizontal: 4 },
-  captionMuted: { fontSize: 12, color: "#5A6572", fontWeight: "600" },
-  captionTitle: { fontSize: 12, color: "#1B222D", fontWeight: "800" },
-  captionTour: { fontSize: 12, color: gfColors.teal, fontWeight: "700" },
+  captionWrap: { marginTop: 14, width: "100%", paddingHorizontal: 4 },
+  caption: {
+    textAlign: "center",
+    fontSize: 20,
+    lineHeight: 25,
+    fontWeight: "800",
+    color: "#232327",
+  },
 });

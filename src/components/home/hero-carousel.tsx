@@ -1,92 +1,69 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Platform, StyleSheet, Text, View, useWindowDimensions, TextInput, Pressable } from "react-native";
+/* eslint-disable react-hooks/immutability -- Reanimated shared values are mutated by design */
+import React, { useState } from "react";
+import { Platform, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import type { PointerEvent } from "react-native";
-import Svg, { Circle, Path } from "react-native-svg";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
+  Easing,
+  interpolateColor,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
-  runOnJS,
-  interpolateColor,
-  withTiming,
   withSpring,
-  Easing,
+  withTiming,
 } from "react-native-reanimated";
+import { router } from "expo-router";
 import { HERO_EVENTS } from "../../constants/home-data";
+import { useTranslation } from "@/context/language-context";
+import MetallicBackground from "../ui/metallic-background";
+import CarouselDots from "./carousel-dots";
 import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
-import MetallicBackground from "../ui/metallic-background";
-import { gfColors } from "../../constants/gf-theme";
-import { useTranslation } from "@/context/language-context";
-import { eventDateFull, eventSubtitle, eventTour } from "@/utils/event-i18n";
+import NewEventBanner from "./new-event-banner";
 
-const CARD_WIDTH_RATIO = 0.72; // card aktif = 72% lebar layar
-const ITEM_SPACING = 28;
-
-const DARK_TEXT = "#1B222D";
-const MUTED_TEXT = "#5A6572";
+const CARD_WIDTH_RATIO = 0.55;
+const CARD_MAX_WIDTH = 300;
+const CARD_ASPECT = 1.31;
+const CARD_GAP_RATIO = 0.17;
+const DIM_COLOR = "#6E7076";
+const DIM_OPACITY = 0.48;
+const TINT_OPACITY = 0.18;
 
 export default function HeroCarousel() {
   const { width } = useWindowDimensions();
-  const cardWidth = width * CARD_WIDTH_RATIO;
-  const snapInterval = cardWidth + ITEM_SPACING;
+  const { t } = useTranslation();
+
+  const count = HERO_EVENTS.length;
+  const cardWidth = Math.min(width * CARD_WIDTH_RATIO, CARD_MAX_WIDTH);
+  const snapInterval = cardWidth * (1 + CARD_GAP_RATIO);
   const sidePadding = (width - cardWidth) / 2;
+  const cardHeight = cardWidth * CARD_ASPECT;
+  const carouselHeight = cardHeight + 92;
 
-  const { language, setLanguage, t } = useTranslation();
-  const homeT = useMemo(
-    () => ({
-      searchPlaceholder: t("home.searchPlaceholder"),
-      hint: t("home.hint"),
-      empty: t("home.empty"),
-      emptySub: t("home.emptySub"),
-    }),
-    [t]
-  );
-
-  const [query, setQuery] = useState("");
-  const filteredEvents = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return HERO_EVENTS;
-    return HERO_EVENTS.filter((e) => {
-      const subtitle = eventSubtitle(t, e) ?? "";
-      const tour = eventTour(t, e) ?? "";
-      const date = eventDateFull(t, e);
-      return (
-        e.title.toLowerCase().includes(q) ||
-        subtitle.toLowerCase().includes(q) ||
-        tour.toLowerCase().includes(q) ||
-        e.venue.toLowerCase().includes(q) ||
-        date.toLowerCase().includes(q)
-      );
-    });
-  }, [query, t]);
-
-  const count = filteredEvents.length;
   const [activeIndex, setActiveIndex] = useState(0);
-  const cardHeight = cardWidth * 1.2;
-  const carouselHeight = cardHeight + 58; // card + caption + padding ( +10 buat geser sedikit ke bawah )
-
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
   const parallaxX = useSharedValue(0);
 
-  // Web: strip card ikut posisi kursor tanpa perlu drag — lebih sensitif & smooth
+  // Web: card strip ikut posisi kursor tanpa perlu drag
   const webPointerProps =
     Platform.OS === "web"
       ? {
           onPointerMove: (e: PointerEvent) => {
             const progress = Math.max(-1, Math.min(1, (e.nativeEvent.clientX - width / 2) / (width / 2)));
-            // 0.38 = geser terasa ngikutin kursor tapi tetap dalam 1 card, tidak lompat
-            parallaxX.value = withTiming(progress * snapInterval * 0.38, { duration: 220, easing: Easing.out(Easing.cubic) });
+            parallaxX.value = withTiming(progress * snapInterval * 0.25, {
+              duration: 220,
+              easing: Easing.out(Easing.cubic),
+            });
           },
           onPointerLeave: () => {
             parallaxX.value = withTiming(0, { duration: 420, easing: Easing.out(Easing.cubic) });
           },
-          // scroll wheel horizontal / vertical untuk ganti card (biar tidak harus drag)
+          // scroll wheel untuk ganti card
           onWheel: (e: any) => {
             const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
             if (Math.abs(delta) < 10) return;
-            // throttle via JS state
             const dir = delta > 0 ? 1 : -1;
             const next = Math.max(0, Math.min(count - 1, activeIndex + dir));
             if (next !== activeIndex) {
@@ -94,7 +71,6 @@ export default function HeroCarousel() {
                 damping: 26,
                 stiffness: 190,
                 mass: 0.85,
-                overshootClamping: false,
               });
               setActiveIndex(next);
             }
@@ -106,39 +82,25 @@ export default function HeroCarousel() {
     transform: [{ translateX: parallaxX.value }],
   }));
 
-  // reset carousel when filter changes — smooth spring
-  useEffect(() => {
-    setActiveIndex(0);
-    translateX.value = withSpring(0, { damping: 22, stiffness: 180, mass: 0.8 });
-    parallaxX.value = withSpring(0, { damping: 22, stiffness: 180, mass: 0.8 });
-  }, [count]);
-
-  const tintInputRange = filteredEvents.length ? filteredEvents.map((_, i) => -i * snapInterval) : [0];
-  const tintOutputRange = filteredEvents.length
-    ? filteredEvents.map((e) => (e as any).accent ?? "#E8E8EA")
-    : ["#E8E8EA"];
-
-  // Tint smooth mengikuti poster aktif - interpolateColor untuk transisi halus, opacity tipis biar metalik tetap dominan terang
+  // Warna metalik mengikuti aksen poster aktif
+  const tintInputRange = HERO_EVENTS.map((_, i) => -(count - 1 - i) * snapInterval);
+  const tintOutputRange = [...HERO_EVENTS].reverse().map((event) => event.accent);
   const tintStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(translateX.value, tintInputRange, tintOutputRange),
   }));
 
   const panGesture = Gesture.Pan()
-    // Lebih sensitif: sedikit geser langsung aktif, tidak harus tekan kuat
     .activeOffsetX([-6, 6])
     .failOffsetY([-10, 10])
     .minDistance(4)
     .onStart(() => {
       startX.value = translateX.value;
-      // matikan parallax saat drag biar tidak bentrok & terasa 1:1
       parallaxX.value = withTiming(0, { duration: 120, easing: Easing.out(Easing.quad) });
     })
     .onUpdate((e) => {
       const lowerBound = -(count - 1) * snapInterval;
-      const upperBound = 0;
       let nextX = startX.value + e.translationX;
-      // edge resistance lebih soft biar tidak patah di ujung
-      if (nextX > upperBound) nextX = upperBound + (nextX - upperBound) * 0.45;
+      if (nextX > 0) nextX = nextX * 0.45;
       if (nextX < lowerBound) nextX = lowerBound + (nextX - lowerBound) * 0.45;
       translateX.value = nextX;
     })
@@ -147,17 +109,14 @@ export default function HeroCarousel() {
       const swipedFast = Math.abs(e.velocityX) > 260;
       let next = Math.round(-translateX.value / snapInterval);
       if (dragMoved || swipedFast) {
-        // pakai base dari start biar 1 swipe = 1 card, tidak double
         const base = Math.round(-startX.value / snapInterval);
         next = e.translationX < 0 || e.velocityX < 0 ? base + 1 : base - 1;
       }
       next = Math.max(0, Math.min(next, count - 1));
-      // spring lebih empuk biar tidak kedet/patah
       translateX.value = withSpring(-next * snapInterval, {
         damping: 26,
         stiffness: 190,
         mass: 0.85,
-        overshootClamping: false,
       });
       runOnJS(setActiveIndex)(next);
     });
@@ -165,81 +124,43 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        {/* Background metalik berkilau menyala - shared component dengan halaman concert */}
         <MetallicBackground />
-        {/* Tint aksen poster - smooth interpolateColor mengikuti poster aktif */}
-        <Animated.View style={[StyleSheet.absoluteFill, { opacity: 0.16 }, tintStyle]} pointerEvents="none" />
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.dim]} />
+        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint, tintStyle]} />
 
-        <HomeNavbar />
+        <SafeAreaView style={styles.flex}>
+          <HomeNavbar />
 
-        {/* Searchbar + bahasa di bawah Go fest */}
-        <View style={styles.searchWrap}>
-          <View style={styles.searchBox}>
-            <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-              <Circle cx="11" cy="11" r="7" stroke={MUTED_TEXT} strokeWidth={1.8} />
-              <Path d="M15.5 15.5L20 20" stroke={MUTED_TEXT} strokeWidth={1.8} strokeLinecap="round" />
-            </Svg>
-            <TextInput
-              value={query}
-              onChangeText={setQuery}
-              placeholder={homeT.searchPlaceholder}
-              placeholderTextColor={MUTED_TEXT}
-              style={styles.searchInput}
-              returnKeyType="search"
-              clearButtonMode="while-editing"
-            />
-            {query.length > 0 && (
-              <Pressable onPress={() => setQuery("")} hitSlop={10} style={styles.clearBtn}>
-                <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
-                  <Path d="M6 6l12 12M18 6L6 18" stroke={MUTED_TEXT} strokeWidth={1.8} strokeLinecap="round" />
-                </Svg>
-              </Pressable>
-            )}
+          <View style={styles.stage}>
+            <GestureDetector gesture={panGesture}>
+              <Animated.View style={[styles.carouselWrap, { height: carouselHeight }, parallaxStyle]}>
+                {HERO_EVENTS.map((item, index) => (
+                  <Animated.View
+                    key={item.id}
+                    style={[styles.slot, { left: sidePadding + index * snapInterval, width: cardWidth }]}
+                  >
+                    <HeroCard
+                      event={item}
+                      index={index}
+                      scrollX={translateX}
+                      snapInterval={snapInterval}
+                      cardWidth={cardWidth}
+                    />
+                  </Animated.View>
+                ))}
+              </Animated.View>
+            </GestureDetector>
+
+            <View style={styles.dotsWrap}>
+              <CarouselDots count={count} activeIndex={activeIndex} />
+            </View>
           </View>
 
-          {/* Button ganti bahasa di sebelah kanan search bar — pakai LanguageContext global agar sinkron semua halaman */}
-          <Pressable
-            onPress={() => setLanguage(language === "id" ? "en" : "id")}
-            style={[styles.langBtn, language === "en" && styles.langBtnActive]}
-          >
-            <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
-              <Circle cx="12" cy="12" r="9" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.6} />
-              <Path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.4} strokeLinecap="round" />
-              <Path d="M4.5 8.5h15M4.5 15.5h15" stroke={language === "en" ? "#FFFFFF" : DARK_TEXT} strokeWidth={1.2} strokeLinecap="round" opacity={0.9} />
-            </Svg>
-            <Text style={[styles.langText, language === "en" && styles.langTextActive]}>{language.toUpperCase()}</Text>
-          </Pressable>
-        </View>
-
-        {count === 0 ? (
-          <View style={styles.emptyWrap}>
-            <Text style={styles.emptyText}>{homeT.empty}</Text>
-            <Text style={styles.emptySub}>{homeT.emptySub}</Text>
+          <View style={styles.bottomArea}>
+            <Text style={styles.hint}>{t("home.hint")}</Text>
+            <NewEventBanner onPress={() => router.push("/(tabs)/ticket")} />
           </View>
-        ) : (
-          <GestureDetector gesture={panGesture}>
-            <Animated.View style={[styles.carouselWrap, { height: carouselHeight }, parallaxStyle]}>
-              {filteredEvents.map((item, index) => (
-                <Animated.View
-                  key={item.id}
-                  style={{ position: "absolute", top: 0, bottom: 0, left: sidePadding + index * snapInterval, width: snapInterval, alignItems: "center", justifyContent: "flex-start", paddingTop: 2 }}
-                >
-                  <HeroCard event={item} index={index} scrollX={translateX} snapInterval={snapInterval} cardWidth={cardWidth} />
-                </Animated.View>
-              ))}
-            </Animated.View>
-          </GestureDetector>
-        )}
-
-        <View style={styles.dots}>
-          {filteredEvents.map((_, i) => (
-            <View key={i} style={[styles.dot, i === activeIndex && styles.dotActive]} />
-          ))}
-        </View>
-
-        <View style={styles.hintWrap}>
-          <Text style={styles.hint}>{count === 0 ? " " : homeT.hint}</Text>
-        </View>
+        </SafeAreaView>
       </View>
     </GestureHandlerRootView>
   );
@@ -248,61 +169,20 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1, overflow: "hidden" },
-  searchWrap: { flexDirection: "row", alignItems: "center", gap: 10, paddingHorizontal: 20, marginTop: 16, marginBottom: 20 },
-  searchBox: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1.5,
-    borderColor: "#E2E5EA",
-    borderRadius: 100,
-    paddingHorizontal: 14,
-    height: 44,
-    shadowColor: "#1A2E4D",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  searchInput: { flex: 1, fontSize: 13.5, color: DARK_TEXT, paddingVertical: 0 },
-  clearBtn: { width: 24, height: 24, alignItems: "center", justifyContent: "center" },
-  langBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1.5,
-    borderColor: "#E2E5EA",
-    borderRadius: 100,
-    paddingHorizontal: 12,
-    height: 44,
-    shadowColor: "#1A2E4D",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  langBtnActive: { backgroundColor: "#142C4A", borderColor: "#142C4A" },
-  langText: { fontSize: 12, fontWeight: "800", color: DARK_TEXT, letterSpacing: 0.5 },
-  langTextActive: { color: "#FFFFFF" },
+  dim: { backgroundColor: DIM_COLOR, opacity: DIM_OPACITY },
+  tint: { opacity: TINT_OPACITY },
+  stage: { flex: 1, justifyContent: "center" },
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
-  emptyWrap: { height: 320, alignItems: "center", justifyContent: "center", paddingHorizontal: 20 },
-  emptyText: { fontSize: 14, fontWeight: "700", color: DARK_TEXT, textShadowColor: "rgba(255,255,255,0.9)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 6 },
-  emptySub: { fontSize: 12, color: MUTED_TEXT, marginTop: 4, textShadowColor: "rgba(255,255,255,0.9)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 6 },
-  dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginBottom: 8 },
-  dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#C2C8D0" },
-  dotActive: { width: 18, backgroundColor: gfColors.teal },
-  hintWrap: {
-    alignSelf: "center",
-    marginTop: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 100,
-    backgroundColor: "rgba(255,255,255,0.58)",
-    borderWidth: 1,
-    borderColor: "rgba(200,200,204,0.45)",
+  slot: { position: "absolute", top: 14, alignItems: "center" },
+  dotsWrap: { marginTop: 6 },
+  bottomArea: { paddingHorizontal: 20, alignItems: "center", paddingBottom: 92 },
+  hint: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#4A4A4F",
+    marginBottom: 16,
+    textShadowColor: "rgba(255,255,255,0.55)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
-  hint: { textAlign: "center", fontSize: 11.5, color: MUTED_TEXT, textShadowColor: "rgba(255,255,255,0.95)", textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 4 },
 });

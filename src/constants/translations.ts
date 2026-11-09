@@ -178,7 +178,9 @@ export const translations: Record<Language, Dict> = {
     "tabs.handpicked.sub": "Ditemukan khusus buat selera kamu",
     // Home
     "home.searchPlaceholder": "Cari konser, artis, venue...",
-    "home.hint": "Geser buat lihat event lain",
+    "home.hint": "Ketuk banner untuk lihat info event",
+    "home.newEvent": "Event baru telah hadir!",
+    "home.viewTicketInfo": "Lihat Info Tiket",
     "home.empty": "Tidak ada event ditemukan",
     "home.emptySub": "Coba kata kunci lain",
     // Calendar
@@ -429,7 +431,9 @@ export const translations: Record<Language, Dict> = {
     "tabs.handpicked": "Handpicked events just for you",
     "tabs.handpicked.sub": "Handpicked especially for your taste",
     "home.searchPlaceholder": "Search concerts, artists, venue...",
-    "home.hint": "Swipe to see other events",
+    "home.hint": "Tap the banner to see event info",
+    "home.newEvent": "New event is here!",
+    "home.viewTicketInfo": "View Ticket Info",
     "home.empty": "No events found",
     "home.emptySub": "Try another keyword",
     "calendar.title": "Event Calendar",
