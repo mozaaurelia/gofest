@@ -80,7 +80,7 @@ export default function ProfileScreen() {
           </View>
 
           <Text style={styles.name}>moza</Text>
-          <Text style={styles.email}>moza@loket.com • {t("profile.seeProfile")}</Text>
+          <Text style={styles.email}>moza@gofest.com • {t("profile.seeProfile")}</Text>
 
           {/* Stats seperti contoh Income/Expense — pakai warna app (teal / navy) */}
           <View style={styles.statsCard}>
