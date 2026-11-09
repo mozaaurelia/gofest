@@ -6,11 +6,17 @@ import Svg, { Path } from "react-native-svg";
 export default function HomeNavbar() {
   return (
     <View style={styles.row}>
-      <View style={styles.side}>
+      <Pressable
+        style={({ pressed }) => [styles.side, pressed && styles.sidePressed]}
+        hitSlop={10}
+        accessibilityRole="button"
+        accessibilityLabel="Menu"
+        onPress={() => router.push("/menu")}
+      >
         <Svg viewBox="0 0 24 24" width={28} height={28} fill="none">
           <Path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17" stroke="#FFFFFF" strokeWidth={2.1} strokeLinecap="round" />
         </Svg>
-      </View>
+      </Pressable>
 
       <View style={styles.brandRow}>
         <Text style={styles.brand}>go</Text>
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
     height: 62,
   },
   side: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  sidePressed: { opacity: 0.7 },
   brandRow: { flexDirection: "row", alignItems: "center" },
   brand: {
     fontSize: 29,
