@@ -12,7 +12,6 @@ import {
   PaymentPromoBanner,
   PaymentPromoSection,
   PaymentProtectionCard,
-  PaymentStepper,
   PaymentTimerBar,
 } from "@/components/payment";
 
@@ -53,9 +52,8 @@ export default function PaymentScreen() {
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={[1]}
+        stickyHeaderIndices={[0]}
       >
-        <PaymentStepper />
         <PaymentTimerBar time={formatted} />
 
         <View style={styles.body}>

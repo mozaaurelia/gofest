@@ -1,4 +1,3 @@
-export { default as PaymentStepper } from "./payment-stepper";
 export { default as PaymentTimerBar } from "./payment-timer-bar";
 export { default as PaymentPromoSection } from "./payment-promo-section";
 export { default as PaymentMethodSection } from "./payment-method-section";
