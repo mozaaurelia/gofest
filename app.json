@@ -32,11 +32,19 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Aplikasi membutuhkan akses ke galeri untuk memilih foto profil.",
+          "cameraPermission": "Aplikasi membutuhkan akses ke kamera untuk mengambil foto profil.",
+          "microphonePermission": false
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     }
   }
 }

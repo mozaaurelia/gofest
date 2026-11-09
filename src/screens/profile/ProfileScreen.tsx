@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Svg, { Path, Circle, Rect } from "react-native-svg";
+import Svg, { Path, Circle } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
 import { useSavedTickets } from "@/context/saved-tickets-context";
+import { useProfileAvatar } from "@/context/profile-avatar-context";
 import { LanguageSwitcher } from "@/components/language";
 import { gfColors } from "@/constants/gf-theme";
+import { AvatarSourceModal, MozaAvatarCircle, ProfileAvatarButton } from "@/components/profile/avatar";
 import AccountMenuItem, {
   AboutIcon,
   HelpIcon,
@@ -16,25 +18,6 @@ import AccountMenuItem, {
 } from "@/components/profile/account/AccountMenuItem";
 
 const NAVY = "#142C4A";
-
-function MozaAvatarCircle({ size = 80 }: { size?: number }) {
-  return (
-    <View style={{ width: size, height: size, borderRadius: size / 2, overflow: "hidden", backgroundColor: "#FFF7ED" }}>
-      <Svg viewBox="0 0 80 80" width={size} height={size}>
-        <Rect x={0} y={0} width={80} height={80} rx={40} fill="#FB923C" />
-        <Path d="M24 12 L32 2 L40 12 Z" fill="#FB923C" />
-        <Path d="M48 12 L56 2 L64 12 Z" fill="#FB923C" />
-        <Circle cx={28} cy={38} r={14} fill="#FFFFFF" />
-        <Circle cx={52} cy={38} r={14} fill="#FFFFFF" />
-        <Circle cx={28} cy={42} r={4} fill="#111827" />
-        <Circle cx={52} cy={42} r={4} fill="#111827" />
-        <Circle cx={26} cy={38} r={1.8} fill="#FFFFFF" />
-        <Circle cx={50} cy={38} r={1.8} fill="#FFFFFF" />
-        <Path d="M30 56 Q40 62 50 56" stroke="#111827" strokeWidth={2} fill="none" strokeLinecap="round" />
-      </Svg>
-    </View>
-  );
-}
 
 function QuickAction({ icon, label, onPress }: { icon: React.ReactNode; label: string; onPress?: () => void }) {
   return (
@@ -48,7 +31,23 @@ function QuickAction({ icon, label, onPress }: { icon: React.ReactNode; label: s
 export default function ProfileScreen() {
   const { t } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
+  const [avatarOpen, setAvatarOpen] = useState(false);
   const { savedIds } = useSavedTickets();
+  const { avatarUri, pickFromLibrary, takePhoto, removeAvatar } = useProfileAvatar();
+
+  const handlePickPhoto = async (source: "camera" | "library") => {
+    try {
+      const result = source === "camera" ? await takePhoto() : await pickFromLibrary();
+      if (result.status === "denied") {
+        Alert.alert(
+          t("profile.photoPermissionTitle"),
+          t(source === "camera" ? "profile.photoCameraDenied" : "profile.photoLibraryDenied")
+        );
+      }
+    } catch {
+      Alert.alert(t("profile.photoErrorTitle"), t("profile.photoErrorMessage"));
+    }
+  };
 
   return (
     <View style={styles.root}>
@@ -72,15 +71,12 @@ export default function ProfileScreen() {
         <View style={styles.sheet}>
           {/* Avatar bulat overlapping header */}
           <View style={styles.avatarWrap}>
-            <View style={styles.avatarRing}>
-              <MozaAvatarCircle size={84} />
-            </View>
-            <View style={styles.verifiedBadge}>
-              <Svg viewBox="0 0 24 24" width={12} height={12} fill="none">
-                <Circle cx={12} cy={12} r={10} fill={gfColors.teal} />
-                <Path d="M7 12l3 3 6-6" stroke="#FFFFFF" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-              </Svg>
-            </View>
+            <ProfileAvatarButton
+              uri={avatarUri}
+              size={84}
+              fallback={<MozaAvatarCircle size={84} />}
+              onPress={() => setAvatarOpen(true)}
+            />
           </View>
 
           <Text style={styles.name}>moza</Text>
@@ -137,6 +133,15 @@ export default function ProfileScreen() {
           <View style={{ height: 24 }} />
         </View>
       </ScrollView>
+
+      <AvatarSourceModal
+        visible={avatarOpen}
+        canRemove={!!avatarUri}
+        onClose={() => setAvatarOpen(false)}
+        onCamera={() => handlePickPhoto("camera")}
+        onGallery={() => handlePickPhoto("library")}
+        onRemove={removeAvatar}
+      />
 
       {/* Language modal */}
       <Modal visible={langOpen} transparent animationType="fade" onRequestClose={() => setLangOpen(false)}>
@@ -205,31 +210,6 @@ const styles = StyleSheet.create({
     height: 92,
     alignItems: "center",
     justifyContent: "center",
-  },
-  avatarRing: {
-    width: 92,
-    height: 92,
-    borderRadius: 46,
-    backgroundColor: "#FFFFFF",
-    padding: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-  verifiedBadge: {
-    position: "absolute",
-    bottom: 2,
-    right: 6,
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "#FFFFFF",
   },
   name: { marginTop: 10, fontSize: 17, fontWeight: "800", color: gfColors.text, textAlign: "center" },
   email: { marginTop: 4, fontSize: 12, color: gfColors.textMuted, textAlign: "center" },
