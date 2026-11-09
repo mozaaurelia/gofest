@@ -58,6 +58,10 @@ function routeToTabName(routeName: string): TabName {
 
 function CustomTabBar({ state, navigation }: any) {
   const insets = useSafeAreaInsets();
+  const isHome = routeToTabName(state.routes[state.index]?.name ?? "") === "home";
+
+  // Sembunyikan bottom nav khusus di homepage
+  if (isHome) return null;
 
   return (
     <View style={[styles.wrapper, { paddingBottom: Math.max(insets.bottom, 10) + 8 }]} pointerEvents="box-none">

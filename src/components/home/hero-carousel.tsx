@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
   slot: { position: "absolute", top: 14, alignItems: "center" },
   dotsWrap: { marginTop: 6 },
-  bottomArea: { paddingHorizontal: 20, alignItems: "center", paddingBottom: 92 },
+  bottomArea: { paddingHorizontal: 20, alignItems: "center", paddingBottom: 32 },
   hint: {
     fontSize: 13,
     fontWeight: "600",
