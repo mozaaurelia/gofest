@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { LoketMark } from "./detail-payment-icons";
+import GoFestLogo from "@/components/splash/GoFestLogo";
 
 export default function DetailPaymentBrandFooter() {
   return (
@@ -8,11 +8,14 @@ export default function DetailPaymentBrandFooter() {
       <Text style={styles.title}>Dip Persembahkan oleh</Text>
 
       <View style={styles.logoRow}>
-        <LoketMark size={38} />
-        <Text style={styles.wordmark}>LOKÉT</Text>
+        <GoFestLogo size={34} />
+        <View style={styles.wordmarkRow}>
+          <Text style={styles.wordmarkGo}>go</Text>
+          <Text style={styles.wordmarkFest}>Fest!</Text>
+        </View>
       </View>
 
-      <Text style={styles.copyright}>© 2026 LOKÉT. Hak cipta dilindungi Undang-undang</Text>
+      <Text style={styles.copyright}>© 2026 goFest!. Hak cipta dilindungi Undang-undang</Text>
     </View>
   );
 }
@@ -37,11 +40,21 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 18,
   },
-  wordmark: {
-    fontSize: 28,
+  wordmarkRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  wordmarkGo: {
+    fontSize: 30,
     fontWeight: "900",
-    letterSpacing: 3,
+    letterSpacing: 0.2,
     color: "#142C4A",
+  },
+  wordmarkFest: {
+    fontSize: 30,
+    fontWeight: "900",
+    letterSpacing: 0.2,
+    color: "#2FA8C0",
   },
   copyright: {
     marginTop: 18,

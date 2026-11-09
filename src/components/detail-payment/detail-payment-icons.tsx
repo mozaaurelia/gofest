@@ -71,15 +71,3 @@ export function QrisMark({ size = 44, color = "#111111" }: IconProps) {
   );
 }
 
-export function LoketMark({ size = 38, color = "#142C4A" }: IconProps) {
-  return (
-    <Svg viewBox="0 0 100 100" width={size} height={size}>
-      <Path
-        d="M14 18C14 11.5 18.2 7.2 24.8 7.2H44.6V30.2H60.2V7.2H75.2C81.8 7.2 86 11.5 86 18V75.2C86 81.8 81.8 86 75.2 86H24.8C18.2 86 14 81.8 14 75.2V18Z"
-        fill={color}
-      />
-      <Path d="M44.6 1L44.6 26L53.5 12Z" fill={color} />
-      <Path d="M33.2 18.5V68.8H69V55.2H46.8V18.5H33.2Z" fill="#FFFFFF" />
-    </Svg>
-  );
-}
