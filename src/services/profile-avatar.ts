@@ -1,8 +1,18 @@
 import * as ImagePicker from "expo-image-picker";
 import { Directory, File, Paths } from "expo-file-system";
+import { Platform } from "react-native";
 
-const AVATAR_DIR = new Directory(Paths.document, "profile");
 const AVATAR_PREFIX = "avatar-";
+
+let cachedAvatarDir: Directory | null | undefined;
+
+function getAvatarDir(): Directory | null {
+  if (Platform.OS === "web") return null;
+  if (cachedAvatarDir === undefined) {
+    cachedAvatarDir = new Directory(Paths.document, "profile");
+  }
+  return cachedAvatarDir;
+}
 
 export type AvatarPickResult =
   | { status: "saved"; uri: string }
@@ -10,8 +20,9 @@ export type AvatarPickResult =
   | { status: "denied" };
 
 function avatarFiles(): File[] {
-  if (!AVATAR_DIR.exists) return [];
-  return AVATAR_DIR.list().filter(
+  const avatarDir = getAvatarDir();
+  if (!avatarDir || !avatarDir.exists) return [];
+  return avatarDir.list().filter(
     (entry): entry is File => entry instanceof File && entry.name.startsWith(AVATAR_PREFIX)
   );
 }
@@ -30,11 +41,13 @@ export function removeSavedAvatar(): void {
 }
 
 async function persistAvatar(asset: ImagePicker.ImagePickerAsset): Promise<string> {
-  if (!AVATAR_DIR.exists) AVATAR_DIR.create({ intermediates: true });
+  const avatarDir = getAvatarDir();
+  if (!avatarDir) return asset.uri;
+  if (!avatarDir.exists) avatarDir.create({ intermediates: true });
   removeSavedAvatar();
 
   const extension = asset.uri.match(/\.[a-zA-Z0-9]+$/)?.[0] ?? ".jpg";
-  const destination = new File(AVATAR_DIR, `${AVATAR_PREFIX}${Date.now()}${extension}`);
+  const destination = new File(avatarDir, `${AVATAR_PREFIX}${Date.now()}${extension}`);
   await new File(asset.uri).copy(destination);
 
   return destination.uri;
