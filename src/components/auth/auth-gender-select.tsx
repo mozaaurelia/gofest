@@ -14,7 +14,7 @@ export default function AuthGenderSelect({
   label,
   value,
   onChange,
-  options = ["Laki-Laki", "Wanita"],
+  options = ["Male", "Female"],
 }: AuthGenderSelectProps) {
   return (
     <View style={styles.wrap}>

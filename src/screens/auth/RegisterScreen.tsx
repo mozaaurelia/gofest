@@ -40,35 +40,35 @@ export default function RegisterScreen() {
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>
-          Buat akun baru
+          Create a new account
         </Animated.Text>
         <Animated.Text entering={FadeInDown.duration(500).delay(180)} style={styles.subtitle}>
-          Gabung sekarang, temukan konser favoritmu
+          Join now and find your favorite concerts
         </Animated.Text>
 
         <Animated.View entering={FadeInDown.duration(500).delay(260)} style={styles.form}>
           <View style={styles.nameRow}>
             <View style={styles.nameField}>
-              <AuthInput label="Nama Depan *" icon="user" placeholder="Nama depan" value={firstName} onChangeText={setFirstName} />
+              <AuthInput label="First Name *" icon="user" placeholder="First name" value={firstName} onChangeText={setFirstName} />
             </View>
             <View style={styles.nameField}>
-              <AuthInput label="Nama Belakang" icon="user" placeholder="Nama belakang" value={lastName} onChangeText={setLastName} />
+              <AuthInput label="Last Name" icon="user" placeholder="Last name" value={lastName} onChangeText={setLastName} />
             </View>
           </View>
 
-          <AuthInput label="Email *" icon="mail" placeholder="kamu@email.com" keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
+          <AuthInput label="Email *" icon="mail" placeholder="you@email.com" keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
           <AuthInput label="Password *" icon="lock" isPassword placeholder="Password" value={password} onChangeText={setPassword} />
 
-          <AuthDatePicker label="Tanggal Lahir *" onValueChange={setBirthDate} />
-          <AuthGenderSelect label="Jenis Kelamin *" value={gender} onChange={setGender} />
+          <AuthDatePicker label="Date of Birth *" onValueChange={setBirthDate} />
+          <AuthGenderSelect label="Gender *" value={gender} onChange={setGender} />
 
           <View style={{ marginTop: 4 }}>
-            <AuthButton label="Daftar" onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
+            <AuthButton label="Sign Up" onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
           </View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(340)}>
-          <AuthSwitchLink question="Sudah punya akun?" actionLabel="Masuk di sini" href="/auth/login" />
+          <AuthSwitchLink question="Already have an account?" actionLabel="Sign in here" href="/auth/login" />
         </Animated.View>
       </ScrollView>
     </SafeAreaView>
