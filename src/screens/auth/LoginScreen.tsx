@@ -15,7 +15,11 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const canSubmit = email.includes("@") && email.trim() !== "" && password.trim() !== "";
+  const canSubmit =
+    email.includes("@") &&
+    email.trim() !== "" &&
+    password.trim().length >= 5 &&
+    /[a-zA-Z0-9]/.test(password);
 
   return (
     <SafeAreaView style={styles.safe}>
