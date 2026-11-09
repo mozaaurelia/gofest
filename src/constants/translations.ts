@@ -10,6 +10,12 @@ export const translations: Record<Language, Dict> = {
     "common.en": "EN",
     "common.close": "Tutup",
     "common.languageSubtitle": "Pilih bahasa — akan diterapkan ke semua halaman",
+    // Onboarding
+    "onboarding.merch.title": "Audio, visual, dan suvenir eksklusif",
+    "onboarding.merch.subtitle":
+      "Rasakan gelegar suara dan keajaiban panggung. Temukan merchandise spesial!",
+    "onboarding.back": "Kembali",
+    "onboarding.next": "Lanjut",
     // Detail list (concert page)
     "detail.ticketInfo.title": "Info Penjualan Tiket",
     "detail.ticketInfo.subtitle": "Jadwal & cara pembelian tiket",
@@ -119,6 +125,11 @@ export const translations: Record<Language, Dict> = {
     "common.en": "EN",
     "common.close": "Close",
     "common.languageSubtitle": "Choose language — will be applied to all pages",
+    "onboarding.merch.title": "Audio, visuals, and exclusive souvenirs",
+    "onboarding.merch.subtitle":
+      "Feel the roar of sound and the magic of the stage. Discover special merchandise!",
+    "onboarding.back": "Back",
+    "onboarding.next": "Next",
     "detail.ticketInfo.title": "Ticket Sales Info",
     "detail.ticketInfo.subtitle": "Ticket schedule & how to purchase",
     "detail.seatMap.title": "Seat Map",

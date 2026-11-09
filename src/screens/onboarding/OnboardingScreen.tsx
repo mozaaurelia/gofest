@@ -4,11 +4,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Path } from "react-native-svg";
 import {
   OnboardingActions,
+  OnboardingFooter,
   OnboardingIllustration,
+  OnboardingMerchIllustration,
+  OnboardingTitle,
   OnboardingTransferIllustration,
   OnboardingWave,
   OnboardingProgress,
 } from "@/components/onboarding";
+import { useTranslation } from "@/context/language-context";
 
 type OnboardingStep = 1 | 2 | 3;
 
@@ -24,30 +28,21 @@ function OnboardingBackButton({ onPress }: { onPress: () => void }) {
 
 export default function OnboardingScreen() {
   const [step, setStep] = useState<OnboardingStep>(1);
+  const { t } = useTranslation();
 
   if (step === 1) {
     return (
-      <View style={styles.rootLight}>
-        <SafeAreaView style={styles.safeLight} edges={["top"]}>
-          <OnboardingProgress step={1} variant="light" />
-          <View style={styles.transferIllustWrap}>
-            <OnboardingTransferIllustration />
+      <View style={styles.rootDark}>
+        <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+          <View style={styles.merchIllustWrap}>
+            <OnboardingMerchIllustration />
           </View>
-          <View style={styles.transferTextWrap}>
-            <Text style={styles.transferTitle}>Transfer Your Tickets,</Text>
-            <Text style={styles.transferTitle}>Send to Anyone</Text>
-            <Text style={styles.transferSub}>Spread the joy! Now you can easily send your ticket to friends or family.</Text>
-          </View>
+          <OnboardingTitle
+            title={t("onboarding.merch.title")}
+            subtitle={t("onboarding.merch.subtitle")}
+          />
+          <OnboardingFooter currentStep={1} totalSteps={3} onNext={() => setStep(2)} />
         </SafeAreaView>
-        <OnboardingWave />
-        <View style={styles.bottomLight}>
-          <Pressable onPress={() => setStep(2)} style={({ pressed }) => [styles.arrowBtn, pressed && styles.pressed]}>
-            <Svg viewBox="0 0 24 24" width={20} height={20} fill="none">
-              <Path d="M5 12h14M13 6l6 6-6 6" stroke="#FFFFFF" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-            </Svg>
-          </Pressable>
-          <View style={styles.homeIndicator} />
-        </View>
       </View>
     );
   }
@@ -111,14 +106,7 @@ export default function OnboardingScreen() {
 }
 
 const styles = StyleSheet.create({
-  rootLight: { flex: 1, backgroundColor: "#EAF3FF" },
-  safeLight: { flex: 1, backgroundColor: "#EAF3FF" },
-  transferIllustWrap: { flex: 1, justifyContent: "center", paddingHorizontal: 16, marginTop: 8 },
-  transferTextWrap: { alignItems: "center", paddingHorizontal: 24, paddingBottom: 12, gap: 4 },
-  transferTitle: { fontSize: 22, fontWeight: "800", color: "#1E2E58", textAlign: "center" },
-  transferSub: { fontSize: 12, color: "#6B7683", textAlign: "center", lineHeight: 18, marginTop: 8 },
-  bottomLight: { backgroundColor: "#FFFFFF", alignItems: "center", paddingTop: 20, paddingBottom: 8 },
-  arrowBtn: { width: 52, height: 52, borderRadius: 26, backgroundColor: "#1E4ED8", alignItems: "center", justifyContent: "center" },
+  merchIllustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12, paddingTop: 8 },
   arrowBtnDark: { width: 52, height: 52, borderRadius: 26, backgroundColor: "#1E4ED8", alignItems: "center", justifyContent: "center", alignSelf: "center", marginTop: 16 },
   pressed: { opacity: 0.85 },
   rootDark: { flex: 1, backgroundColor: "#232E58" },
