@@ -41,20 +41,22 @@ export default function OnboardingScreen() {
 
   if (step === 2) {
     return (
-      <View style={styles.rootDark}>
-        <SafeAreaView style={styles.safeDark} edges={["top", "bottom"]}>
+      <View style={styles.rootLight}>
+        <SafeAreaView style={styles.safeLight} edges={["top", "bottom"]}>
           <View style={styles.illustWrap}>
             <OnboardingPaymentIllustration />
           </View>
           <OnboardingTitle
             title={t("onboarding.payment.title")}
             subtitle={t("onboarding.payment.subtitle")}
+            variant="light"
           />
           <OnboardingFooter
             currentStep={2}
             totalSteps={TOTAL_STEPS}
             onBack={() => setStep(1)}
             onNext={() => setStep(3)}
+            variant="light"
           />
         </SafeAreaView>
       </View>
