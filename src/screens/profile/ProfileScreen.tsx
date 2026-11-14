@@ -7,6 +7,7 @@ import { useTranslation } from "@/context/language-context";
 import { useSavedTickets } from "@/context/saved-tickets-context";
 import { useProfileAvatar } from "@/context/profile-avatar-context";
 import { LanguageSwitcher } from "@/components/language";
+import { OnboardingBackground } from "@/components/onboarding";
 import { gfColors } from "@/constants/gf-theme";
 import { AvatarSourceModal, MozaAvatarCircle, ProfileAvatarButton } from "@/components/profile/avatar";
 import AccountMenuItem, {
@@ -52,15 +53,11 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.root}>
-      {/* Header navy seperti contoh — pakai warna NAVY yang sama dengan nav */}
-      <View style={styles.headerBg}>
-        <SafeAreaView edges={["top"]} style={styles.headerSafe}>
-          <Text style={styles.headerTitle}>{t("profile.account")}</Text>
-        </SafeAreaView>
-        {/* dekorasi lingkaran halus biar mirip contoh */}
-        <View style={styles.headerDeco1} />
-        <View style={styles.headerDeco2} />
-      </View>
+      <OnboardingBackground />
+
+      <SafeAreaView edges={["top"]} style={styles.headerSafe}>
+        <Text style={styles.headerTitle}>{t("profile.account")}</Text>
+      </SafeAreaView>
 
       <ScrollView
         style={styles.scroll}
@@ -68,7 +65,7 @@ export default function ProfileScreen() {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Sheet putih rounded seperti contoh */}
+        {/* Sheet transparan agar gradasi background terlihat */}
         <View style={styles.sheet}>
           {/* Avatar bulat overlapping header */}
           <View style={styles.avatarWrap}>
@@ -175,48 +172,19 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: NAVY },
-  headerBg: {
-    height: 180,
-    backgroundColor: NAVY,
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    overflow: "hidden",
-  },
-  headerSafe: { zIndex: 2 },
-  headerTitle: { fontSize: 18, fontWeight: "800", color: "#FFFFFF", marginTop: 6 },
-  headerDeco1: {
-    position: "absolute",
-    top: -40,
-    right: -40,
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: "rgba(255,255,255,0.06)",
-  },
-  headerDeco2: {
-    position: "absolute",
-    top: 20,
-    right: 60,
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: "rgba(255,255,255,0.04)",
-  },
-  scroll: { flex: 1, marginTop: -42 },
+  root: { flex: 1, backgroundColor: "#F4F9F8" },
+  headerSafe: { paddingHorizontal: 22, paddingTop: 10, paddingBottom: 4, zIndex: 2 },
+  headerTitle: { fontSize: 22, fontWeight: "800", color: NAVY, marginTop: 2 },
+  scroll: { flex: 1 },
   content: { paddingBottom: 120 },
   sheet: {
-    backgroundColor: "#FFFFFF",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    paddingTop: 0,
+    paddingTop: 8,
     paddingHorizontal: 16,
     paddingBottom: 16,
-    minHeight: 600,
   },
   avatarWrap: {
     alignSelf: "center",
-    marginTop: -42,
+    marginTop: 4,
     width: 92,
     height: 92,
     alignItems: "center",
