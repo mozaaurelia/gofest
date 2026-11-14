@@ -1,11 +1,23 @@
 import React, { useState } from "react";
-import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
 import { useSavedTickets } from "@/context/saved-tickets-context";
 import { useProfileAvatar } from "@/context/profile-avatar-context";
+import { useProfileName } from "@/context/profile-name-context";
 import { LanguageSwitcher } from "@/components/language";
 import { OnboardingBackground } from "@/components/onboarding";
 import { gfColors } from "@/constants/gf-theme";
@@ -34,8 +46,26 @@ export default function ProfileScreen() {
   const { t } = useTranslation();
   const [langOpen, setLangOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
+  const [nameOpen, setNameOpen] = useState(false);
+  const [draftName, setDraftName] = useState("");
   const { savedIds } = useSavedTickets();
   const { avatarUri, pickFromLibrary, takePhoto, removeAvatar } = useProfileAvatar();
+  const { name, updateName } = useProfileName();
+
+  const openNameEditor = () => {
+    setDraftName(name);
+    setNameOpen(true);
+  };
+
+  const closeNameEditor = () => setNameOpen(false);
+
+  const canSaveName = draftName.trim().length > 0;
+
+  const handleSaveName = () => {
+    if (!canSaveName) return;
+    updateName(draftName);
+    setNameOpen(false);
+  };
 
   const handlePickPhoto = async (source: "camera" | "library") => {
     try {
@@ -77,7 +107,20 @@ export default function ProfileScreen() {
             />
           </View>
 
-          <Text style={styles.name}>moza</Text>
+          <Pressable
+            onPress={openNameEditor}
+            style={({ pressed }) => [styles.nameRow, pressed && styles.nameRowPressed]}
+            accessibilityRole="button"
+            accessibilityLabel={t("profile.editName")}
+          >
+            <Text style={styles.name}>{name}</Text>
+            <View style={styles.nameEditIcon}>
+              <Svg viewBox="0 0 24 24" width={13} height={13} fill="none">
+                <Path d="M4 20h4L18 10a2.83 2.83 0 0 0-4-4L4 16v4Z" stroke={gfColors.teal} strokeWidth={1.9} strokeLinejoin="round" />
+                <Path d="m13.5 6.5 4 4" stroke={gfColors.teal} strokeWidth={1.9} strokeLinecap="round" />
+              </Svg>
+            </View>
+          </Pressable>
           <Text style={styles.email}>moza@gofest.com • {t("profile.seeProfile")}</Text>
 
           {/* Stats seperti contoh Income/Expense — pakai warna app (teal / navy) */}
@@ -151,6 +194,46 @@ export default function ProfileScreen() {
         onRemove={removeAvatar}
       />
 
+      {/* Edit name modal */}
+      <Modal visible={nameOpen} transparent animationType="fade" onRequestClose={closeNameEditor}>
+        <KeyboardAvoidingView
+          style={styles.modalOverlay}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+        >
+          <Pressable style={StyleSheet.absoluteFill} onPress={closeNameEditor} />
+          <View style={styles.modalCard}>
+            <View style={styles.handle} />
+            <Text style={styles.modalTitle}>{t("profile.editName")}</Text>
+            <Text style={styles.modalSub}>{t("profile.editNameSubtitle")}</Text>
+            <Text style={styles.inputLabel}>{t("profile.nameLabel")}</Text>
+            <TextInput
+              value={draftName}
+              onChangeText={setDraftName}
+              placeholder={t("profile.namePlaceholder")}
+              placeholderTextColor={gfColors.textMuted}
+              style={styles.nameInput}
+              autoFocus
+              maxLength={40}
+              returnKeyType="done"
+              onSubmitEditing={handleSaveName}
+            />
+            <View style={styles.modalActions}>
+              <Pressable onPress={closeNameEditor} style={[styles.modalBtn, styles.modalBtnGhost]}>
+                <Text style={styles.modalBtnGhostText}>{t("profile.cancelEditName")}</Text>
+              </Pressable>
+              <Pressable
+                onPress={handleSaveName}
+                disabled={!canSaveName}
+                accessibilityState={{ disabled: !canSaveName }}
+                style={[styles.modalBtn, styles.modalBtnPrimary, !canSaveName && styles.modalBtnDisabled]}
+              >
+                <Text style={styles.modalBtnPrimaryText}>{t("profile.saveName")}</Text>
+              </Pressable>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+
       {/* Language modal */}
       <Modal visible={langOpen} transparent animationType="fade" onRequestClose={() => setLangOpen(false)}>
         <Pressable style={styles.modalOverlay} onPress={() => setLangOpen(false)}>
@@ -190,7 +273,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  name: { marginTop: 10, fontSize: 17, fontWeight: "800", color: gfColors.text, textAlign: "center" },
+  nameRow: {
+    marginTop: 10,
+    alignSelf: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+  },
+  nameRowPressed: { opacity: 0.6 },
+  name: { fontSize: 17, fontWeight: "800", color: gfColors.text, textAlign: "center" },
+  nameEditIcon: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#E6F7FA",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   email: { marginTop: 4, fontSize: 12, color: gfColors.textMuted, textAlign: "center" },
   statsCard: {
     marginTop: 16,
@@ -249,4 +350,23 @@ const styles = StyleSheet.create({
   modalSub: { fontSize: 12, color: gfColors.textMuted, textAlign: "center", marginTop: 4 },
   closeBtn: { marginTop: 16, backgroundColor: gfColors.surface, borderRadius: 10, paddingVertical: 12, alignItems: "center" },
   closeText: { fontSize: 14, fontWeight: "700", color: gfColors.text },
+  inputLabel: { marginTop: 18, marginBottom: 6, fontSize: 12, fontWeight: "700", color: gfColors.text },
+  nameInput: {
+    height: 48,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: "#D3DEE0",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 14,
+    fontSize: 14,
+    fontWeight: "600",
+    color: gfColors.text,
+  },
+  modalActions: { flexDirection: "row", gap: 10, marginTop: 16 },
+  modalBtn: { flex: 1, height: 46, borderRadius: 12, alignItems: "center", justifyContent: "center" },
+  modalBtnGhost: { backgroundColor: gfColors.surface, borderWidth: 1, borderColor: gfColors.border },
+  modalBtnGhostText: { fontSize: 14, fontWeight: "700", color: gfColors.text },
+  modalBtnPrimary: { backgroundColor: gfColors.teal },
+  modalBtnPrimaryText: { fontSize: 14, fontWeight: "800", color: "#FFFFFF" },
+  modalBtnDisabled: { opacity: 0.5 },
 });

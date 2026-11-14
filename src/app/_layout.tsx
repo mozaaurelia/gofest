@@ -5,6 +5,7 @@ import AnimatedSplashScreen from "../components/animated-splash-screen";
 import { SavedTicketsProvider } from "../context/saved-tickets-context";
 import { LanguageProvider } from "../context/language-context";
 import { ProfileAvatarProvider } from "../context/profile-avatar-context";
+import { ProfileNameProvider } from "../context/profile-name-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,8 +20,10 @@ export default function RootLayout() {
     <LanguageProvider>
       <SavedTicketsProvider>
         <ProfileAvatarProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-          {showSplash ? <AnimatedSplashScreen onFinish={() => setShowSplash(false)} /> : null}
+          <ProfileNameProvider>
+            <Stack screenOptions={{ headerShown: false }} />
+            {showSplash ? <AnimatedSplashScreen onFinish={() => setShowSplash(false)} /> : null}
+          </ProfileNameProvider>
         </ProfileAvatarProvider>
       </SavedTicketsProvider>
     </LanguageProvider>
