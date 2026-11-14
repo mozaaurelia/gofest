@@ -39,15 +39,6 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     label: "QR",
     options: [{ id: "qris", label: "QRIS" }],
   },
-  {
-    key: "installment",
-    label: "Installment",
-    options: [
-      { id: "installment-3", label: "3 Bulan" },
-      { id: "installment-6", label: "6 Bulan" },
-      { id: "installment-12", label: "12 Bulan" },
-    ],
-  },
 ];
 
 export const PAYMENT_FEES = {

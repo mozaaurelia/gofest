@@ -16,7 +16,7 @@ import Animated, {
 import { router } from "expo-router";
 import { HERO_EVENTS } from "../../constants/home-data";
 import { useTranslation } from "@/context/language-context";
-import MetallicBackground from "../ui/metallic-background";
+import HomeBackground from "./home-background";
 import CarouselDots from "./carousel-dots";
 import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
@@ -26,9 +26,7 @@ const CARD_WIDTH_RATIO = 0.55;
 const CARD_MAX_WIDTH = 300;
 const CARD_ASPECT = 1.31;
 const CARD_GAP_RATIO = 0.17;
-const DIM_COLOR = "#6E7076";
-const DIM_OPACITY = 0.48;
-const TINT_OPACITY = 0.18;
+const TINT_OPACITY = 0.16;
 
 export default function HeroCarousel() {
   const { width } = useWindowDimensions();
@@ -124,8 +122,7 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        <MetallicBackground />
-        <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.dim]} />
+        <HomeBackground />
         <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint, tintStyle]} />
 
         <SafeAreaView style={styles.flex}>
@@ -169,7 +166,6 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1, overflow: "hidden" },
-  dim: { backgroundColor: DIM_COLOR, opacity: DIM_OPACITY },
   tint: { opacity: TINT_OPACITY },
   stage: { flex: 1, justifyContent: "center" },
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
