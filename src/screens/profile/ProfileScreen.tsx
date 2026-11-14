@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
 import { useSavedTickets } from "@/context/saved-tickets-context";
@@ -84,7 +85,17 @@ export default function ProfileScreen() {
 
           {/* Stats seperti contoh Income/Expense — pakai warna app (teal / navy) */}
           <View style={styles.statsCard}>
-            <View style={styles.statItem}>
+            <Pressable
+              style={({ pressed }) => [styles.statItem, pressed && styles.statItemPressed]}
+              onPress={() =>
+                router.push({
+                  pathname: "/(tabs)/ticket",
+                  params: { tab: "saved" },
+                })
+              }
+              accessibilityRole="button"
+              accessibilityLabel={`${t("tabs.saved")}: ${savedIds.size}`}
+            >
               <View style={[styles.statIconWrap, { backgroundColor: "#E6F7FA" }]}>
                 <Svg viewBox="0 0 24 24" width={16} height={16} fill="none">
                   <Path d="M7 8.5h10v2.6a2.2 2.2 0 0 0 0 4.4v2.6H7v-2.6a2.2 2.2 0 0 0 0-4.4V8.5Z" stroke={gfColors.teal} strokeWidth={1.7} strokeLinejoin="round" />
@@ -92,7 +103,7 @@ export default function ProfileScreen() {
               </View>
               <Text style={styles.statValue}>{savedIds.size}</Text>
               <Text style={styles.statLabel}>{t("tabs.saved")}</Text>
-            </View>
+            </Pressable>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
               <View style={[styles.statIconWrap, { backgroundColor: "#EEF2F7" }]}>
@@ -228,6 +239,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   statItem: { flex: 1, alignItems: "center", gap: 4 },
+  statItemPressed: { opacity: 0.6 },
   statIconWrap: { width: 32, height: 32, borderRadius: 16, alignItems: "center", justifyContent: "center" },
   statValue: { fontSize: 16, fontWeight: "800", color: gfColors.text },
   statLabel: { fontSize: 11, color: gfColors.textMuted, fontWeight: "600" },

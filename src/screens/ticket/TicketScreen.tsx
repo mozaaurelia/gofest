@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router, useLocalSearchParams } from "expo-router";
 import { gfColors } from "@/constants/gf-theme";
 import { CALENDAR_EVENTS, CalendarEvent } from "@/constants/calendar-data";
 import { CONCERT_DETAILS } from "@/constants/concert-detail-data";
@@ -14,7 +15,8 @@ import TicketEmptyState from "./components/TicketEmptyState";
 import { PURCHASED, concertToCalendarEvent } from "./utils";
 
 export default function TicketScreen() {
-  const [activeTab, setActiveTab] = useState<TicketTabKey>("purchased");
+  const { tab } = useLocalSearchParams<{ tab?: string }>();
+  const activeTab: TicketTabKey = tab === "saved" ? "saved" : "purchased";
   const { savedIds } = useSavedTickets();
   const { t } = useTranslation();
 
@@ -41,7 +43,7 @@ export default function TicketScreen() {
       <TicketHeader />
 
       {/* keep tabs even when empty — so user can switch Dibeli/Disimpan */}
-      <TicketTabs activeTab={activeTab} onChange={setActiveTab} />
+      <TicketTabs activeTab={activeTab} onChange={(next) => router.setParams({ tab: next })} />
 
       {isEmpty ? (
         <View style={styles.emptyContainer}>
