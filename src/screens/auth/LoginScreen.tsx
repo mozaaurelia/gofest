@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import TicketIcon from "@/components/ticket-icon";
-import AuthGlowBg from "@/components/auth/auth-glow-bg";
+import { OnboardingBackground } from "@/components/onboarding";
 import AuthInput from "@/components/auth/auth-input";
 import AuthButton from "@/components/auth/auth-button";
 import AuthSwitchLink from "@/components/auth/auth-switch-link";
@@ -25,7 +25,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <AuthGlowBg />
+      <OnboardingBackground />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View entering={FadeInDown.duration(500).delay(50)} style={styles.logoRow}>
           <TicketIcon size={30} />
@@ -72,7 +72,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: gfColors.bg },
+  safe: { flex: 1, backgroundColor: "#F4F9F8" },
   content: { flexGrow: 1, justifyContent: "center", paddingHorizontal: 28, paddingVertical: 40 },
   logoRow: { flexDirection: "row", alignItems: "center", gap: 8, alignSelf: "center", marginBottom: 28 },
   wordmark: { fontSize: 20, fontWeight: "800", color: gfColors.text },

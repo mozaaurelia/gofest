@@ -1,3 +1,4 @@
+export { default as OnboardingBackground } from "./onboarding-background";
 export { default as OnboardingMerchIllustration } from "./onboarding-merch-illustration";
 export { default as OnboardingPaymentIllustration } from "./onboarding-payment-illustration";
 export { default as OnboardingLiveEventIllustration } from "./onboarding-live-event-illustration";

@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
   label: { fontSize: 12.5, fontWeight: "700", color: gfColors.text, marginBottom: 6 },
   row: {
     flexDirection: "row", alignItems: "center", gap: 6,
-    borderRadius: 14, borderWidth: 1.5, borderColor: gfColors.border,
-    backgroundColor: gfColors.surface, paddingHorizontal: 14, height: 50,
+    borderRadius: 14, borderWidth: 1.5, borderColor: "#D3DEE0",
+    backgroundColor: "#FFFFFF", paddingHorizontal: 14, height: 50,
   },
   rowFocused: { borderColor: gfColors.teal },
   input: { fontSize: 13.5, color: gfColors.text, paddingVertical: 0 },
