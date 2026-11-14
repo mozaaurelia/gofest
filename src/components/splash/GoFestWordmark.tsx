@@ -8,7 +8,7 @@ type Props = {
 export default function GoFestWordmark({ size = 34 }: Props) {
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.text, { fontSize: size, letterSpacing: -0.5 }]}>Go fest!</Text>
+      <Text style={[styles.text, { fontSize: size, letterSpacing: -0.5 }]}>goFest!</Text>
     </View>
   );
 }

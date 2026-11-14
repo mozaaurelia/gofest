@@ -38,7 +38,7 @@ export default function RegisterScreen() {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View entering={FadeInDown.duration(500).delay(50)} style={styles.logoRow}>
           <TicketIcon size={30} />
-          <Text style={styles.wordmark}>Go fest!</Text>
+          <Text style={styles.wordmark}>goFest!</Text>
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>

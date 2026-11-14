@@ -14,6 +14,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#EFF1F3", // match referensi light grey Go fest!
+    backgroundColor: "#EFF1F3", // match referensi light grey goFest!
   },
 });
