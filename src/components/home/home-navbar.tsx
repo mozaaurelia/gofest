@@ -1,7 +1,12 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Defs, LinearGradient, Path, Stop, Text as SvgText } from "react-native-svg";
+
+const BRAND_FONT = Platform.select({
+  web: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+  default: undefined,
+});
 
 export default function HomeNavbar() {
   return (
@@ -19,8 +24,27 @@ export default function HomeNavbar() {
       </Pressable>
 
       <View style={styles.brandRow}>
-        <Text style={styles.brand}>go</Text>
-        <Text style={[styles.brand, styles.brandAccent]}>Fest!</Text>
+        <Svg width={116} height={36} viewBox="0 0 116 36">
+          <Defs>
+            <LinearGradient id="gofestBrand" x1="0" y1="0" x2="1" y2="0">
+              <Stop offset="0" stopColor="#2FA8C0" />
+              <Stop offset="0.55" stopColor="#5CC6A8" />
+              <Stop offset="1" stopColor="#8FD14F" />
+            </LinearGradient>
+          </Defs>
+          <SvgText
+            x="58"
+            y="27"
+            textAnchor="middle"
+            fontFamily={BRAND_FONT}
+            fontSize={29}
+            fontWeight="900"
+            letterSpacing={0.2}
+            fill="url(#gofestBrand)"
+          >
+            goFest!
+          </SvgText>
+        </Svg>
       </View>
 
       <Pressable
@@ -57,18 +81,5 @@ const styles = StyleSheet.create({
   side: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   sidePressed: { opacity: 0.7 },
   brandRow: { flexDirection: "row", alignItems: "center" },
-  brand: {
-    fontSize: 29,
-    fontWeight: "900",
-    letterSpacing: 0.2,
-    color: "#FFFFFF",
-    textShadowColor: "rgba(20,35,58,0.3)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 8,
-  },
-  brandAccent: {
-    color: "#8E949D",
-    textShadowColor: "rgba(20,35,58,0.25)",
-  },
   ticketTilt: { transform: [{ rotate: "-8deg" }] },
 });
