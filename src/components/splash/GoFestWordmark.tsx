@@ -5,10 +5,10 @@ type Props = {
   size?: number;
 };
 
-export default function GoFestWordmark({ size = 34 }: Props) {
+export default function GoFestWordmark({ size = 66 }: Props) {
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.text, { fontSize: size, letterSpacing: -0.5 }]}>goFest!</Text>
+      <Text style={[styles.text, { fontSize: size, letterSpacing: size * -0.03 }]}>Gofest</Text>
     </View>
   );
 }
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    fontWeight: "900",
-    color: "#14233A",
+    fontWeight: "800",
+    color: "#0F1B2E",
     textAlign: "center",
     includeFontPadding: false,
   },

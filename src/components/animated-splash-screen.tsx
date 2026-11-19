@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import GoFestLogo from "./splash/GoFestLogo";
 import GoFestWordmark from "./splash/GoFestWordmark";
@@ -11,8 +11,13 @@ type AnimatedSplashScreenProps = {
 };
 
 export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenProps) {
+  const { width } = useWindowDimensions();
   const { bgOpacity, logoOpacity, logoScale, wordmarkOpacity, wordmarkTranslateY, exitOpacity, exitScale } =
     useGoFestSplashAnimation(onFinish);
+
+  const markSize = Math.min(96, Math.max(64, width * 0.25));
+  const wordmarkSize = Math.round(markSize * 0.72);
+  const gap = Math.round(markSize * 0.18);
 
   const containerStyle = useAnimatedStyle(() => ({
     opacity: bgOpacity.value * exitOpacity.value,
@@ -31,13 +36,15 @@ export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenP
   return (
     <Animated.View style={[styles.root, containerStyle]}>
       <GoFestSplashBackground>
-        <Animated.View style={[styles.logoWrap, logoStyle]}>
-          <GoFestLogo size={78} />
-        </Animated.View>
+        <View style={[styles.lockup, { gap }]}>
+          <Animated.View style={logoStyle}>
+            <GoFestLogo size={markSize} />
+          </Animated.View>
 
-        <Animated.View style={[styles.wordmarkWrap, wordmarkStyle]}>
-          <GoFestWordmark size={36} />
-        </Animated.View>
+          <Animated.View style={wordmarkStyle}>
+            <GoFestWordmark size={wordmarkSize} />
+          </Animated.View>
+        </View>
       </GoFestSplashBackground>
     </Animated.View>
   );
@@ -49,12 +56,9 @@ const styles = StyleSheet.create({
     zIndex: 999,
     elevation: 999,
   },
-  logoWrap: {
+  lockup: {
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-  },
-  wordmarkWrap: {
-    marginTop: 18,
-    alignItems: "center",
   },
 });
