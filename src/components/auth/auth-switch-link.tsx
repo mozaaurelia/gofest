@@ -18,5 +18,5 @@ export default function AuthSwitchLink({ question, actionLabel, href }: AuthSwit
 const styles = StyleSheet.create({
   wrap: { alignItems: "center", marginTop: 20 },
   question: { fontSize: 12.5, color: gfColors.textMuted },
-  action: { fontWeight: "700", color: gfColors.teal },
+  action: { fontWeight: "700", color: gfColors.brandBlue },
 });

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import TicketIcon from "@/components/ticket-icon";
+import { GoFestLogo, GoFestWordmark } from "@/components/splash";
 import { OnboardingBackground } from "@/components/onboarding";
 import AuthInput from "@/components/auth/auth-input";
 import AuthButton from "@/components/auth/auth-button";
@@ -28,8 +28,8 @@ export default function LoginScreen() {
       <OnboardingBackground />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View entering={FadeInDown.duration(500).delay(50)} style={styles.logoRow}>
-          <TicketIcon size={30} />
-          <Text style={styles.wordmark}>goFest!</Text>
+          <GoFestLogo size={40} />
+          <GoFestWordmark size={26} />
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>
@@ -74,10 +74,9 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#F4F9F8" },
   content: { flexGrow: 1, justifyContent: "center", paddingHorizontal: 28, paddingVertical: 40 },
-  logoRow: { flexDirection: "row", alignItems: "center", gap: 8, alignSelf: "center", marginBottom: 28 },
-  wordmark: { fontSize: 20, fontWeight: "800", color: gfColors.text },
+  logoRow: { flexDirection: "row", alignItems: "center", gap: 10, alignSelf: "center", marginBottom: 28 },
   title: { fontSize: 24, fontWeight: "800", color: gfColors.text, textAlign: "center" },
   subtitle: { fontSize: 13, color: gfColors.textMuted, textAlign: "center", marginTop: 6, marginBottom: 28 },
   form: {},
-  forgot: { alignSelf: "flex-end", fontSize: 12, fontWeight: "600", color: gfColors.teal, marginBottom: 20, marginTop: -4 },
+  forgot: { alignSelf: "flex-end", fontSize: 12, fontWeight: "600", color: gfColors.brandBlue, marginBottom: 20, marginTop: -4 },
 });

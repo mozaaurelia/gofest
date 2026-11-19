@@ -19,7 +19,7 @@ export default function AuthPhoneInput({ label, countryCode = "+62", ...rest }: 
           <Text style={[styles.countryCode, focused && styles.countryCodeFocused]}>{countryCode}</Text>
         </View>
         <View style={styles.divider} />
-        <IconGlyph color={focused ? gfColors.teal : gfColors.textMuted} />
+        <IconGlyph color={focused ? gfColors.brandBlue : gfColors.textMuted} />
         <TextInput
           {...rest}
           placeholderTextColor={gfColors.textMuted}
@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
     borderRadius: 14, borderWidth: 1.5, borderColor: gfColors.border,
     backgroundColor: gfColors.surface, paddingHorizontal: 12, height: 50,
   },
-  rowFocused: { borderColor: gfColors.teal },
+  rowFocused: { borderColor: gfColors.brandBlue },
   countryCodeBox: {
     borderRightWidth: 1, borderRightColor: gfColors.border,
     paddingRight: 10, height: "100%", justifyContent: "center",
   },
   countryCode: { fontSize: 13.5, fontWeight: "700", color: gfColors.textMuted },
-  countryCodeFocused: { color: gfColors.teal },
+  countryCodeFocused: { color: gfColors.brandBlue },
   divider: { width: 1 },
   input: { flex: 1, fontSize: 13.5, color: gfColors.text },
 });

@@ -17,7 +17,7 @@ export default function AuthInput({ label, icon, isPassword, ...rest }: AuthInpu
     <View style={styles.wrap}>
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.row, focused && styles.rowFocused]}>
-        <IconGlyph name={icon} color={focused ? gfColors.teal : gfColors.textMuted} />
+        <IconGlyph name={icon} color={focused ? gfColors.brandBlue : gfColors.textMuted} />
         <TextInput
           {...rest}
           secureTextEntry={secure}
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
   label: { fontSize: 12.5, fontWeight: "700", color: gfColors.text, marginBottom: 6 },
   row: {
     flexDirection: "row", alignItems: "center", gap: 10,
-    borderRadius: 14, borderWidth: 1.5, borderColor: "#D3DEE0",
+    borderRadius: 14, borderWidth: 1.5, borderColor: "#D6E4F5",
     backgroundColor: "#FFFFFF", paddingHorizontal: 14, height: 50,
   },
-  rowFocused: { borderColor: gfColors.teal },
+  rowFocused: { borderColor: gfColors.brandBlue },
   input: { flex: 1, fontSize: 13.5, color: gfColors.text },
 });

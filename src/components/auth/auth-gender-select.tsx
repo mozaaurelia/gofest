@@ -35,7 +35,7 @@ export default function AuthGenderSelect({
           const selected = option.value === value;
           return (
             <Pressable key={option.value} onPress={() => onChange(option.value)} style={styles.option} hitSlop={6}>
-              <RadioIcon selected={selected} color={selected ? gfColors.teal : gfColors.textMuted} />
+              <RadioIcon selected={selected} color={selected ? gfColors.brandBlue : gfColors.textMuted} />
               <Text style={[styles.optionText, selected && styles.optionTextSelected]}>{option.label}</Text>
             </Pressable>
           );
