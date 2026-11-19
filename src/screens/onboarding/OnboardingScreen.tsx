@@ -3,7 +3,6 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import {
-  OnboardingBackground,
   OnboardingCta,
   OnboardingFooter,
   OnboardingLiveEventIllustration,
@@ -12,6 +11,7 @@ import {
   OnboardingTitle,
   OnboardingVipIllustration,
 } from "@/components/onboarding";
+import BlueMetallicBackground from "@/components/ui/blue-metallic-background";
 import { useTranslation } from "@/context/language-context";
 
 type OnboardingStep = 1 | 2 | 3 | 4;
@@ -24,7 +24,7 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.root}>
-      <OnboardingBackground />
+      <BlueMetallicBackground />
 
       <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
         {step === 1 && (
@@ -106,7 +106,7 @@ export default function OnboardingScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: "#F4F9F8" },
+  root: { flex: 1, backgroundColor: "#8FB8F5" },
   safe: { flex: 1 },
   illustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
 });
