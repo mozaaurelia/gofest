@@ -24,5 +24,5 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, lineHeight: 33, fontWeight: "800", color: "#FFFFFF", textAlign: "center", letterSpacing: 0.2 },
   titleLight: { color: gfColors.text },
   subtitle: { fontSize: 14, lineHeight: 21, color: "rgba(255,255,255,0.72)", textAlign: "center", marginTop: 10 },
-  subtitleLight: { color: gfColors.textMuted },
+  subtitleLight: { color: "rgba(15,27,46,0.72)" },
 });

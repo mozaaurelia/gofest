@@ -34,7 +34,7 @@ export default function OnboardingDots({ total, activeStep, variant = "dark" }: 
 const styles = StyleSheet.create({
   wrap: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8 },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "rgba(255,255,255,0.32)" },
-  dotLight: { backgroundColor: "rgba(27,34,45,0.18)" },
+  dotLight: { backgroundColor: "rgba(255,255,255,0.7)" },
   dotActive: { width: 8, height: 8, borderRadius: 4, backgroundColor: gfColors.lime },
-  dotActiveLight: { backgroundColor: gfColors.teal },
+  dotActiveLight: { width: 18, height: 8, borderRadius: 4, backgroundColor: "#0F1B2E" },
 });

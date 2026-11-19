@@ -1,7 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import OnboardingDots from "./onboarding-dots";
 
@@ -43,7 +42,7 @@ export default function OnboardingFooter({ currentStep, totalSteps, onBack, onNe
       <Pressable onPress={onNext} accessibilityRole="button" accessibilityLabel={t("onboarding.next")}>
         {({ pressed }) => (
           <LinearGradient
-            colors={[gfColors.teal, gfColors.lime]}
+            colors={["#2374F0", "#1263E4"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={[styles.nextBtn, pressed && styles.pressed]}
@@ -75,10 +74,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  backBtnLight: { borderColor: "rgba(27,34,45,0.35)" },
+  backBtnLight: { borderColor: "rgba(255,255,255,0.85)", backgroundColor: "rgba(255,255,255,0.32)" },
   backBtnDisabled: { opacity: 0.4 },
   backText: { fontSize: 12, fontWeight: "700", letterSpacing: 1, color: "#FFFFFF", textTransform: "uppercase" },
-  backTextLight: { color: gfColors.text },
+  backTextLight: { color: "#0F1B2E" },
   dots: { flex: 1, alignItems: "center" },
   nextBtn: {
     minWidth: 108,
@@ -87,7 +86,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#1263E4",
+    shadowOpacity: 0.35,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5,
   },
-  nextText: { fontSize: 12, fontWeight: "800", letterSpacing: 1, color: "#10151D", textTransform: "uppercase" },
+  nextText: { fontSize: 12, fontWeight: "800", letterSpacing: 1, color: "#FFFFFF", textTransform: "uppercase" },
   pressed: { opacity: 0.85 },
 });

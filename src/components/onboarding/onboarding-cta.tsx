@@ -1,7 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   primaryLabel: string;
@@ -25,7 +24,7 @@ export default function OnboardingCta({
       <Pressable onPress={onPrimaryPress} accessibilityRole="button" accessibilityLabel={primaryLabel}>
         {({ pressed }) => (
           <LinearGradient
-            colors={[gfColors.teal, gfColors.lime]}
+            colors={["#2374F0", "#1263E4"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={[styles.primaryBtn, pressed && styles.pressed]}
@@ -49,10 +48,20 @@ export default function OnboardingCta({
 
 const styles = StyleSheet.create({
   wrap: { paddingHorizontal: 20, paddingTop: 18, paddingBottom: 12, gap: 4 },
-  primaryBtn: { height: 52, borderRadius: 14, alignItems: "center", justifyContent: "center" },
-  primaryText: { fontSize: 15, fontWeight: "700", color: "#10151D" },
+  primaryBtn: {
+    height: 52,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#1263E4",
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 6,
+  },
+  primaryText: { fontSize: 15, fontWeight: "700", color: "#FFFFFF" },
   secondaryBtn: { paddingVertical: 14, alignItems: "center" },
   secondaryText: { fontSize: 14, fontWeight: "600", color: "rgba(255,255,255,0.85)" },
-  secondaryTextLight: { color: gfColors.textMuted },
+  secondaryTextLight: { color: "rgba(15,27,46,0.72)" },
   pressed: { opacity: 0.85 },
 });
