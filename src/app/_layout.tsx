@@ -31,6 +31,7 @@ function RootNavigator() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="menu" />
         <Stack.Screen name="calendar" />
+        <Stack.Screen name="profile-info" />
         <Stack.Screen name="concert/[id]" />
         <Stack.Screen name="payment/[id]" />
         <Stack.Screen name="detail-payment/[id]" />

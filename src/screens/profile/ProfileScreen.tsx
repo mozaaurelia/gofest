@@ -168,8 +168,8 @@ export default function ProfileScreen() {
           {/* 4 quick actions seperti contoh Top up etc — pakai warna app */}
           <View style={styles.qaGrid}>
             <QuickAction icon={<LanguageIcon />} label={t("profile.language")} onPress={() => setLangOpen(true)} />
-            <QuickAction icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), t("profile.helpCenterBody"))} />
-            <QuickAction icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), t("profile.aboutBody"))} />
+            <QuickAction icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "help" } })} />
+            <QuickAction icon={<AboutIcon />} label={t("profile.about")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "about" } })} />
             <QuickAction icon={<RatingIcon />} label={t("profile.giveRating")} onPress={() => Alert.alert(t("profile.giveRating"), "v1.13.7")} />
           </View>
 
@@ -178,13 +178,13 @@ export default function ProfileScreen() {
           <View style={styles.generalCard}>
             <AccountMenuItem icon={<LanguageIcon />} label={t("profile.language")} onPress={() => setLangOpen(true)} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => Alert.alert(t("profile.helpCenter"), t("profile.helpCenterBody"))} />
+            <AccountMenuItem icon={<HelpIcon />} label={t("profile.helpCenter")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "help" } })} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<AboutIcon />} label={t("profile.about")} onPress={() => Alert.alert(t("profile.about"), t("profile.aboutBody"))} />
+            <AccountMenuItem icon={<AboutIcon />} label={t("profile.about")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "about" } })} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<TermsIcon />} label={t("profile.terms")} onPress={() => Alert.alert(t("profile.terms"), t("profile.termsBody"))} />
+            <AccountMenuItem icon={<TermsIcon />} label={t("profile.terms")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "terms" } })} />
             <View style={styles.divider} />
-            <AccountMenuItem icon={<PrivacyIcon />} label={t("profile.privacy")} onPress={() => Alert.alert(t("profile.privacy"), t("profile.privacyBody"))} />
+            <AccountMenuItem icon={<PrivacyIcon />} label={t("profile.privacy")} onPress={() => router.push({ pathname: "/profile-info", params: { type: "privacy" } })} />
             <View style={styles.divider} />
             <AccountMenuItem icon={<RatingIcon />} label={t("profile.giveRating")} value="v1.13.7" onPress={() => Alert.alert(t("profile.giveRating"), "v1.13.7")} />
             <View style={styles.divider} />
@@ -265,7 +265,7 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: "#F4F9F8" },
+  root: { flex: 1, backgroundColor: gfColors.bg },
   headerSafe: { paddingHorizontal: 22, paddingTop: 10, paddingBottom: 4, zIndex: 2 },
   headerTitle: { fontSize: 22, fontWeight: "800", color: NAVY, marginTop: 2 },
   scroll: { flex: 1 },

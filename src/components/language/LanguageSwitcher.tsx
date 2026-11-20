@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   btnActive: {
-    backgroundColor: gfColors.teal,
+    backgroundColor: gfColors.brandBlue,
   },
   btnText: {
     fontSize: 12,

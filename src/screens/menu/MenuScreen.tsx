@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useTranslation } from "@/context/language-context";
@@ -50,7 +50,7 @@ export default function MenuScreen() {
       key: "help",
       icon: <HelpMenuIcon />,
       label: t("profile.helpCenter"),
-      onPress: () => Alert.alert(t("profile.helpCenter"), t("profile.helpCenterBody")),
+      onPress: () => router.push({ pathname: "/profile-info", params: { type: "help" } }),
     },
   ];
 
@@ -75,7 +75,7 @@ export default function MenuScreen() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#EDEEF0",
+    backgroundColor: "#F7FBFF",
   },
   flex: {
     flex: 1,

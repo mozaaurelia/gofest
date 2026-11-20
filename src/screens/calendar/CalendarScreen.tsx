@@ -7,7 +7,6 @@ import MonthGrid from "@/components/calendar/month-grid";
 import DayEventsPanel from "@/components/calendar/day-events-panel";
 import BottomNav from "@/components/home/bottom-nav";
 import { getEventsForDate } from "@/constants/calendar-data";
-import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { MONTH_SHORT_KEYS } from "@/utils/date-labels";
 import { OnboardingBackground } from "@/components/onboarding";
@@ -51,7 +50,7 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: gfColors.bg },
+  safe: { flex: 1, backgroundColor: "#F7FBFF" },
   gridScroll: { flex: 1 },
   gridScrollContent: { flexGrow: 1, paddingBottom: 120 },
 });
