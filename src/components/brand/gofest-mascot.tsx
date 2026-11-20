@@ -13,14 +13,17 @@ const PINK = "#FF7D96";
 const BLUSH = "#FF9DB4";
 
 export type MascotVariant = "female" | "male";
+export type MascotMood = "happy" | "sad";
 
 type ArtProps = {
   variant?: MascotVariant;
+  mood?: MascotMood;
   transform?: string;
 };
 
-export function MascotArt({ variant = "male", transform }: ArtProps) {
+export function MascotArt({ variant = "male", mood = "happy", transform }: ArtProps) {
   const isFemale = variant === "female";
+  const isSad = mood === "sad";
 
   return (
     <G transform={transform}>
@@ -66,13 +69,31 @@ export function MascotArt({ variant = "male", transform }: ArtProps) {
       <Circle cx={100.5} cy={58} r={2.3} fill={WHITE} />
 
       {/* brows */}
-      <Path d="M53 47 Q59 43 65 46" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
-      <Path d="M95 46 Q101 43 107 47" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
+      {isSad ? (
+        <>
+          <Path d="M53 49 Q59 43 66 44" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
+          <Path d="M94 44 Q101 43 107 49" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <Path d="M53 47 Q59 43 65 46" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
+          <Path d="M95 46 Q101 43 107 47" stroke={BELLY} strokeWidth={4} fill="none" strokeLinecap="round" />
+        </>
+      )}
 
       {/* nose + mouth */}
       <Ellipse cx={80} cy={73} rx={8.5} ry={6.5} fill={OUTLINE} />
-      <Path d="M66 80 Q80 97 94 80 Q80 87 66 80 Z" fill={OUTLINE} />
-      <Ellipse cx={80} cy={88} rx={8} ry={4.5} fill={PINK} />
+      {isSad ? (
+        <Path d="M67 87 Q80 74 93 87" stroke={OUTLINE} strokeWidth={4} fill="none" strokeLinecap="round" />
+      ) : (
+        <>
+          <Path d="M66 80 Q80 97 94 80 Q80 87 66 80 Z" fill={OUTLINE} />
+          <Ellipse cx={80} cy={88} rx={8} ry={4.5} fill={PINK} />
+        </>
+      )}
+      {isSad ? (
+        <Path d="M101 69 C96 76 96 80 101 83 C106 80 106 76 101 69 Z" fill="#8FD8FF" stroke={WHITE} strokeWidth={1} />
+      ) : null}
 
       {/* whiskers */}
       <Path d="M40 76 L52 74 M38 84 L52 84 M41 92 L53 90" stroke={OUTLINE} strokeWidth={2.5} strokeLinecap="round" />
@@ -89,49 +110,67 @@ export function MascotArt({ variant = "male", transform }: ArtProps) {
       <Rect x={126} y={46} width={15} height={30} rx={7.5} fill={gfColors.brandBlueLight} />
       <Path d="M136 50 Q138 58 136 68" stroke={WHITE} strokeWidth={2.5} fill="none" strokeLinecap="round" opacity={0.55} />
 
-      {/* waving arm + paw */}
-      <Rect
-        x={24.5}
-        y={86}
-        width={15}
-        height={46}
-        rx={7.5}
-        fill={FUR}
-        stroke={OUTLINE}
-        strokeWidth={4}
-        transform="rotate(-34 32 109)"
-      />
-      <Circle cx={18} cy={88} r={13.5} fill={FUR} stroke={OUTLINE} strokeWidth={4} />
-      <Ellipse cx={18} cy={92} rx={7} ry={5.5} fill={BELLY} />
-      <Circle cx={8} cy={80} r={2.6} fill={BELLY} />
-      <Circle cx={15} cy={76} r={2.8} fill={BELLY} />
-      <Circle cx={22} cy={80} r={2.6} fill={BELLY} />
+      {/* left arm and paw */}
+      {isSad ? (
+        <>
+          <Rect
+            x={31}
+            y={101}
+            width={14}
+            height={39}
+            rx={7}
+            fill={FUR}
+            stroke={OUTLINE}
+            strokeWidth={4}
+            transform="rotate(14 38 120.5)"
+          />
+          <Circle cx={29} cy={145} r={13.5} fill={FUR} stroke={OUTLINE} strokeWidth={4} />
+          <Ellipse cx={29} cy={149} rx={7} ry={5.5} fill={BELLY} />
+        </>
+      ) : (
+        <>
+          <Rect
+            x={24.5}
+            y={86}
+            width={15}
+            height={46}
+            rx={7.5}
+            fill={FUR}
+            stroke={OUTLINE}
+            strokeWidth={4}
+            transform="rotate(-34 32 109)"
+          />
+          <Circle cx={18} cy={88} r={13.5} fill={FUR} stroke={OUTLINE} strokeWidth={4} />
+          <Ellipse cx={18} cy={92} rx={7} ry={5.5} fill={BELLY} />
+          <Circle cx={8} cy={80} r={2.6} fill={BELLY} />
+          <Circle cx={15} cy={76} r={2.8} fill={BELLY} />
+          <Circle cx={22} cy={80} r={2.6} fill={BELLY} />
 
-      {/* wristband */}
-      <Rect
-        x={16.5}
-        y={93}
-        width={18}
-        height={9}
-        rx={4.5}
-        fill={WHITE}
-        stroke={OUTLINE}
-        strokeWidth={3}
-        transform="rotate(-34 25.5 97.5)"
-      />
-      <Rect x={20} y={94.5} width={4} height={6} rx={1.5} fill={BLUE} transform="rotate(-34 25.5 97.5)" />
-      <Rect x={27} y={94.5} width={4} height={6} rx={1.5} fill={BLUE} transform="rotate(-34 25.5 97.5)" />
+          <Rect
+            x={16.5}
+            y={93}
+            width={18}
+            height={9}
+            rx={4.5}
+            fill={WHITE}
+            stroke={OUTLINE}
+            strokeWidth={3}
+            transform="rotate(-34 25.5 97.5)"
+          />
+          <Rect x={20} y={94.5} width={4} height={6} rx={1.5} fill={BLUE} transform="rotate(-34 25.5 97.5)" />
+          <Rect x={27} y={94.5} width={4} height={6} rx={1.5} fill={BLUE} transform="rotate(-34 25.5 97.5)" />
 
-      {/* motion lines */}
-      <Path
-        d="M6 62 L12 68 M10 54 L15 61 M20 50 L22 58"
-        stroke={OUTLINE}
-        strokeWidth={3}
-        strokeLinecap="round"
-        opacity={0.4}
-      />
+          <Path
+            d="M6 62 L12 68 M10 54 L15 61 M20 50 L22 58"
+            stroke={OUTLINE}
+            strokeWidth={3}
+            strokeLinecap="round"
+            opacity={0.4}
+          />
+        </>
+      )}
 
-      {/* right arm + ticket */}
+      {/* right arm and optional ticket */}
       <Rect
         x={112}
         y={116}
@@ -145,13 +184,15 @@ export function MascotArt({ variant = "male", transform }: ArtProps) {
       />
       <Circle cx={128} cy={158} r={12} fill={FUR} stroke={OUTLINE} strokeWidth={4} />
       <Ellipse cx={128} cy={160} rx={6} ry={4.5} fill={BELLY} />
-      <G transform="rotate(-8 126 164)">
-        <Rect x={102} y={148} width={48} height={32} rx={5} fill={WHITE} stroke={BLUE} strokeWidth={3} />
-        <Path d="M116 152 L116 176" stroke="#8FB8F5" strokeWidth={2} strokeDasharray="3 3" />
-        <Rect x={106} y={155} width={6} height={3} rx={1.5} fill={BLUE} />
-        <Rect x={106} y={162} width={8} height={3} rx={1.5} fill={BLUE} />
-        <Path d="M135 157 l1.6 3.8 3.8 1.6 -3.8 1.6 -1.6 3.8 -1.6 -3.8 -3.8 -1.6 3.8 -1.6 Z" fill={BLUE} />
-      </G>
+      {isSad ? null : (
+        <G transform="rotate(-8 126 164)">
+          <Rect x={102} y={148} width={48} height={32} rx={5} fill={WHITE} stroke={BLUE} strokeWidth={3} />
+          <Path d="M116 152 L116 176" stroke="#8FB8F5" strokeWidth={2} strokeDasharray="3 3" />
+          <Rect x={106} y={155} width={6} height={3} rx={1.5} fill={BLUE} />
+          <Rect x={106} y={162} width={8} height={3} rx={1.5} fill={BLUE} />
+          <Path d="M135 157 l1.6 3.8 3.8 1.6 -3.8 1.6 -1.6 3.8 -1.6 -3.8 -3.8 -1.6 3.8 -1.6 Z" fill={BLUE} />
+        </G>
+      )}
 
       {/* female details */}
       {isFemale ? (
@@ -168,13 +209,14 @@ export function MascotArt({ variant = "male", transform }: ArtProps) {
 
 type Props = {
   variant?: MascotVariant;
+  mood?: MascotMood;
   width?: number;
 };
 
-export default function GoFestMascot({ variant = "male", width = 160 }: Props) {
+export default function GoFestMascot({ variant = "male", mood = "happy", width = 160 }: Props) {
   return (
     <Svg width={width} height={width * 1.25} viewBox="0 0 160 200">
-      <MascotArt variant={variant} />
+      <MascotArt variant={variant} mood={mood} />
     </Svg>
   );
 }
