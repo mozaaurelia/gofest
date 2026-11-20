@@ -3,11 +3,12 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Tabs } from "expo-router";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { gfColors } from "@/constants/gf-theme";
 
 type TabName = "home" | "kalender" | "ticket" | "profile";
 
-const NAVY = "#142C4A";
-const NAVY_ACTIVE_BG = "#162E50";
+const NAVY = gfColors.brandBlueDark;
+const NAVY_ACTIVE_BG = gfColors.brandBlue;
 
 function TabIcon({ name, color }: { name: TabName; color: string }) {
   return (

@@ -20,7 +20,7 @@ export default function AccountMenuItem({ icon, label, value, onPress }: Props) 
       <View style={styles.right}>
         {value ? <Text style={styles.value}>{value}</Text> : null}
         <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-          <Path d="M9 6l6 6-6 6" stroke="#1E3A8A" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
+          <Path d="M9 6l6 6-6 6" stroke={gfColors.brandBlueDark} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
         </Svg>
       </View>
     </Pressable>
@@ -30,52 +30,52 @@ export default function AccountMenuItem({ icon, label, value, onPress }: Props) 
 export function LanguageIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Rect x={3} y={3} width={18} height={18} rx={3} stroke="#1E3A8A" strokeWidth={1.7} />
-      <Path d="M7 8h10M8 12h8M9 16h6" stroke="#1E3A8A" strokeWidth={1.4} strokeLinecap="round" />
-      <Path d="M10 8c0 2-1 4-2 6M14 8c0 2 1 4 2 6" stroke="#1E3A8A" strokeWidth={1.3} strokeLinecap="round" />
+      <Rect x={3} y={3} width={18} height={18} rx={3} stroke={gfColors.brandBlueDark} strokeWidth={1.7} />
+      <Path d="M7 8h10M8 12h8M9 16h6" stroke={gfColors.brandBlueDark} strokeWidth={1.4} strokeLinecap="round" />
+      <Path d="M10 8c0 2-1 4-2 6M14 8c0 2 1 4 2 6" stroke={gfColors.brandBlueDark} strokeWidth={1.3} strokeLinecap="round" />
     </Svg>
   );
 }
 export function HelpIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Path d="M5 8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3h-2l-3 3v-3H8a3 3 0 0 1-3-3V8Z" stroke="#1E3A8A" strokeWidth={1.6} strokeLinejoin="round" />
-      <Circle cx={9} cy={10.5} r={1} fill="#1E3A8A" />
-      <Circle cx={15} cy={10.5} r={1} fill="#1E3A8A" />
-      <Path d="M9 13c1.2 1 3.8 1 5 0" stroke="#1E3A8A" strokeWidth={1.3} strokeLinecap="round" />
+      <Path d="M5 8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3h-2l-3 3v-3H8a3 3 0 0 1-3-3V8Z" stroke={gfColors.brandBlueDark} strokeWidth={1.6} strokeLinejoin="round" />
+      <Circle cx={9} cy={10.5} r={1} fill={gfColors.brandBlueDark} />
+      <Circle cx={15} cy={10.5} r={1} fill={gfColors.brandBlueDark} />
+      <Path d="M9 13c1.2 1 3.8 1 5 0" stroke={gfColors.brandBlueDark} strokeWidth={1.3} strokeLinecap="round" />
     </Svg>
   );
 }
 export function AboutIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Path d="M6 3v18h12V7l-4-4H6Z" stroke="#1E3A8A" strokeWidth={1.6} strokeLinejoin="round" />
-      <Path d="M14 3v4h4" stroke="#1E3A8A" strokeWidth={1.4} strokeLinejoin="round" />
-      <Path d="M9 13h6M9 17h4" stroke="#1E3A8A" strokeWidth={1.5} strokeLinecap="round" />
+      <Path d="M6 3v18h12V7l-4-4H6Z" stroke={gfColors.brandBlueDark} strokeWidth={1.6} strokeLinejoin="round" />
+      <Path d="M14 3v4h4" stroke={gfColors.brandBlueDark} strokeWidth={1.4} strokeLinejoin="round" />
+      <Path d="M9 13h6M9 17h4" stroke={gfColors.brandBlueDark} strokeWidth={1.5} strokeLinecap="round" />
     </Svg>
   );
 }
 export function TermsIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Rect x={4} y={3} width={16} height={18} rx={2} stroke="#1E3A8A" strokeWidth={1.6} />
-      <Path d="M8 8h8M8 12h6M8 16h8" stroke="#1E3A8A" strokeWidth={1.4} strokeLinecap="round" />
+      <Rect x={4} y={3} width={16} height={18} rx={2} stroke={gfColors.brandBlueDark} strokeWidth={1.6} />
+      <Path d="M8 8h8M8 12h6M8 16h8" stroke={gfColors.brandBlueDark} strokeWidth={1.4} strokeLinecap="round" />
     </Svg>
   );
 }
 export function PrivacyIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Path d="M12 3l7 4v5c0 4.2-2.8 7.2-7 9-4.2-1.8-7-4.8-7-9V7l7-4Z" stroke="#1E3A8A" strokeWidth={1.6} strokeLinejoin="round" />
-      <Circle cx={12} cy={11} r={2.5} stroke="#1E3A8A" strokeWidth={1.4} />
-      <Path d="M10 14.5l1.2 1.5 2.8-2.8" stroke="#1E3A8A" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M12 3l7 4v5c0 4.2-2.8 7.2-7 9-4.2-1.8-7-4.8-7-9V7l7-4Z" stroke={gfColors.brandBlueDark} strokeWidth={1.6} strokeLinejoin="round" />
+      <Circle cx={12} cy={11} r={2.5} stroke={gfColors.brandBlueDark} strokeWidth={1.4} />
+      <Path d="M10 14.5l1.2 1.5 2.8-2.8" stroke={gfColors.brandBlueDark} strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
 export function RatingIcon() {
   return (
     <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-      <Path d="M12 3l2.3 5.2 5.7.8-4.1 3.8.9 5.6L12 16l-4.8 2.4.9-5.6-4.1-3.8 5.7-.8L12 3Z" stroke="#1E3A8A" strokeWidth={1.6} strokeLinejoin="round" />
+      <Path d="M12 3l2.3 5.2 5.7.8-4.1 3.8.9 5.6L12 16l-4.8 2.4.9-5.6-4.1-3.8 5.7-.8L12 3Z" stroke={gfColors.brandBlueDark} strokeWidth={1.6} strokeLinejoin="round" />
     </Svg>
   );
 }

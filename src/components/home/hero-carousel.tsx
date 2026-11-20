@@ -6,7 +6,6 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-g
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, {
   Easing,
-  interpolateColor,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -15,8 +14,9 @@ import Animated, {
 } from "react-native-reanimated";
 import { router } from "expo-router";
 import { HERO_EVENTS } from "../../constants/home-data";
+import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
-import HomeBackground from "./home-background";
+import { OnboardingBackground } from "@/components/onboarding";
 import CarouselDots from "./carousel-dots";
 import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
@@ -26,7 +26,7 @@ const CARD_WIDTH_RATIO = 0.55;
 const CARD_MAX_WIDTH = 300;
 const CARD_ASPECT = 1.31;
 const CARD_GAP_RATIO = 0.17;
-const TINT_OPACITY = 0.16;
+const TINT_OPACITY = 0.08;
 
 export default function HeroCarousel() {
   const { width } = useWindowDimensions();
@@ -80,13 +80,6 @@ export default function HeroCarousel() {
     transform: [{ translateX: parallaxX.value }],
   }));
 
-  // Warna metalik mengikuti aksen poster aktif
-  const tintInputRange = HERO_EVENTS.map((_, i) => -(count - 1 - i) * snapInterval);
-  const tintOutputRange = [...HERO_EVENTS].reverse().map((event) => event.accent);
-  const tintStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(translateX.value, tintInputRange, tintOutputRange),
-  }));
-
   const panGesture = Gesture.Pan()
     .activeOffsetX([-6, 6])
     .failOffsetY([-10, 10])
@@ -122,8 +115,8 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        <HomeBackground />
-        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint, tintStyle]} />
+        <OnboardingBackground />
+        <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint]} />
 
         <SafeAreaView style={styles.flex}>
           <HomeNavbar />
@@ -166,7 +159,7 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1, overflow: "hidden" },
-  tint: { opacity: TINT_OPACITY },
+  tint: { backgroundColor: gfColors.brandBlue, opacity: TINT_OPACITY },
   stage: { flex: 1, justifyContent: "center" },
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
   slot: { position: "absolute", top: 14, alignItems: "center" },

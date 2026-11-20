@@ -10,8 +10,8 @@ import {
   OnboardingPaymentIllustration,
   OnboardingTitle,
   OnboardingVipIllustration,
+  OnboardingBackground,
 } from "@/components/onboarding";
-import BlueMetallicBackground from "@/components/ui/blue-metallic-background";
 import { useTranslation } from "@/context/language-context";
 import { markOnboardingSeen } from "@/services/auth";
 
@@ -25,7 +25,7 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.root}>
-      <BlueMetallicBackground />
+      <OnboardingBackground />
 
       <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
         {step === 1 && (

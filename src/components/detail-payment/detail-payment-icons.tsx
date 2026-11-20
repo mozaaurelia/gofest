@@ -1,12 +1,13 @@
 import React from "react";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
 type IconProps = {
   size?: number;
   color?: string;
 };
 
-export function TicketCheckIcon({ size = 34, color = "#7DD3FC" }: IconProps) {
+export function TicketCheckIcon({ size = 34, color = gfColors.brandBlueLight }: IconProps) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" style={{ transform: [{ rotate: "-8deg" }] }}>
       <Path
@@ -25,7 +26,7 @@ export function TicketCheckIcon({ size = 34, color = "#7DD3FC" }: IconProps) {
   );
 }
 
-export function CustomerIcon({ size = 28, color = "#0B5CFF" }: IconProps) {
+export function CustomerIcon({ size = 28, color = gfColors.brandBlue }: IconProps) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none">
       <Circle cx={9.2} cy={8.4} r={3.2} fill={color} />

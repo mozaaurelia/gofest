@@ -33,7 +33,7 @@ import AccountMenuItem, {
   TermsIcon,
 } from "@/components/profile/account/AccountMenuItem";
 
-const NAVY = "#142C4A";
+const NAVY = gfColors.brandBlueDark;
 
 function QuickAction({ icon, label, onPress }: { icon: React.ReactNode; label: string; onPress?: () => void }) {
   return (

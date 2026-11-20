@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, Ellipse, G, Path, Rect, Text as SvgText } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-const INK = "#0B2350";
-const BLUE = "#1263E4";
-const BLUE_LIGHT = "#3B82F6";
-const BLUE_DARK = "#0E4CB8";
+const INK = gfColors.brandBlueDark;
+const BLUE = gfColors.brandBlue;
+const BLUE_LIGHT = gfColors.brandBlueLight;
+const BLUE_DARK = gfColors.brandBlueDark;
 const BLUE_SOFT = "#9DBBE6";
 const SKY = "#8FB8F5";
 const WHITE = "#FFFFFF";
@@ -25,7 +26,7 @@ export default function OnboardingVipIllustration() {
           <Rect x={126} y={58} width={108} height={152} rx={10} fill={CARD_BG} stroke={BLUE} strokeWidth={2.5} />
           <Rect x={164} y={66} width={32} height={6} rx={3} fill={SILVER_DARK} opacity={0.5} />
 
-          <Rect x={136} y={80} width={88} height={84} rx={6} fill="#0E2350" />
+          <Rect x={136} y={80} width={88} height={84} rx={6} fill={gfColors.brandBlueDark} />
           <Path d="M136 80 h88 v56 L136 106 Z" fill="#FFFFFF" opacity={0.08} />
           <Path d="M196 80 h28 v84 h-28 Z" fill={SKY} opacity={0.08} />
 
@@ -64,7 +65,7 @@ export default function OnboardingVipIllustration() {
         {/* VIP section access coin */}
         <G>
           <Circle cx={293} cy={236} r={48} fill={INK} opacity={0.08} />
-          <Circle cx={290} cy={232} r={48} fill="#0E2350" />
+          <Circle cx={290} cy={232} r={48} fill={gfColors.brandBlueDark} />
           <Circle cx={290} cy={232} r={48} fill="none" stroke={BLUE_LIGHT} strokeWidth={5} />
           <Circle cx={290} cy={232} r={39} fill="none" stroke={BLUE} strokeWidth={1.5} opacity={0.6} />
           <Path d="M256 204 a48 48 0 0 1 32 -19" stroke="#FFFFFF" strokeWidth={2} fill="none" strokeLinecap="round" opacity={0.35} />

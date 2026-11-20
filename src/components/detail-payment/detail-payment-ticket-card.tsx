@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { formatRupiah } from "@/constants/ticket-sale-data";
 import type { PaymentCustomer } from "@/constants/detail-payment-data";
+import { gfColors } from "@/constants/gf-theme";
 import { CustomerIcon, TicketCheckIcon } from "./detail-payment-icons";
 
 type Props = {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
   thumbFallbackText: {
     fontSize: 24,
     fontWeight: "900",
-    color: "#0B5CFF",
+    color: gfColors.brandBlue,
   },
   eventInfo: {
     flex: 1,

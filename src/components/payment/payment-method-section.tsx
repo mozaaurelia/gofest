@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { PAYMENT_METHODS, PaymentMethod } from "@/constants/payment-data";
+import { gfColors } from "@/constants/gf-theme";
 import { ChevronDownIcon, MethodIcon } from "./payment-icons";
 
-const BLUE = "#0B5CFF";
+const BLUE = gfColors.brandBlue;
 
 type AccordionProps = {
   method: PaymentMethod;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Path, Circle } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   label?: string;
@@ -25,9 +26,9 @@ export default function TicketEmptyActions({ label = "Help Center", onPress }: P
             opacity={0.98}
           />
           {/* smile */}
-          <Circle cx={9.2} cy={9.2} r={1.2} fill="#0B5CFF" />
-          <Circle cx={14.8} cy={9.2} r={1.2} fill="#0B5CFF" />
-          <Path d="M9 12.2c1.2 1.4 4.8 1.4 6 0" stroke="#0B5CFF" strokeWidth={1.5} strokeLinecap="round" fill="none" />
+          <Circle cx={9.2} cy={9.2} r={1.2} fill={gfColors.brandBlue} />
+          <Circle cx={14.8} cy={9.2} r={1.2} fill={gfColors.brandBlue} />
+          <Path d="M9 12.2c1.2 1.4 4.8 1.4 6 0" stroke={gfColors.brandBlue} strokeWidth={1.5} strokeLinecap="round" fill="none" />
         </Svg>
         <Text style={styles.label}>{label}</Text>
       </Pressable>
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "#0B5CFF",
+    backgroundColor: gfColors.brandBlue,
     paddingHorizontal: 22,
     height: 46,
     borderRadius: 12,
-    shadowColor: "#0B5CFF",
+    shadowColor: gfColors.brandBlue,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.2,
     shadowRadius: 12,

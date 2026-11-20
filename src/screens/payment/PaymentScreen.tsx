@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import { calcPaymentSummary, PAYMENT_FEES } from "@/constants/payment-data";
 import usePaymentTimer from "@/hooks/use-payment-timer";
+import { OnboardingBackground } from "@/components/onboarding";
 import {
   PaymentBottomBar,
   PaymentBrandFooter,
@@ -54,6 +55,7 @@ export default function PaymentScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
+      <OnboardingBackground />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}

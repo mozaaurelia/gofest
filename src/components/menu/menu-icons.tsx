@@ -1,7 +1,8 @@
 import React from "react";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-const ICON_COLOR = "#142C4A";
+const ICON_COLOR = gfColors.brandBlueDark;
 
 type IconProps = {
   size?: number;

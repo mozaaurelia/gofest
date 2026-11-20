@@ -1,14 +1,15 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, ClipPath, Defs, Ellipse, G, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-const CROWD_BACK = "#22345F";
+const CROWD_BACK = gfColors.brandBlueDark;
 const CROWD_FRONT = "#121F3D";
 const GLASS_LIGHT = "#CFE6FF";
 const WHITE = "#FFFFFF";
-const BLUE_LIGHT = "#3B82F6";
+const BLUE_LIGHT = gfColors.brandBlueLight;
 const SKY = "#8FB8F5";
-const BLUE = "#1263E4";
+const BLUE = gfColors.brandBlue;
 
 type StickProps = {
   x: number;

@@ -7,6 +7,7 @@ import { BoardingPassCard, BoardingPassHeader } from "@/components/boarding-pass
 import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { eventAddress, eventDate } from "@/utils/event-i18n";
+import { OnboardingBackground } from "@/components/onboarding";
 
 function toMinutes(time: string) {
   const [h, m] = time.split(":").map(Number);
@@ -50,6 +51,7 @@ export default function BoardingPassScreen() {
 
   return (
     <View style={styles.root}>
+      <OnboardingBackground />
       <SafeAreaView edges={["top"]} style={styles.safe}>
         <BoardingPassHeader />
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} bounces={false}>

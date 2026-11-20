@@ -12,6 +12,7 @@ import FloatingNav from "@/components/navigation/floating-nav";
 import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { eventSubtitle, eventTour } from "@/utils/event-i18n";
+import { OnboardingBackground } from "@/components/onboarding";
 
 export default function ConcertDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -25,6 +26,7 @@ export default function ConcertDetailScreen() {
 
   return (
     <View style={styles.container}>
+      <OnboardingBackground />
       <DetailHeader title={concert.title} concertId={concert.id} />
 
       <ScrollView bounces contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>

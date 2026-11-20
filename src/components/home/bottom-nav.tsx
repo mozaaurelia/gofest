@@ -65,5 +65,5 @@ const styles = StyleSheet.create({
   },
   item: { flex: 1, alignItems: "center", justifyContent: "center" },
   iconWrap: { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center" },
-  iconWrapActive: { backgroundColor: gfColors.teal },
+  iconWrapActive: { backgroundColor: gfColors.brandBlue },
 });

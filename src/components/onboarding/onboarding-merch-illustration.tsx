@@ -12,16 +12,17 @@ import Svg, {
   Stop,
 } from "react-native-svg";
 import { MascotArt } from "@/components/brand/gofest-mascot";
+import { gfColors } from "@/constants/gf-theme";
 
 const NAVY = "#0F1B2E";
-const OUTLINE = "#0B2350";
-const FUR_AVATAR = "#2E6BE6";
-const BLUE = "#1263E4";
-const BLUE_LIGHT = "#3B82F6";
+const OUTLINE = gfColors.brandBlueDark;
+const FUR_AVATAR = gfColors.brandBlue;
+const BLUE = gfColors.brandBlue;
+const BLUE_LIGHT = gfColors.brandBlueLight;
 const SKY = "#8FB8F5";
 const ICE = "#CFE6FF";
 const WHITE = "#FFFFFF";
-const PHONE_BODY = "#0E2350";
+const PHONE_BODY = gfColors.brandBlueDark;
 
 export default function OnboardingMerchIllustration() {
   return (
@@ -34,12 +35,12 @@ export default function OnboardingMerchIllustration() {
             <Stop offset="1" stopColor={WHITE} stopOpacity={0} />
           </RadialGradient>
           <LinearGradient id="orb" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor="#7FB6FF" />
+            <Stop offset="0" stopColor={gfColors.brandBlueLight} />
             <Stop offset="0.55" stopColor={BLUE_LIGHT} />
             <Stop offset="1" stopColor={BLUE} />
           </LinearGradient>
           <LinearGradient id="screenHeader" x1="0" y1="0" x2="1" y2="1">
-            <Stop offset="0" stopColor="#3B82F6" />
+            <Stop offset="0" stopColor={gfColors.brandBlueLight} />
             <Stop offset="1" stopColor={BLUE} />
           </LinearGradient>
         </Defs>
@@ -110,7 +111,7 @@ export default function OnboardingMerchIllustration() {
         />
         <Path
           d="M110 124 C88 100 78 60 92 36 C104 16 130 24 132 50 C134 76 126 104 118 122"
-          stroke="#5AA0FF"
+          stroke={gfColors.brandBlueLight}
           strokeWidth={9}
           fill="none"
           strokeLinecap="round"
@@ -140,8 +141,8 @@ export default function OnboardingMerchIllustration() {
           <Circle cx={88} cy={151} r={3.2} fill={FUR_AVATAR} stroke={OUTLINE} strokeWidth={2} />
           <Circle cx={106} cy={151} r={3.2} fill={FUR_AVATAR} stroke={OUTLINE} strokeWidth={2} />
           <Path d="M87 154 C87 146 107 146 107 154" fill="none" stroke={OUTLINE} strokeWidth={3.5} strokeLinecap="round" />
-          <Rect x={85} y={154} width={4.5} height={8} rx={2.25} fill="#1B4FCB" stroke={OUTLINE} strokeWidth={1.5} />
-          <Rect x={104.5} y={154} width={4.5} height={8} rx={2.25} fill="#1B4FCB" stroke={OUTLINE} strokeWidth={1.5} />
+          <Rect x={85} y={154} width={4.5} height={8} rx={2.25} fill={gfColors.brandBlueDark} stroke={OUTLINE} strokeWidth={1.5} />
+          <Rect x={104.5} y={154} width={4.5} height={8} rx={2.25} fill={gfColors.brandBlueDark} stroke={OUTLINE} strokeWidth={1.5} />
           <Circle cx={97} cy={160} r={11.5} fill={FUR_AVATAR} stroke={OUTLINE} strokeWidth={2.5} />
           <Ellipse cx={97} cy={165} rx={7.5} ry={5} fill="#C7E4FF" />
           <Circle cx={93} cy={159} r={1.6} fill={OUTLINE} />

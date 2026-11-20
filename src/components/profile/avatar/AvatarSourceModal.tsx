@@ -84,7 +84,7 @@ function Option({
       <View style={[styles.optionIcon, destructive && styles.optionIconDestructive]}>{icon}</View>
       <Text style={[styles.optionLabel, destructive && styles.optionLabelDestructive]}>{label}</Text>
       <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-        <Path d="M9 6l6 6-6 6" stroke={destructive ? "#EF4444" : "#1E3A8A"} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M9 6l6 6-6 6" stroke={destructive ? "#EF4444" : gfColors.brandBlueDark} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
       </Svg>
     </Pressable>
   );

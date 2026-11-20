@@ -1,10 +1,11 @@
 import React from "react";
 import Svg, { Circle, Ellipse, G, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-const OUTLINE = "#0B2350";
-const FUR = "#2E6BE6";
-const FUR_DARK = "#1B4FCB";
-const FUR_LIGHT = "#5AA0FF";
+const OUTLINE = gfColors.brandBlueDark;
+const FUR = gfColors.brandBlue;
+const FUR_DARK = gfColors.brandBlueDark;
+const FUR_LIGHT = gfColors.brandBlueLight;
 const BELLY = "#C7E4FF";
 const WHITE = "#FFFFFF";
 const BLUE = "#1263E4";
@@ -82,10 +83,10 @@ export function MascotArt({ variant = "male", transform }: ArtProps) {
       <Path d="M36 44 C40 12 120 12 124 44" fill="none" stroke={FUR_DARK} strokeWidth={5} strokeLinecap="round" />
       <Path d="M48 24 C60 14 100 14 112 24" fill="none" stroke={FUR_LIGHT} strokeWidth={2.5} strokeLinecap="round" opacity={0.9} />
       <Rect x={13} y={40} width={27} height={42} rx={13} fill={FUR_DARK} stroke={OUTLINE} strokeWidth={4} />
-      <Rect x={19} y={46} width={15} height={30} rx={7.5} fill="#3B82F6" />
+      <Rect x={19} y={46} width={15} height={30} rx={7.5} fill={gfColors.brandBlueLight} />
       <Path d="M24 50 Q22 58 24 68" stroke={WHITE} strokeWidth={2.5} fill="none" strokeLinecap="round" opacity={0.55} />
       <Rect x={120} y={40} width={27} height={42} rx={13} fill={FUR_DARK} stroke={OUTLINE} strokeWidth={4} />
-      <Rect x={126} y={46} width={15} height={30} rx={7.5} fill="#3B82F6" />
+      <Rect x={126} y={46} width={15} height={30} rx={7.5} fill={gfColors.brandBlueLight} />
       <Path d="M136 50 Q138 58 136 68" stroke={WHITE} strokeWidth={2.5} fill="none" strokeLinecap="round" opacity={0.55} />
 
       {/* waving arm + paw */}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import OnboardingDots from "./onboarding-dots";
 
@@ -42,7 +43,7 @@ export default function OnboardingFooter({ currentStep, totalSteps, onBack, onNe
       <Pressable onPress={onNext} accessibilityRole="button" accessibilityLabel={t("onboarding.next")}>
         {({ pressed }) => (
           <LinearGradient
-            colors={["#2374F0", "#1263E4"]}
+            colors={[gfColors.brandBlueLight, gfColors.brandBlue]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={[styles.nextBtn, pressed && styles.pressed]}
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#1263E4",
+    shadowColor: gfColors.brandBlue,
     shadowOpacity: 0.35,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },

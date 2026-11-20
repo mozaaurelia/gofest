@@ -14,6 +14,7 @@ import SeatMapBenefitSection from "@/components/seat-map/seat-map-benefit-sectio
 import SeatMapImage from "@/components/seat-map/seat-map-image";
 import SeatMapFullscreenViewer from "@/components/seat-map/seat-map-fullscreen-viewer";
 import { TicketOptionsSection, TicketFooterBar } from "@/components/seat-map/ticket";
+import { OnboardingBackground } from "@/components/onboarding";
 
 export default function SeatMapScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -64,6 +65,7 @@ export default function SeatMapScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
+      <OnboardingBackground />
       <SeatMapHeader title={title} subtitle={subtitle} />
 
       <ScrollView bounces contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>

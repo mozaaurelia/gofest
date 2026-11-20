@@ -1,7 +1,8 @@
 import React from "react";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-export function CameraIcon({ color = "#1E3A8A", size = 20 }: { color?: string; size?: number }) {
+export function CameraIcon({ color = gfColors.brandBlueDark, size = 20 }: { color?: string; size?: number }) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none">
       <Path
@@ -15,7 +16,7 @@ export function CameraIcon({ color = "#1E3A8A", size = 20 }: { color?: string; s
   );
 }
 
-export function GalleryIcon({ color = "#1E3A8A", size = 20 }: { color?: string; size?: number }) {
+export function GalleryIcon({ color = gfColors.brandBlueDark, size = 20 }: { color?: string; size?: number }) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none">
       <Rect x={3.5} y={4.5} width={17} height={15} rx={2.5} stroke={color} strokeWidth={1.6} />

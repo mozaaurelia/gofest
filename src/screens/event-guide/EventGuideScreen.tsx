@@ -15,6 +15,7 @@ import {
   RulesGuideIcon,
   ScheduleGuideIcon,
 } from "@/components/event-guide";
+import { OnboardingBackground } from "@/components/onboarding";
 
 export default function EventGuideScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -58,6 +59,7 @@ export default function EventGuideScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+      <OnboardingBackground />
       <EventGuideHeader title={t("eventGuide.header")} subtitle={concert.title} />
 
       <ScrollView bounces contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>

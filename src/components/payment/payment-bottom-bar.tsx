@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ChevronRightIcon } from "./payment-icons";
 import { formatRupiah } from "@/constants/ticket-sale-data";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   qty: number;
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 56,
     borderRadius: 12,
-    backgroundColor: "#0B5CFF",
+    backgroundColor: gfColors.brandBlue,
     alignItems: "center",
     justifyContent: "center",
   },

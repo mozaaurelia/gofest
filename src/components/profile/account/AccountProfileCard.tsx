@@ -37,7 +37,7 @@ export default function AccountProfileCard({ name = "moza", subtitle = "See Prof
         </View>
       </View>
       <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
-        <Path d="M9 6l6 6-6 6" stroke="#1E3A8A" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M9 6l6 6-6 6" stroke={gfColors.brandBlueDark} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
       </Svg>
     </Pressable>
   );

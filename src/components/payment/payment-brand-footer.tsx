@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import GoFestLogo from "@/components/splash/GoFestLogo";
+import { gfColors } from "@/constants/gf-theme";
 
 function GoFestMark() {
   return (
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "900",
     letterSpacing: 0.2,
-    color: "#142C4A",
+    color: gfColors.brandBlueDark,
   },
   wordmarkFest: {
     fontSize: 30,

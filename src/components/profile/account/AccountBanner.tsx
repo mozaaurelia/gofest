@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, Ellipse, G, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
 export default function AccountBanner() {
   return (
     <View style={styles.wrap}>
       <Svg viewBox="0 0 360 140" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
         {/* sky */}
-        <Rect x={0} y={0} width={360} height={140} fill="#0EA5E9" />
+        <Rect x={0} y={0} width={360} height={140} fill={gfColors.brandBlue} />
         {/* orange mascot */}
         <G>
           <Rect x={8} y={22} width={74} height={74} rx={12} fill="#FB923C" />
@@ -40,8 +41,8 @@ export default function AccountBanner() {
         </G>
         {/* dark blue mascot with guitar */}
         <G>
-          <Rect x={178} y={22} width={78} height={74} rx={12} fill="#1E3A8A" />
-          <Path d="M212 22 L218 6 L224 22 Z" fill="#1E3A8A" />
+          <Rect x={178} y={22} width={78} height={74} rx={12} fill={gfColors.brandBlueDark} />
+          <Path d="M212 22 L218 6 L224 22 Z" fill={gfColors.brandBlueDark} />
           <Ellipse cx={204} cy={48} rx={15} ry={12} fill="#FFFFFF" />
           <Ellipse cx={232} cy={48} rx={15} ry={12} fill="#FFFFFF" />
           <Path d="M200 48 L196 44 L204 42 L212 44 L208 48 Z" fill="#FACC15" stroke="#111827" strokeWidth={1} />
@@ -50,9 +51,9 @@ export default function AccountBanner() {
           <Ellipse cx={200} cy={64} rx={5} ry={3} fill="#BFDBFE" opacity={0.3} />
           {/* guitar */}
           <G transform="rotate(-18 218 72)">
-            <Rect x={198} y={64} width={52} height={14} rx={7} fill="#93C5FD" stroke="#1E3A8A" strokeWidth={1} />
-            <Rect x={244} y={67} width={10} height={8} rx={2} fill="#1E3A8A" />
-            <Circle cx={210} cy={71} r={3} fill="#1E3A8A" opacity={0.2} />
+            <Rect x={198} y={64} width={52} height={14} rx={7} fill={gfColors.brandBlueLight} stroke={gfColors.brandBlueDark} strokeWidth={1} />
+            <Rect x={244} y={67} width={10} height={8} rx={2} fill={gfColors.brandBlueDark} />
+            <Circle cx={210} cy={71} r={3} fill={gfColors.brandBlueDark} opacity={0.2} />
           </G>
           <Path d="M186 84 L176 96 M250 84 L262 96" stroke="#0F172A" strokeWidth={2} strokeLinecap="round" />
         </G>
@@ -76,7 +77,7 @@ export default function AccountBanner() {
 const styles = StyleSheet.create({
   wrap: {
     height: 148,
-    backgroundColor: "#0EA5E9",
+    backgroundColor: gfColors.brandBlue,
     overflow: "hidden",
   },
 });

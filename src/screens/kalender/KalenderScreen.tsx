@@ -10,6 +10,7 @@ import { getEventsForDate } from "@/constants/calendar-data";
 import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { MONTH_SHORT_KEYS } from "@/utils/date-labels";
+import { OnboardingBackground } from "@/components/onboarding";
 
 function getTodayISO(): string {
   const d = new Date();
@@ -25,6 +26,7 @@ export default function KalenderScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
+      <OnboardingBackground />
       <CalendarHeader mode={mode} onToggleMode={() => setMode((m) => (m === "list" ? "grid" : "list"))} />
 
       {mode === "list" ? (

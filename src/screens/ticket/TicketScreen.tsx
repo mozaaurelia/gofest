@@ -7,6 +7,7 @@ import { CALENDAR_EVENTS, CalendarEvent } from "@/constants/calendar-data";
 import { CONCERT_DETAILS } from "@/constants/concert-detail-data";
 import { useSavedTickets } from "@/context/saved-tickets-context";
 import { useTranslation } from "@/context/language-context";
+import { OnboardingBackground } from "@/components/onboarding";
 
 import TicketHeader from "./components/TicketHeader";
 import TicketTabs, { TicketTabKey } from "./components/TicketTabs";
@@ -40,6 +41,7 @@ export default function TicketScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, isEmpty && styles.safeEmpty]} edges={["top"]}>
+      <OnboardingBackground />
       <TicketHeader />
 
       {/* keep tabs even when empty — so user can switch Dibeli/Disimpan */}

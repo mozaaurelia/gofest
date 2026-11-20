@@ -6,6 +6,7 @@ import { getConcertDetailById } from "@/constants/concert-detail-data";
 import { useTranslation } from "@/context/language-context";
 import { eventAddress, eventDate, eventSubtitle } from "@/utils/event-i18n";
 import { WristbandHeader, WristbandSectionHeader, WristbandContent } from "@/components/wristband";
+import { OnboardingBackground } from "@/components/onboarding";
 
 export default function WristbandScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -22,6 +23,7 @@ export default function WristbandScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+      <OnboardingBackground />
       <WristbandHeader title={displayTitle} subtitle={subtitle} />
 
       <ScrollView bounces contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>

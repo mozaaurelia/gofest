@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   onPress: () => void;
@@ -17,11 +18,11 @@ export default function NewEventBanner({ onPress }: Props) {
         <Text style={styles.link}>{t("home.viewTicketInfo")}</Text>
       </Text>
       <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-        <Path d="M14 4h6v6" stroke="#1E6FE8" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
-        <Path d="M20 4l-8.5 8.5" stroke="#1E6FE8" strokeWidth={1.9} strokeLinecap="round" />
+        <Path d="M14 4h6v6" stroke={gfColors.brandBlue} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
+        <Path d="M20 4l-8.5 8.5" stroke={gfColors.brandBlue} strokeWidth={1.9} strokeLinecap="round" />
         <Path
           d="M19 14.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.5"
-          stroke="#1E6FE8"
+          stroke={gfColors.brandBlue}
           strokeWidth={1.9}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -57,6 +58,6 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: "700",
-    color: "#1E6FE8",
+    color: gfColors.brandBlue,
   },
 });

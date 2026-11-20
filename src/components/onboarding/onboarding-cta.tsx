@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   primaryLabel: string;
@@ -24,7 +25,7 @@ export default function OnboardingCta({
       <Pressable onPress={onPrimaryPress} accessibilityRole="button" accessibilityLabel={primaryLabel}>
         {({ pressed }) => (
           <LinearGradient
-            colors={["#2374F0", "#1263E4"]}
+            colors={[gfColors.brandBlueLight, gfColors.brandBlue]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={[styles.primaryBtn, pressed && styles.pressed]}
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#1263E4",
+    shadowColor: gfColors.brandBlue,
     shadowOpacity: 0.35,
     shadowRadius: 12,
     shadowOffset: { width: 0, height: 5 },

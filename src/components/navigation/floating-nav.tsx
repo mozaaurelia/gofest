@@ -3,9 +3,10 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { router, usePathname } from "expo-router";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { gfColors } from "@/constants/gf-theme";
 
-const NAVY = "#142C4A";
-const NAVY_ACTIVE_BG = "#162E50";
+const NAVY = gfColors.brandBlueDark;
+const NAVY_ACTIVE_BG = gfColors.brandBlue;
 
 type TabName = "home" | "kalender" | "ticket" | "profile";
 type TabConfig = { name: TabName; href: string };

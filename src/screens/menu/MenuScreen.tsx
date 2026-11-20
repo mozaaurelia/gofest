@@ -9,11 +9,11 @@ import {
   HelpMenuIcon,
   LanguageMenuIcon,
   LanguageSheet,
-  MenuBackground,
   MenuCard,
   MenuCloseButton,
 } from "@/components/menu";
 import type { MenuEntry } from "@/components/menu";
+import { OnboardingBackground } from "@/components/onboarding";
 
 export default function MenuScreen() {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export default function MenuScreen() {
 
   return (
     <View style={styles.root}>
-      <MenuBackground />
+      <OnboardingBackground />
 
       <SafeAreaView style={styles.flex} edges={["top", "bottom"]}>
         <View style={styles.content}>

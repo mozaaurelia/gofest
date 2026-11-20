@@ -1,14 +1,15 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, ClipPath, Defs, Ellipse, G, Path, Rect, Text as SvgText } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
-const INK = "#0B2350";
-const BLUE_LIGHT = "#3B82F6";
+const INK = gfColors.brandBlueDark;
+const BLUE_LIGHT = gfColors.brandBlueLight;
 const SKY = "#8FB8F5";
 const ICE = "#CFE6FF";
 const WHITE = "#FFFFFF";
-const BLUE = "#1263E4";
-const BLUE_DARK = "#0E4CB8";
+const BLUE = gfColors.brandBlue;
+const BLUE_DARK = gfColors.brandBlueDark;
 const BLUE_SOFT = "#9DBBE6";
 const BAND_RING =
   "M66 166 a114 56 0 1 0 228 0 a114 56 0 1 0 -228 0 Z M104 166 a76 32 0 1 0 152 0 a76 32 0 1 0 -152 0 Z";

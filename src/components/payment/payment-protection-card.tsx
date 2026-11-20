@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { gfColors } from "@/constants/gf-theme";
 import { CheckIcon, ShieldLockIcon } from "./payment-icons";
 
 export default function PaymentProtectionCard() {
@@ -64,12 +65,12 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontSize: 14,
     fontWeight: "700",
-    color: "#0B5CFF",
+    color: gfColors.brandBlue,
     textDecorationLine: "underline",
   },
   changeBtn: {
     borderWidth: 1.5,
-    borderColor: "#0B5CFF",
+    borderColor: gfColors.brandBlue,
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 8,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   changeText: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#0B5CFF",
+    color: gfColors.brandBlue,
   },
   greenBar: {
     flexDirection: "row",

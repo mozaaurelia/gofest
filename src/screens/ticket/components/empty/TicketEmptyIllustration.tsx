@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Circle, Ellipse, G, Path, Rect } from "react-native-svg";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   width?: number;
@@ -37,7 +38,7 @@ export default function TicketEmptyIllustration({ width = 340, height = 260 }: P
           <Path d="M108 102 L122 118 L108 108 Z" fill="#FFD966" />
           {/* ticket inside */}
           <G transform="rotate(-12 92 78)">
-            <Rect x={72} y={62} width={42} height={28} rx={4} fill="#8EC9F5" stroke="#4A8FD6" strokeWidth={1.2} />
+            <Rect x={72} y={62} width={42} height={28} rx={4} fill={gfColors.brandBlueLight} stroke={gfColors.brandBlue} strokeWidth={1.2} />
             {/* perforation */}
             <Circle cx={72} cy={76} r={3.2} fill="#FFD966" />
             <Circle cx={114} cy={76} r={3.2} fill="#FFD966" />
@@ -56,35 +57,35 @@ export default function TicketEmptyIllustration({ width = 340, height = 260 }: P
         {/* ticket box — main body */}
         <G>
           {/* bottom extrusion shadow */}
-          <Rect x={120} y={174} width={128} height={8} rx={3} fill="#0F2E5E" opacity={0.9} />
+          <Rect x={120} y={174} width={128} height={8} rx={3} fill={gfColors.brandBlueDark} opacity={0.9} />
           {/* right extrusion */}
-          <Rect x={238} y={92} width={10} height={84} rx={3} fill="#0F2E5E" />
+          <Rect x={238} y={92} width={10} height={84} rx={3} fill={gfColors.brandBlueDark} />
           {/* top highlight */}
-          <Rect x={114} y={84} width={132} height={14} rx={7} fill="#2A5FA0" />
+          <Rect x={114} y={84} width={132} height={14} rx={7} fill={gfColors.brandBlue} />
           {/* main rect */}
-          <Rect x={112} y={92} width={132} height={84} rx={10} fill="#184A8A" stroke="#0F2E5E" strokeWidth={1.3} />
+          <Rect x={112} y={92} width={132} height={84} rx={10} fill={gfColors.brandBlueDark} stroke={gfColors.brandBlueDark} strokeWidth={1.3} />
           {/* left ear */}
-          <Path d="M112 118 L88 124 L112 134 Z" fill="#184A8A" stroke="#0F2E5E" strokeWidth={1.1} strokeLinejoin="round" />
+          <Path d="M112 118 L88 124 L112 134 Z" fill={gfColors.brandBlueDark} stroke={gfColors.brandBlueDark} strokeWidth={1.1} strokeLinejoin="round" />
           {/* tiny highlight on box */}
           <Rect x={126} y={98} width={28} height={4} rx={2} fill="#FFFFFF" opacity={0.08} />
         </G>
 
         {/* detached tickets — two stubs flying */}
         <G>
-          <Rect x={250} y={102} width={58} height={18} rx={3} fill="#D6EAFD" stroke="#184A8A" strokeWidth={1.6} />
-          <Path d="M284 102 L286 107 L283 112 L286 117 L284 120" stroke="#184A8A" strokeWidth={1.4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <Rect x={250} y={102} width={58} height={18} rx={3} fill="#D6EAFD" stroke={gfColors.brandBlueDark} strokeWidth={1.6} />
+          <Path d="M284 102 L286 107 L283 112 L286 117 L284 120" stroke={gfColors.brandBlueDark} strokeWidth={1.4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
           {/* lines on stub */}
-          <Rect x={256} y={109} width={18} height={2.2} rx={1} fill="#184A8A" opacity={0.7} />
-          <Rect x={256} y={113.5} width={12} height={2.2} rx={1} fill="#184A8A" opacity={0.5} />
+          <Rect x={256} y={109} width={18} height={2.2} rx={1} fill={gfColors.brandBlueDark} opacity={0.7} />
+          <Rect x={256} y={113.5} width={12} height={2.2} rx={1} fill={gfColors.brandBlueDark} opacity={0.5} />
 
-          <Rect x={250} y={130} width={58} height={18} rx={3} fill="#D6EAFD" stroke="#184A8A" strokeWidth={1.6} />
-          <Path d="M284 130 L286 135 L283 140 L286 145 L284 148" stroke="#184A8A" strokeWidth={1.4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <Rect x={256} y={137} width={18} height={2.2} rx={1} fill="#184A8A" opacity={0.7} />
-          <Rect x={256} y={141.5} width={12} height={2.2} rx={1} fill="#184A8A" opacity={0.5} />
+          <Rect x={250} y={130} width={58} height={18} rx={3} fill="#D6EAFD" stroke={gfColors.brandBlueDark} strokeWidth={1.6} />
+          <Path d="M284 130 L286 135 L283 140 L286 145 L284 148" stroke={gfColors.brandBlueDark} strokeWidth={1.4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <Rect x={256} y={137} width={18} height={2.2} rx={1} fill={gfColors.brandBlueDark} opacity={0.7} />
+          <Rect x={256} y={141.5} width={12} height={2.2} rx={1} fill={gfColors.brandBlueDark} opacity={0.5} />
           {/* connecting wires */}
-          <Path d="M240 118 C248 120 248 126 256 128" stroke="#184A8A" strokeWidth={1.4} fill="none" strokeLinecap="round" />
-          <Path d="M240 146 C248 148 248 154 256 156" stroke="#184A8A" strokeWidth={1.4} fill="none" strokeLinecap="round" />
-          <Path d="M232 168 C236 172 242 172 248 168" stroke="#184A8A" strokeWidth={1.4} fill="none" strokeLinecap="round" />
+          <Path d="M240 118 C248 120 248 126 256 128" stroke={gfColors.brandBlueDark} strokeWidth={1.4} fill="none" strokeLinecap="round" />
+          <Path d="M240 146 C248 148 248 154 256 156" stroke={gfColors.brandBlueDark} strokeWidth={1.4} fill="none" strokeLinecap="round" />
+          <Path d="M232 168 C236 172 242 172 248 168" stroke={gfColors.brandBlueDark} strokeWidth={1.4} fill="none" strokeLinecap="round" />
         </G>
 
         {/* eyes — yellow rim */}
@@ -117,11 +118,11 @@ export default function TicketEmptyIllustration({ width = 340, height = 260 }: P
 
         {/* phone on ground */}
         <G transform="rotate(-18 194 190)">
-          <Rect x={160} y={176} width={68} height={38} rx={6} fill="#3AA0FF" stroke="#0F2E5E" strokeWidth={1.2} />
+          <Rect x={160} y={176} width={68} height={38} rx={6} fill={gfColors.brandBlueLight} stroke={gfColors.brandBlueDark} strokeWidth={1.2} />
           <Rect x={165} y={181} width={58} height={28} rx={4} fill="#FFFFFF" />
-          <Rect x={182} y={191} width={22} height={12} rx={2} fill="#3AA0FF" />
+          <Rect x={182} y={191} width={22} height={12} rx={2} fill={gfColors.brandBlueLight} />
           <Path d="M186 194 L196 198 L192 202" stroke="#FFFFFF" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          <Circle cx={170} cy={188} r={1.4} fill="#3AA0FF" opacity={0.6} />
+          <Circle cx={170} cy={188} r={1.4} fill={gfColors.brandBlueLight} opacity={0.6} />
         </G>
       </Svg>
     </View>
