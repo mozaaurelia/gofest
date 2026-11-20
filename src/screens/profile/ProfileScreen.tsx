@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Svg, { Path, Circle } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
+import { useAuth } from "@/context/auth-context";
 import { useSavedTickets } from "@/context/saved-tickets-context";
 import { useProfileAvatar } from "@/context/profile-avatar-context";
 import { useProfileName } from "@/context/profile-name-context";
@@ -26,6 +27,7 @@ import AccountMenuItem, {
   AboutIcon,
   HelpIcon,
   LanguageIcon,
+  LogoutIcon,
   PrivacyIcon,
   RatingIcon,
   TermsIcon,
@@ -44,6 +46,7 @@ function QuickAction({ icon, label, onPress }: { icon: React.ReactNode; label: s
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
+  const { signOut } = useAuth();
   const [langOpen, setLangOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
@@ -60,6 +63,11 @@ export default function ProfileScreen() {
   const closeNameEditor = () => setNameOpen(false);
 
   const canSaveName = draftName.trim().length > 0;
+
+  const handleSignOut = () => {
+    signOut();
+    router.replace("/");
+  };
 
   const handleSaveName = () => {
     if (!canSaveName) return;
@@ -179,6 +187,8 @@ export default function ProfileScreen() {
             <AccountMenuItem icon={<PrivacyIcon />} label={t("profile.privacy")} onPress={() => Alert.alert(t("profile.privacy"), t("profile.privacyBody"))} />
             <View style={styles.divider} />
             <AccountMenuItem icon={<RatingIcon />} label={t("profile.giveRating")} value="v1.13.7" onPress={() => Alert.alert(t("profile.giveRating"), "v1.13.7")} />
+            <View style={styles.divider} />
+            <AccountMenuItem icon={<LogoutIcon />} label={t("auth.signOut")} onPress={handleSignOut} />
           </View>
 
           <View style={{ height: 24 }} />

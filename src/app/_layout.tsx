@@ -10,6 +10,10 @@ import { ProfileNameProvider } from "../context/profile-name-context";
 
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+  anchor: "auth/login",
+};
+
 function RootNavigator() {
   const { isAuthenticated } = useAuth();
 

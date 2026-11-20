@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { GoFestLogo, GoFestWordmark } from "@/components/splash";
+import AuthLogo from "@/components/auth/auth-logo";
 import { OnboardingBackground } from "@/components/onboarding";
 import AuthInput from "@/components/auth/auth-input";
 import AuthDatePicker from "@/components/auth/auth-date-picker";
@@ -44,8 +44,7 @@ export default function RegisterScreen() {
       <OnboardingBackground />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View entering={FadeInDown.duration(500).delay(50)} style={styles.logoRow}>
-          <GoFestLogo size={40} />
-          <GoFestWordmark size={26} />
+          <AuthLogo />
         </Animated.View>
 
         <Animated.Text entering={FadeInDown.duration(500).delay(120)} style={styles.title}>

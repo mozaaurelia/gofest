@@ -98,7 +98,7 @@ export default function OnboardingScreen() {
                 markOnboardingSeen();
                 router.replace("/auth/register" as any);
               }}
-              secondaryLabel={t("onboarding.vip.explore")}
+              secondaryLabel={t("auth.signIn")}
               onSecondaryPress={() => {
                 markOnboardingSeen();
                 router.replace("/auth/login" as any);
