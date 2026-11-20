@@ -61,42 +61,42 @@ export default function PaymentDetailSection({
 
 const styles = StyleSheet.create({
   wrap: {
-    marginHorizontal: 20,
-    marginTop: 26,
+    marginHorizontal: 16,
+    marginTop: 18,
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "800",
     color: "#0F2540",
-    marginBottom: 14,
+    marginBottom: 10,
   },
   row: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    gap: 16,
-    paddingVertical: 5,
+    gap: 12,
+    paddingVertical: 4,
   },
   labelWrap: {
     flex: 1,
   },
   label: {
-    fontSize: 15.5,
+    fontSize: 14,
     color: "#374151",
   },
   note: {
     marginTop: 1,
-    fontSize: 13,
+    fontSize: 12,
     color: "#6B7280",
   },
   value: {
-    fontSize: 15.5,
+    fontSize: 14,
     fontWeight: "600",
     color: "#111827",
     textAlign: "right",
   },
   dashed: {
-    marginTop: 14,
+    marginTop: 10,
     borderTopWidth: 1,
     borderTopColor: "#DDE3EA",
     borderStyle: "dashed",
@@ -105,15 +105,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 16,
+    marginTop: 12,
   },
   totalLabel: {
-    fontSize: 19,
+    fontSize: 16,
     fontWeight: "800",
     color: "#111827",
   },
   totalValue: {
-    fontSize: 19,
+    fontSize: 16,
     fontWeight: "900",
     color: "#111827",
   },

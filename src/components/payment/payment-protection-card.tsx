@@ -32,8 +32,8 @@ export default function PaymentProtectionCard() {
 
 const styles = StyleSheet.create({
   card: {
-    marginHorizontal: 20,
-    marginTop: 24,
+    marginHorizontal: 16,
+    marginTop: 16,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#DCE7FF",
@@ -41,29 +41,29 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   content: {
-    padding: 16,
+    padding: 14,
   },
   topRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 12,
+    gap: 10,
   },
   textWrap: {
     flex: 1,
   },
   title: {
-    fontSize: 15.5,
+    fontSize: 14,
     fontWeight: "800",
     color: "#111827",
   },
   price: {
     marginTop: 5,
-    fontSize: 14.5,
+    fontSize: 13,
     color: "#374151",
   },
   terms: {
     marginTop: 6,
-    fontSize: 14,
+    fontSize: 12.5,
     fontWeight: "700",
     color: gfColors.brandBlue,
     textDecorationLine: "underline",
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: gfColors.brandBlue,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
   changeText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "700",
     color: gfColors.brandBlue,
   },
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
     gap: 8,
     backgroundColor: "#16A34A",
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 11,
   },
   greenText: {
-    fontSize: 14.5,
+    fontSize: 13,
     fontWeight: "700",
     color: "#FFFFFF",
   },

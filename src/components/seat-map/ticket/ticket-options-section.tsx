@@ -25,7 +25,7 @@ export default function TicketOptionsSection({ quantities, onChange, items = TIC
 }
 
 const styles = StyleSheet.create({
-  wrap: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 8, backgroundColor: "#FFFFFF" },
+  wrap: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 8 },
   heading: { fontSize: 13, fontWeight: "800", color: "#1E293B", letterSpacing: 0.3 },
   list: { marginTop: 12, gap: 12 },
 });

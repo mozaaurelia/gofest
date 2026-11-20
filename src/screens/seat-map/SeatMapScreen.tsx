@@ -3,7 +3,6 @@ import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
-import { gfColors } from "@/constants/gf-theme";
 import { TICKET_SALE_ITEMS } from "@/constants/ticket-sale-data";
 import { useTranslation } from "@/context/language-context";
 import { eventAddress, eventDate } from "@/utils/event-i18n";
@@ -94,7 +93,7 @@ export default function SeatMapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "transparent",
   },
   scrollContent: {
     flexGrow: 1,
@@ -102,6 +101,6 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 8,
-    backgroundColor: "#F0F2F4",
+    backgroundColor: "rgba(18,99,228,0.06)",
   },
 });

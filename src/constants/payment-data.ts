@@ -9,7 +9,7 @@ export type PaymentMethod = {
   badge?: string;
   options: PaymentMethodOption[];
 };
-
+  
 export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     key: "creditCard",

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 8,
     paddingBottom: 24,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "transparent",
   },
   heading: {
     fontSize: 14,

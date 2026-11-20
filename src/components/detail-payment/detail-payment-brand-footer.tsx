@@ -1,19 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import GoFestLogo from "@/components/splash/GoFestLogo";
-import { gfColors } from "@/constants/gf-theme";
+import AuthLogo from "@/components/auth/auth-logo";
 
 export default function DetailPaymentBrandFooter() {
   return (
     <View style={styles.wrap}>
       <Text style={styles.title}>Dip Persembahkan oleh</Text>
 
-      <View style={styles.logoRow}>
-        <GoFestLogo size={34} />
-        <View style={styles.wordmarkRow}>
-          <Text style={styles.wordmarkGo}>go</Text>
-          <Text style={styles.wordmarkFest}>Fest!</Text>
-        </View>
+      <View style={styles.logo}>
+        <AuthLogo width={120} />
       </View>
 
       <Text style={styles.copyright}>© 2026 goFest!. Hak cipta dilindungi Undang-undang</Text>
@@ -31,35 +26,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: "800",
     color: "#111827",
   },
-  logoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    marginTop: 18,
-  },
-  wordmarkRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  wordmarkGo: {
-    fontSize: 30,
-    fontWeight: "900",
-    letterSpacing: 0.2,
-    color: gfColors.brandBlueDark,
-  },
-  wordmarkFest: {
-    fontSize: 30,
-    fontWeight: "900",
-    letterSpacing: 0.2,
-    color: "#2FA8C0",
+  logo: {
+    marginTop: 12,
   },
   copyright: {
-    marginTop: 18,
-    fontSize: 13,
+    marginTop: 10,
+    fontSize: 12,
     color: "#4B5563",
     textAlign: "center",
   },

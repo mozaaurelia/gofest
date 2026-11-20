@@ -24,12 +24,12 @@ export default function DetailPaymentMethodCard() {
 
 const styles = StyleSheet.create({
   wrap: {
-    marginHorizontal: 20,
-    marginTop: 36,
+    marginHorizontal: 16,
+    marginTop: 18,
   },
   title: {
-    marginBottom: 16,
-    fontSize: 20,
+    marginBottom: 10,
+    fontSize: 16,
     fontWeight: "800",
     color: "#0F2540",
   },
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    gap: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
   headerLabel: {
-    fontSize: 19,
+    fontSize: 16,
     fontWeight: "800",
     color: "#111827",
   },
@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#E5E7EB",
   },
   description: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    fontSize: 15.5,
-    lineHeight: 24,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 13.5,
+    lineHeight: 20,
     color: "#374151",
   },
 });

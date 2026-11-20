@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   body: {
-    paddingBottom: 8,
+    paddingBottom: 20,
   },
   sectionDivider: {
     height: 1,
-    marginTop: 16,
+    marginTop: 14,
     backgroundColor: "#EEF0F3",
   },
 });

@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import GoFestLogo from "./splash/GoFestLogo";
-import GoFestWordmark from "./splash/GoFestWordmark";
+import AuthLogo from "./auth/auth-logo";
 import GoFestSplashBackground from "./splash/GoFestSplashBackground";
 import { useGoFestSplashAnimation } from "./splash/useGoFestSplashAnimation";
 
@@ -12,12 +11,9 @@ type AnimatedSplashScreenProps = {
 
 export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenProps) {
   const { width } = useWindowDimensions();
-  const { bgOpacity, logoOpacity, logoScale, wordmarkOpacity, wordmarkTranslateY, exitOpacity, exitScale } =
-    useGoFestSplashAnimation(onFinish);
+  const { bgOpacity, logoOpacity, logoScale, exitOpacity, exitScale } = useGoFestSplashAnimation(onFinish);
 
-  const markSize = Math.min(96, Math.max(64, width * 0.25));
-  const wordmarkSize = Math.round(markSize * 0.72);
-  const gap = Math.round(markSize * 0.18);
+  const logoWidth = Math.min(270, Math.max(180, width * 0.62));
 
   const containerStyle = useAnimatedStyle(() => ({
     opacity: bgOpacity.value * exitOpacity.value,
@@ -28,21 +24,12 @@ export default function AnimatedSplashScreen({ onFinish }: AnimatedSplashScreenP
     transform: [{ scale: logoScale.value * exitScale.value }],
   }));
 
-  const wordmarkStyle = useAnimatedStyle(() => ({
-    opacity: wordmarkOpacity.value,
-    transform: [{ translateY: wordmarkTranslateY.value }, { scale: exitScale.value }],
-  }));
-
   return (
     <Animated.View style={[styles.root, containerStyle]}>
       <GoFestSplashBackground>
-        <View style={[styles.lockup, { gap }]}>
+        <View style={styles.lockup}>
           <Animated.View style={logoStyle}>
-            <GoFestLogo size={markSize} />
-          </Animated.View>
-
-          <Animated.View style={wordmarkStyle}>
-            <GoFestWordmark size={wordmarkSize} />
+            <AuthLogo width={logoWidth} />
           </Animated.View>
         </View>
       </GoFestSplashBackground>

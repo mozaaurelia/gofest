@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 8,
     paddingBottom: 12,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "transparent",
     borderBottomWidth: 1,
     borderBottomColor: "#EEF0F3",
   },

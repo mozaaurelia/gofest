@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   body: {
-    paddingBottom: 28,
+    paddingBottom: 20,
   },
 });

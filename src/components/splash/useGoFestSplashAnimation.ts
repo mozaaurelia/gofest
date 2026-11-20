@@ -8,8 +8,6 @@ export function useGoFestSplashAnimation(onFinish: () => void) {
   const bgOpacity = useSharedValue(0);
   const logoOpacity = useSharedValue(0);
   const logoScale = useSharedValue(0.78);
-  const wordmarkOpacity = useSharedValue(0);
-  const wordmarkTranslateY = useSharedValue(12);
   const exitOpacity = useSharedValue(1);
   const exitScale = useSharedValue(1);
 
@@ -27,10 +25,6 @@ export function useGoFestSplashAnimation(onFinish: () => void) {
       )
     );
 
-    // wordmark muncul setelah logo settle
-    wordmarkOpacity.value = withDelay(880, withTiming(1, { duration: 360, easing: EASE_OUT }));
-    wordmarkTranslateY.value = withDelay(880, withTiming(0, { duration: 360, easing: EASE_OUT }));
-
     // hold + fade-out transition ke halaman berikutnya
     exitOpacity.value = withDelay(
       1900,
@@ -45,8 +39,6 @@ export function useGoFestSplashAnimation(onFinish: () => void) {
     bgOpacity,
     logoOpacity,
     logoScale,
-    wordmarkOpacity,
-    wordmarkTranslateY,
     exitOpacity,
     exitScale,
   };

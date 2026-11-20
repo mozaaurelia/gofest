@@ -92,7 +92,7 @@ export default function DetailPaymentTicketCard({
 const styles = StyleSheet.create({
   card: {
     marginHorizontal: 16,
-    marginTop: 24,
+    marginTop: 16,
     borderWidth: 1,
     borderColor: "#DDE3EA",
     borderRadius: 12,
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
   },
   eventRow: {
     flexDirection: "row",
-    gap: 12,
-    padding: 16,
+    gap: 10,
+    padding: 12,
   },
   thumb: {
-    width: 64,
-    height: 64,
+    width: 58,
+    height: 58,
     borderRadius: 6,
     backgroundColor: "#EEF0F3",
   },
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#DCE7FF",
   },
   thumbFallbackText: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "900",
     color: gfColors.brandBlue,
   },
@@ -124,15 +124,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   eventTitle: {
-    fontSize: 17.5,
+    fontSize: 15,
     fontWeight: "800",
-    lineHeight: 23,
+    lineHeight: 20,
     color: "#111827",
   },
   eventMeta: {
-    marginTop: 6,
-    fontSize: 15.5,
-    lineHeight: 22,
+    marginTop: 4,
+    fontSize: 13,
+    lineHeight: 18,
     color: "#374151",
   },
   divider: {
@@ -142,48 +142,48 @@ const styles = StyleSheet.create({
   ticketRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 15,
+    gap: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
   },
   ticketInfo: {
     flex: 1,
   },
   ticketCategory: {
-    fontSize: 16.5,
+    fontSize: 15,
     color: "#111827",
   },
   ticketPrice: {
     marginTop: 3,
-    fontSize: 15,
+    fontSize: 13.5,
     color: "#9CA3AF",
   },
   customerSection: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 6,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 4,
   },
   customerHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    marginBottom: 16,
+    gap: 8,
+    marginBottom: 12,
   },
   customerTitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "800",
     color: "#111827",
   },
   field: {
-    marginBottom: 14,
+    marginBottom: 10,
   },
   fieldLabel: {
-    fontSize: 15,
+    fontSize: 12.5,
     color: "#9CA3AF",
   },
   fieldValue: {
-    marginTop: 4,
-    fontSize: 16.5,
+    marginTop: 3,
+    fontSize: 14.5,
     color: "#1F2937",
   },
 });
