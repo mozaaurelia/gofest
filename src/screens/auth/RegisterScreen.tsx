@@ -11,6 +11,7 @@ import AuthGenderSelect from "@/components/auth/auth-gender-select";
 import AuthButton from "@/components/auth/auth-button";
 import AuthSwitchLink from "@/components/auth/auth-switch-link";
 import { gfColors } from "@/constants/gf-theme";
+import { useAuth } from "@/context/auth-context";
 import { useTranslation } from "@/context/language-context";
 
 export default function RegisterScreen() {
@@ -21,7 +22,13 @@ export default function RegisterScreen() {
   const [birthDate, setBirthDate] = useState({ day: "", month: "", year: "" });
   const [gender, setGender] = useState("");
   const router = useRouter();
+  const { signUp } = useAuth();
   const { t } = useTranslation();
+
+  const handleSignUp = () => {
+    signUp({ email, firstName, lastName });
+    router.replace("/(tabs)" as any);
+  };
 
   const canSubmit =
     firstName.trim() !== "" &&
@@ -65,7 +72,7 @@ export default function RegisterScreen() {
           <AuthGenderSelect label={t("auth.gender")} value={gender} onChange={setGender} />
 
           <View style={{ marginTop: 4 }}>
-            <AuthButton label={t("auth.signUp")} onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
+            <AuthButton label={t("auth.signUp")} onPress={handleSignUp} disabled={!canSubmit} />
           </View>
         </Animated.View>
 

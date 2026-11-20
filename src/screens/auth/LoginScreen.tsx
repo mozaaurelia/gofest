@@ -9,13 +9,20 @@ import AuthInput from "@/components/auth/auth-input";
 import AuthButton from "@/components/auth/auth-button";
 import AuthSwitchLink from "@/components/auth/auth-switch-link";
 import { gfColors } from "@/constants/gf-theme";
+import { useAuth } from "@/context/auth-context";
 import { useTranslation } from "@/context/language-context";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { signIn } = useAuth();
   const { t } = useTranslation();
+
+  const handleSignIn = () => {
+    signIn(email);
+    router.replace("/(tabs)" as any);
+  };
 
   const canSubmit =
     email.includes("@") &&
@@ -60,7 +67,7 @@ export default function LoginScreen() {
 
           <Text style={styles.forgot}>{t("auth.forgot")}</Text>
 
-          <AuthButton label={t("auth.signIn")} onPress={() => router.replace("/(tabs)" as any)} disabled={!canSubmit} />
+          <AuthButton label={t("auth.signIn")} onPress={handleSignIn} disabled={!canSubmit} />
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(500).delay(340)}>

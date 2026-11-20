@@ -13,6 +13,7 @@ import {
 } from "@/components/onboarding";
 import BlueMetallicBackground from "@/components/ui/blue-metallic-background";
 import { useTranslation } from "@/context/language-context";
+import { markOnboardingSeen } from "@/services/auth";
 
 type OnboardingStep = 1 | 2 | 3 | 4;
 
@@ -93,9 +94,15 @@ export default function OnboardingScreen() {
             />
             <OnboardingCta
               primaryLabel={t("onboarding.vip.register")}
-              onPrimaryPress={() => router.replace("/auth/register" as any)}
+              onPrimaryPress={() => {
+                markOnboardingSeen();
+                router.replace("/auth/register" as any);
+              }}
               secondaryLabel={t("onboarding.vip.explore")}
-              onSecondaryPress={() => router.replace("/(tabs)" as any)}
+              onSecondaryPress={() => {
+                markOnboardingSeen();
+                router.replace("/auth/login" as any);
+              }}
               variant="light"
             />
           </>
