@@ -6,6 +6,11 @@ import { ChevronDownIcon, MethodIcon } from "./payment-icons";
 
 const BLUE = gfColors.brandBlue;
 
+type PaymentMethodSectionProps = {
+  selectedOption: string;
+  onSelectOption: (optionId: string) => void;
+};
+
 type AccordionProps = {
   method: PaymentMethod;
   expanded: boolean;
@@ -59,9 +64,8 @@ function PaymentAccordion({ method, expanded, selectedOption, onToggle, onSelect
   );
 }
 
-export default function PaymentMethodSection() {
+export default function PaymentMethodSection({ selectedOption, onSelectOption }: PaymentMethodSectionProps) {
   const [expandedKey, setExpandedKey] = useState<string | null>("creditCard");
-  const [selectedOption, setSelectedOption] = useState("credit-debit");
 
   return (
     <View style={styles.wrap}>
@@ -75,7 +79,7 @@ export default function PaymentMethodSection() {
           selectedOption={selectedOption}
           onToggle={() => setExpandedKey((prev) => (prev === method.key ? null : method.key))}
           onSelect={(optionId) => {
-            setSelectedOption(optionId);
+            onSelectOption(optionId);
             setExpandedKey(method.key);
           }}
         />

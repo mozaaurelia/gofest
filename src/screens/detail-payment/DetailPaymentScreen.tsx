@@ -20,12 +20,13 @@ import {
 } from "@/components/detail-payment";
 
 export default function DetailPaymentScreen() {
-  const { id, qty, price, category, timer } = useLocalSearchParams<{
+  const { id, qty, price, category, timer, paymentMethod } = useLocalSearchParams<{
     id: string;
     qty: string;
     price: string;
     category: string;
     timer: string;
+    paymentMethod?: string;
   }>();
 
   const concert = getConcertDetailById(id);
@@ -39,6 +40,7 @@ export default function DetailPaymentScreen() {
   );
 
   const targetId = Array.isArray(id) ? id[0] : id;
+  const selectedPaymentMethodId = Array.isArray(paymentMethod) ? paymentMethod[0] : paymentMethod;
 
   const handlePay = () => {
     router.push({
@@ -81,7 +83,7 @@ export default function DetailPaymentScreen() {
             customer={PAYMENT_CUSTOMER}
           />
 
-          <DetailPaymentMethodCard />
+          <DetailPaymentMethodCard paymentMethodId={selectedPaymentMethodId} />
 
           <View style={styles.sectionDivider} />
 
@@ -106,7 +108,7 @@ export default function DetailPaymentScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "transparent",
   },
   scroll: {
     flex: 1,

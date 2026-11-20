@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
@@ -17,6 +17,7 @@ import {
 } from "@/components/payment";
 
 export default function PaymentScreen() {
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState("credit-debit");
   const { id, qty, price, category } = useLocalSearchParams<{
     id: string;
     qty: string;
@@ -49,6 +50,7 @@ export default function PaymentScreen() {
         price: String(basePrice),
         category: ticketCategory,
         timer: String(secondsLeft),
+        paymentMethod: selectedPaymentMethodId,
       },
     } as any);
   };
@@ -66,7 +68,10 @@ export default function PaymentScreen() {
 
         <View style={styles.body}>
           <PaymentPromoSection />
-          <PaymentMethodSection />
+          <PaymentMethodSection
+            selectedOption={selectedPaymentMethodId}
+            onSelectOption={setSelectedPaymentMethodId}
+          />
           <PaymentPromoBanner />
           <PaymentDetailSection
             category={ticketCategory}

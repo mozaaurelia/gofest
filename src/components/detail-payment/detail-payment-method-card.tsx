@@ -1,22 +1,41 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { PAYMENT_METHODS } from "@/constants/payment-data";
 import { QRIS_DESCRIPTION } from "@/constants/detail-payment-data";
-import { QrisMark } from "./detail-payment-icons";
+import { MethodIcon } from "@/components/payment/payment-icons";
 
-export default function DetailPaymentMethodCard() {
+type Props = {
+  paymentMethodId?: string;
+};
+
+const paymentOptions = PAYMENT_METHODS.flatMap((method) =>
+  method.options.map((option) => ({ ...option, methodKey: method.key }))
+);
+
+export default function DetailPaymentMethodCard({ paymentMethodId }: Props) {
+  const selectedMethod = paymentOptions.find((option) => option.id === paymentMethodId) ?? {
+    id: "credit-debit",
+    label: "Credit / Debit Card",
+    methodKey: "creditCard",
+  };
+  const description =
+    selectedMethod.id === "qris"
+      ? QRIS_DESCRIPTION
+      : `Selesaikan pembayaran menggunakan ${selectedMethod.label} yang kamu pilih.`;
+
   return (
     <View style={styles.wrap}>
       <Text style={styles.title}>Metode Pembayaran</Text>
 
       <View style={styles.card}>
         <View style={styles.header}>
-          <QrisMark size={46} />
-          <Text style={styles.headerLabel}>QRIS</Text>
+          <MethodIcon name={selectedMethod.methodKey} size={38} />
+          <Text style={styles.headerLabel}>{selectedMethod.label}</Text>
         </View>
 
         <View style={styles.divider} />
 
-        <Text style={styles.description}>{QRIS_DESCRIPTION}</Text>
+        <Text style={styles.description}>{description}</Text>
       </View>
     </View>
   );
