@@ -37,7 +37,16 @@ export default function TicketScreen() {
 
   const data: CalendarEvent[] = activeTab === "purchased" ? PURCHASED : savedEvents;
   const isEmpty = data.length === 0;
-  const seenDates = useMemo(() => new Set<string>(), [activeTab, savedEvents]);
+  const firstEventIndexes = useMemo(() => {
+    const seenDates = new Set<string>();
+    return new Set(
+      data.flatMap((event, index) => {
+        if (seenDates.has(event.dateISO)) return [];
+        seenDates.add(event.dateISO);
+        return [index];
+      })
+    );
+  }, [data]);
 
   return (
     <SafeAreaView style={[styles.safe, isEmpty && styles.safeEmpty]} edges={["top"]}>
@@ -62,10 +71,8 @@ export default function TicketScreen() {
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
             {data.map((event, idx) => {
-              const isFirstOfDate = !seenDates.has(event.dateISO);
-              if (isFirstOfDate) seenDates.add(event.dateISO);
               const isLast = idx === data.length - 1;
-              return <TicketEventCard key={event.id} event={event} isFirstOfDate={isFirstOfDate} isLast={isLast} />;
+              return <TicketEventCard key={event.id} event={event} isFirstOfDate={firstEventIndexes.has(idx)} isLast={isLast} />;
             })}
           </ScrollView>
         </>
