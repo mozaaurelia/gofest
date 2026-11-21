@@ -115,7 +115,7 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        <HomeBackground activeProgress={activeProgress} />
+        <HomeBackground activeProgress={activeProgress} accentColors={HERO_EVENTS.map((event) => event.accent)} />
 
         <SafeAreaView style={styles.flex}>
           <HomeNavbar />

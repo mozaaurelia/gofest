@@ -56,7 +56,7 @@ export default function HeroCard({ event, index, scrollX, snapInterval, cardWidt
       onPress={() => router.push(`/concert/${event.id}`)}
     >
       <Animated.View style={[styles.group, { width: cardWidth }, cardStyle]}>
-        <View style={[styles.frame, { width: cardWidth, height: cardHeight }]}>
+        <View style={[styles.frame, { width: cardWidth, height: cardHeight, borderColor: event.accent }]}>
           <View style={styles.posterClip}>
             <Image source={event.image} style={StyleSheet.absoluteFill} contentFit="cover" transition={220} />
           </View>

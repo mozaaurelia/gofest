@@ -45,7 +45,12 @@ export default function DetailPaymentScreen() {
   const handlePay = () => {
     router.push({
       pathname: "/boarding-pass/[id]",
-      params: { id: targetId ?? "h1", qty: String(ticketQty), price: String(total) },
+      params: {
+        id: targetId ?? "h1",
+        qty: String(ticketQty),
+        price: String(total),
+        category: ticketCategory,
+      },
     } as any);
   };
 

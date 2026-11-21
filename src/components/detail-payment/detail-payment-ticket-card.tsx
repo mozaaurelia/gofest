@@ -65,7 +65,7 @@ export default function DetailPaymentTicketCard({
         <View style={styles.ticketInfo}>
           <Text style={styles.ticketCategory}>{category}</Text>
           <Text style={styles.ticketPrice}>
-            {qty} ticket x {formatRupiah(price)}
+            {qty} tiket • Subtotal {formatRupiah(price)}
           </Text>
         </View>
       </View>

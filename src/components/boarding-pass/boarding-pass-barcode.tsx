@@ -2,15 +2,38 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Rect } from "react-native-svg";
 
-const BAR_WIDTHS = [2, 1, 3, 1, 2, 1, 4, 1, 2, 3, 1, 2, 1, 3, 2, 1, 2, 4, 1, 2, 1, 3, 2, 1, 4, 2, 1, 3, 1, 2, 4, 1, 2, 1, 3, 2, 1, 2, 3, 1, 4, 1, 2, 1, 3, 2, 4, 1, 2, 1, 2, 3, 1, 4];
+const SIZE = 25;
+
+function isDarkModule(row: number, column: number) {
+  const finderOrigin =
+    row < 7 && column < 7
+      ? [0, 0]
+      : row < 7 && column >= SIZE - 7
+        ? [0, SIZE - 7]
+        : row >= SIZE - 7 && column < 7
+          ? [SIZE - 7, 0]
+          : null;
+
+  if (finderOrigin) {
+    const [top, left] = finderOrigin;
+    const x = column - left;
+    const y = row - top;
+    return x === 0 || x === 6 || y === 0 || y === 6 || (x >= 2 && x <= 4 && y >= 2 && y <= 4);
+  }
+
+  return (row * 13 + column * 7 + row * column * 3) % 11 < 5;
+}
 
 export default function BoardingPassBarcode() {
   return (
     <View style={styles.wrap}>
-      <Svg viewBox="0 0 260 56" width="100%" height={56}>
-        {BAR_WIDTHS.map((w, i) => {
-          const x = BAR_WIDTHS.slice(0, i).reduce((total, width) => total + width * 2.2 + 1.2, 0);
-          return i % 2 === 0 ? <Rect key={i} x={x} y={0} width={w * 2.2} height={56} fill="#111827" /> : null;
+      <Svg viewBox={`0 0 ${SIZE} ${SIZE}`} width={156} height={156}>
+        {Array.from({ length: SIZE * SIZE }, (_, index) => {
+          const row = Math.floor(index / SIZE);
+          const column = index % SIZE;
+          return isDarkModule(row, column) ? (
+            <Rect key={index} x={column} y={row} width={1} height={1} fill="#111111" />
+          ) : null;
         })}
       </Svg>
     </View>
@@ -18,5 +41,5 @@ export default function BoardingPassBarcode() {
 }
 
 const styles = StyleSheet.create({
-  wrap: { alignItems: "center", justifyContent: "center", paddingHorizontal: 12 },
+  wrap: { alignItems: "center", justifyContent: "center", marginTop: 16 },
 });

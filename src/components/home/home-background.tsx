@@ -23,9 +23,10 @@ const SWEEP_SHEEN = ["rgba(255,255,255,0)", "rgba(255,255,255,0.24)", "rgba(255,
 
 type HomeBackgroundProps = {
   activeProgress?: SharedValue<number>;
+  accentColors?: string[];
 };
 
-export default function HomeBackground({ activeProgress }: HomeBackgroundProps) {
+export default function HomeBackground({ activeProgress, accentColors = [] }: HomeBackgroundProps) {
   const { width, height } = useWindowDimensions();
   const shimmer = useSharedValue(0);
 
@@ -34,11 +35,10 @@ export default function HomeBackground({ activeProgress }: HomeBackgroundProps) 
   }, [shimmer]);
 
   const accentStyle = useAnimatedStyle(() => {
-    if (!activeProgress) return {};
-    const progress = Math.max(0, Math.min(4, activeProgress.value));
-    const base = interpolateColor(progress, [0, 1, 2, 3, 4], ["#B7C8D1", "#C6D9A8", "#B8BDE2", "#E3D6A7", "#C6D9A8"]);
-    return { backgroundColor: base };
-  });
+    if (!activeProgress || accentColors.length === 0) return {};
+    const progress = Math.max(0, Math.min(accentColors.length - 1, activeProgress.value));
+    return { backgroundColor: interpolateColor(progress, accentColors.map((_, index) => index), accentColors) };
+  }, [accentColors]);
 
   const sweepStyle = useAnimatedStyle(() => ({
     transform: [

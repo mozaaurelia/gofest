@@ -3,51 +3,27 @@ import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
+import { PAYMENT_CUSTOMER } from "@/constants/detail-payment-data";
 import { BoardingPassCard, BoardingPassHeader } from "@/components/boarding-pass";
 import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { eventAddress, eventDate } from "@/utils/event-i18n";
 import { OnboardingBackground } from "@/components/onboarding";
 
-function toMinutes(time: string) {
-  const [h, m] = time.split(":").map(Number);
-  return h * 60 + m;
-}
-
-function formatClock(totalMinutes: number) {
-  const normalized = ((totalMinutes % 1440) + 1440) % 1440;
-  const h = Math.floor(normalized / 60);
-  const m = normalized % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-}
-
-// Ambil jam mulai/selesai dari data konser, contoh: "19:00 - 22:00 WIB"
-function getShowTimes(timeRange?: string) {
-  if (!timeRange) return null;
-  const match = timeRange.match(/(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/);
-  if (!match) return null;
-  const start = `${match[1].padStart(2, "0")}:${match[2]}`;
-  const end = `${match[3].padStart(2, "0")}:${match[4]}`;
-  return { boarding: formatClock(toMinutes(start) - 30), start, end };
-}
-
 export default function BoardingPassScreen() {
-  const { id, qty, price } = useLocalSearchParams<{ id: string; qty: string; price: string }>();
+  const { id, qty, price, category } = useLocalSearchParams<{
+    id: string;
+    qty: string;
+    price: string;
+    category: string;
+  }>();
   const { t } = useTranslation();
   const concert = getConcertDetailById(id);
-  const totalQty = qty ? parseInt(String(qty), 10) : 1;
-
-  // Mapping data konser ke boarding pass biar terasa personal, tapi layout tetap persis contoh
-  // Jika ada konser, pakai inisial kota venue sebagai route, passenger = moza
-  const fromCode = "CGK";
-  const fromCity = concert ? concert.address.split(",")[0] : "Paris, France";
-  const toCode = "JKT";
-  const toCity = "Jakarta, Indonesia";
-  const dateLabel = concert ? eventDate(t, concert) : "March 12, Tue";
-  const showTimes = getShowTimes(concert?.timeRange);
-  const passenger = "moza";
-  // Seat diambil dari kategori — mock 1C, gate 37 seperti contoh
-  const seat = totalQty > 1 ? t("boarding.seats", { qty: totalQty }) : "1C";
+  const parsedQty = Number.parseInt(String(qty), 10);
+  const totalQty = Number.isFinite(parsedQty) && parsedQty > 0 ? parsedQty : null;
+  const parsedPrice = Number(price);
+  const totalPrice = Number.isFinite(parsedPrice) && parsedPrice >= 0 ? parsedPrice : null;
+  const ticketCategory = typeof category === "string" && category.trim() ? category : "—";
 
   return (
     <View style={styles.root}>
@@ -56,28 +32,21 @@ export default function BoardingPassScreen() {
         <BoardingPassHeader />
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} bounces={false}>
           <BoardingPassCard
-            code={`AB ${id ?? "4723211"}`.toUpperCase()}
-            aircraft="gofest"
-            fromCode={fromCode}
-            fromCity={fromCity}
-            toCode={toCode}
-            toCity={toCity}
-            boardingTime={showTimes?.boarding ?? "02:20 AM"}
-            departure={showTimes?.start ?? "03:00 AM"}
-            arrival={showTimes?.end ?? "11:15 AM"}
-            date={dateLabel}
-            clazz={totalQty > 1 ? t("boarding.classTickets", { qty: totalQty }) : t("boarding.classEconomy")}
-            passenger={passenger}
-            terminal="1"
-            gate="37"
-            seat={seat}
+            eventTitle={concert?.title ?? t("boarding.eventUnavailable")}
+            venue={concert ? eventAddress(t, concert) : ""}
+            date={concert ? eventDate(t, concert) : ""}
+            category={ticketCategory}
+            quantity={totalQty}
+            passenger={PAYMENT_CUSTOMER.name}
           />
 
-          {/* info tambahan total */}
           <View style={styles.summary}>
-            <Text style={styles.summaryText}>
-              {t("boarding.summary", { qty: totalQty })} • {price ? `Rp. ${Number(price).toLocaleString("id-ID")}` : ""}
-            </Text>
+            {totalQty !== null ? (
+              <Text style={styles.summaryText}>
+                {t("boarding.summary", { qty: totalQty })}
+                {totalPrice !== null ? ` • Rp. ${totalPrice.toLocaleString("id-ID")}` : ""}
+              </Text>
+            ) : null}
             {concert ? (
               <Text style={styles.summarySub} numberOfLines={2}>
                 {concert.title} — {eventAddress(t, concert)}

@@ -1,125 +1,76 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { gfColors } from "@/constants/gf-theme";
+import Svg, { Path } from "react-native-svg";
 import { useTranslation } from "@/context/language-context";
 import BoardingPassBarcode from "./boarding-pass-barcode";
 
 type Props = {
-  code?: string;
-  aircraft?: string;
-  fromCode?: string;
-  fromCity?: string;
-  toCode?: string;
-  toCity?: string;
-  boardingTime?: string;
-  departure?: string;
-  arrival?: string;
-  date?: string;
-  clazz?: string;
-  passenger?: string;
-  terminal?: string;
-  gate?: string;
-  seat?: string;
+  eventTitle: string;
+  venue: string;
+  date: string;
+  category: string;
+  quantity: number | null;
+  passenger: string;
 };
 
 export default function BoardingPassCard({
-  code = "AB 4723211",
-  aircraft = "gofest",
-  fromCode = "CDG",
-  fromCity = "Paris, France",
-  toCode = "JFK",
-  toCity = "New York, USA",
-  boardingTime = "02:20 AM",
-  departure = "03:00 AM",
-  arrival = "11:15 AM",
-  date = "March 12, Tue",
-  clazz = "Economy",
-  passenger = "John Sandler",
-  terminal = "1",
-  gate = "37",
-  seat = "1C",
+  eventTitle,
+  venue,
+  date,
+  category,
+  quantity,
+  passenger,
 }: Props) {
   const { t } = useTranslation();
   return (
     <View style={styles.card}>
-      {/* notches kiri kanan seperti contoh */}
-      <View style={[styles.notch, styles.notchLeft]} />
-      <View style={[styles.notch, styles.notchRight]} />
-
-      <View style={styles.inner}>
-        {/* top: code + aircraft */}
-        <View style={styles.topRow}>
-          <Text style={styles.code}>{code}</Text>
-          <Text style={styles.aircraft}>{aircraft}</Text>
+      <View style={styles.topBand}>
+        <Text style={styles.category} numberOfLines={2}>{category}</Text>
+        <Svg viewBox="0 0 24 24" width={24} height={24} fill="none">
+          <Path d="M4.5 7.5h15v9h-15z" stroke="#7D350C" strokeWidth={1.8} strokeLinejoin="round" />
+          <Path d="M8 10h8M8 14h5" stroke="#7D350C" strokeWidth={1.8} strokeLinecap="round" />
+          <Path d="M7 4.5v3M17 16.5v3" stroke="#7D350C" strokeWidth={1.8} strokeLinecap="round" />
+        </Svg>
+      </View>
+      <View style={styles.eventSection}>
+        <Text style={styles.eventTitle} numberOfLines={2}>{eventTitle}</Text>
+        <View style={styles.venuePill}>
+          <Text style={styles.venue} numberOfLines={2}>{venue || t("boarding.eventUnavailable")}</Text>
         </View>
+      </View>
 
-        {/* route */}
-        <View style={styles.routeRow}>
-          <View style={styles.routeSide}>
-            <Text style={styles.routeCode}>{fromCode}</Text>
-            <Text style={styles.routeCity}>{fromCity}</Text>
-          </View>
-          <View style={styles.routeSideAlignRight}>
-            <Text style={[styles.routeCode, styles.textRight]}>{toCode}</Text>
-            <Text style={[styles.routeCity, styles.textRight]}>{toCity}</Text>
-          </View>
-        </View>
+      <View style={styles.dashedLine} />
 
-        {/* 3 columns */}
-        <View style={styles.threeCol}>
-          <View style={styles.col}>
-            <Text style={styles.label}>{t("boarding.boardingTime")}</Text>
-            <Text style={styles.value}>{boardingTime}</Text>
-          </View>
-          <View style={styles.col}>
-            <Text style={styles.label}>{t("boarding.departure")}</Text>
-            <Text style={styles.value}>{departure}</Text>
-          </View>
-          <View style={styles.col}>
-            <Text style={styles.label}>{t("boarding.arrival")}</Text>
-            <Text style={styles.value}>{arrival}</Text>
-          </View>
+      <View style={styles.detailsRow}>
+        <View style={styles.detail}>
+          <Text style={styles.label}>{t("boarding.date")}</Text>
+          <Text style={styles.value} numberOfLines={2}>{date || "—"}</Text>
         </View>
+        <View style={styles.detailDivider} />
+        <View style={styles.detail}>
+          <Text style={styles.label}>{t("boarding.ticketQty")}</Text>
+          <Text style={styles.value}>{quantity ?? "—"}</Text>
+        </View>
+      </View>
 
-        {/* date / class */}
-        <View style={styles.twoCol}>
-          <View style={styles.col2}>
-            <Text style={styles.label}>{t("boarding.date")}</Text>
-            <Text style={styles.valueSmall}>{date}</Text>
-          </View>
-          <View style={styles.col2}>
-            <Text style={styles.label}>{t("boarding.class")}</Text>
-            <Text style={styles.valueSmall}>{clazz}</Text>
-          </View>
-        </View>
+      <View style={styles.dashedLine} />
 
-        {/* passenger */}
-        <View style={styles.passengerBlock}>
-          <Text style={styles.label}>{t("boarding.passenger")}</Text>
-          <Text style={styles.passengerName}>{passenger}</Text>
-        </View>
-
-        {/* dashed line + barcode */}
-        <View style={styles.dashedWrap}>
-          <View style={styles.dashedLine} />
-        </View>
+      <View style={styles.ticketSection}>
+        <Text style={styles.ticketLabel}>{t("boarding.passenger")}</Text>
+        <Text style={styles.passenger}>{passenger}</Text>
         <BoardingPassBarcode />
+        <Text style={styles.entryNote}>{t("boarding.entryNote")}</Text>
+      </View>
 
-        {/* footer terminal gate seat */}
-        <View style={styles.footerRow}>
-          <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>{t("boarding.terminal")}</Text>
-            <Text style={styles.footerValue}>{terminal}</Text>
-          </View>
-          <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>{t("boarding.gate")}</Text>
-            <Text style={styles.footerValue}>{gate}</Text>
-          </View>
-          <View style={styles.footerCol}>
-            <Text style={styles.footerLabel}>{t("boarding.seat")}</Text>
-            <Text style={styles.footerValue}>{seat}</Text>
-          </View>
+      <View style={styles.bottomBand}>
+        <View style={styles.bottomLabel}>
+          <Svg viewBox="0 0 24 24" width={17} height={17} fill="none">
+            <Path d="M12 3.5 19 6v5.5c0 4.1-2.8 7.3-7 9-4.2-1.7-7-4.9-7-9V6l7-2.5Z" stroke="#7D350C" strokeWidth={1.8} strokeLinejoin="round" />
+            <Path d="m9 11.5 2 2 4-4" stroke="#7D350C" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" />
+          </Svg>
+          <Text style={styles.bottomText}>{t("boarding.footer")}</Text>
         </View>
+        <Text style={styles.brand}>goFest!</Text>
       </View>
     </View>
   );
@@ -128,56 +79,60 @@ export default function BoardingPassCard({
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 20,
+    borderRadius: 18,
     overflow: "hidden",
     marginHorizontal: 16,
-    // shadow biar ngangkat dari background terang
-    shadowColor: "#1A2E4D",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.24,
-    shadowRadius: 16,
-    elevation: 8,
-    position: "relative",
+    shadowColor: "#6A341B",
+    shadowOffset: { width: 0, height: 7 },
+    shadowOpacity: 0.18,
+    shadowRadius: 14,
+    elevation: 6,
   },
-  notch: {
-    position: "absolute",
-    top: "68%",
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: gfColors.bg,
-    zIndex: 2,
+  topBand: {
+    minHeight: 58,
+    paddingHorizontal: 20,
+    paddingVertical: 13,
+    backgroundColor: "#F87528",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  notchLeft: { left: -11 },
-  notchRight: { right: -11 },
-  inner: { paddingHorizontal: 20, paddingTop: 18, paddingBottom: 18 },
-  topRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  code: { fontSize: 11, color: gfColors.textMuted, fontWeight: "600", letterSpacing: 0.4 },
-  aircraft: { fontSize: 11, color: gfColors.textMuted, fontWeight: "700", letterSpacing: 0.3 },
-  routeRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 18 },
-  routeSide: { flex: 1 },
-  routeSideAlignRight: { flex: 1, alignItems: "flex-end" },
-  routeCode: { fontSize: 28, fontWeight: "800", color: gfColors.text, letterSpacing: 0.5 },
-  routeCity: { fontSize: 11, color: gfColors.textMuted, marginTop: 2 },
-  textRight: { textAlign: "right" },
-  threeCol: { flexDirection: "row", justifyContent: "space-between", marginTop: 18, gap: 8 },
-  col: { flex: 1 },
-  twoCol: { flexDirection: "row", gap: 16, marginTop: 14 },
-  col2: { flex: 1 },
-  label: { fontSize: 11, color: gfColors.textMuted, fontWeight: "500" },
-  value: { fontSize: 13, fontWeight: "800", color: gfColors.text, marginTop: 4 },
-  valueSmall: { fontSize: 13, fontWeight: "700", color: gfColors.text, marginTop: 4 },
-  passengerBlock: { marginTop: 14 },
-  passengerName: { fontSize: 18, fontWeight: "800", color: gfColors.text, marginTop: 4 },
-  dashedWrap: { marginTop: 18, marginBottom: 14, alignItems: "center" },
+  category: { flex: 1, marginRight: 12, color: "#7D350C", fontSize: 16, fontWeight: "800" },
+  eventSection: { alignItems: "center", paddingHorizontal: 18, paddingTop: 24, paddingBottom: 20 },
+  eventTitle: { color: "#171717", fontSize: 21, fontWeight: "900", textAlign: "center" },
+  venuePill: {
+    maxWidth: "100%",
+    marginTop: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 18,
+    backgroundColor: "#F3F4F6",
+  },
+  venue: { color: "#4B5563", fontSize: 13, fontWeight: "600", textAlign: "center" },
   dashedLine: {
-    width: "100%",
+    marginHorizontal: 18,
     borderTopWidth: 1,
-    borderColor: "#E2E5EA",
+    borderColor: "#E5E7EB",
     borderStyle: "dashed",
   },
-  footerRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 14 },
-  footerCol: { flex: 1, alignItems: "center" },
-  footerLabel: { fontSize: 11, color: gfColors.textMuted, fontWeight: "500" },
-  footerValue: { fontSize: 22, fontWeight: "800", color: gfColors.text, marginTop: 4 },
+  detailsRow: { minHeight: 92, flexDirection: "row", alignItems: "center", paddingVertical: 14 },
+  detail: { flex: 1, alignItems: "center", paddingHorizontal: 10 },
+  detailDivider: { width: 1, height: 56, backgroundColor: "#E5E7EB" },
+  label: { color: "#9CA3AF", fontSize: 12, fontWeight: "600", textTransform: "uppercase" },
+  value: { marginTop: 6, color: "#171717", fontSize: 17, fontWeight: "800", textAlign: "center" },
+  ticketSection: { alignItems: "center", paddingHorizontal: 16, paddingTop: 18, paddingBottom: 16 },
+  ticketLabel: { color: "#9CA3AF", fontSize: 12, fontWeight: "600", textTransform: "uppercase" },
+  passenger: { marginTop: 4, color: "#171717", fontSize: 16, fontWeight: "800", textAlign: "center" },
+  entryNote: { marginTop: 10, color: "#9CA3AF", fontSize: 12, textAlign: "center" },
+  bottomBand: {
+    minHeight: 50,
+    paddingHorizontal: 16,
+    backgroundColor: "#F87528",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  bottomLabel: { flexDirection: "row", alignItems: "center", gap: 6 },
+  bottomText: { color: "#7D350C", fontSize: 12, fontWeight: "800" },
+  brand: { color: "#7D350C", fontSize: 15, fontWeight: "900", letterSpacing: 0.5 },
 });
