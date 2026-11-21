@@ -8,25 +8,24 @@ import Animated, {
   Easing,
   runOnJS,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { router } from "expo-router";
 import { HERO_EVENTS } from "../../constants/home-data";
-import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
-import { OnboardingBackground } from "@/components/onboarding";
 import CarouselDots from "./carousel-dots";
 import HeroCard from "./hero-card";
 import HomeNavbar from "./home-navbar";
 import NewEventBanner from "./new-event-banner";
+import HomeBackground from "./home-background";
 
 const CARD_WIDTH_RATIO = 0.55;
 const CARD_MAX_WIDTH = 300;
 const CARD_ASPECT = 1.31;
 const CARD_GAP_RATIO = 0.17;
-const TINT_OPACITY = 0.08;
 
 export default function HeroCarousel() {
   const { width } = useWindowDimensions();
@@ -43,6 +42,7 @@ export default function HeroCarousel() {
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
   const parallaxX = useSharedValue(0);
+  const activeProgress = useDerivedValue(() => -translateX.value / snapInterval);
 
   // Web: card strip ikut posisi kursor tanpa perlu drag
   const webPointerProps =
@@ -115,8 +115,7 @@ export default function HeroCarousel() {
   return (
     <GestureHandlerRootView style={styles.flex} collapsable={false}>
       <View style={styles.container} {...webPointerProps}>
-        <OnboardingBackground />
-        <View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.tint]} />
+        <HomeBackground activeProgress={activeProgress} />
 
         <SafeAreaView style={styles.flex}>
           <HomeNavbar />
@@ -159,7 +158,6 @@ export default function HeroCarousel() {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   container: { flex: 1, overflow: "hidden" },
-  tint: { backgroundColor: gfColors.brandBlue, opacity: TINT_OPACITY },
   stage: { flex: 1, justifyContent: "center" },
   carouselWrap: { overflow: "hidden", paddingTop: 12, paddingBottom: 16 },
   slot: { position: "absolute", top: 14, alignItems: "center" },

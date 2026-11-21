@@ -40,7 +40,7 @@ export default function WristbandScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "transparent",
   },
   scrollContent: {
     flexGrow: 1,

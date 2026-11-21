@@ -57,7 +57,7 @@ export default function ConcertDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: gfColors.bg },
+  container: { flex: 1, backgroundColor: "transparent" },
   scrollContent: { flexGrow: 1, paddingBottom: 110 },
   headline: { paddingHorizontal: 20, paddingTop: 18 },
   headlineRow: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   headlineTour: { fontSize: 16, color: gfColors.teal, fontWeight: "700" },
   sheet: {
     flex: 1,
-    backgroundColor: gfColors.bg,
+    backgroundColor: "rgba(247,251,255,0.92)",
     marginTop: 6,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

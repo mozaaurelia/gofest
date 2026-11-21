@@ -5,6 +5,8 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from "react-native-svg";
 import Animated, {
   Easing,
   interpolate,
+  interpolateColor,
+  SharedValue,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -19,13 +21,24 @@ const SCRIM_OPACITY = 0.48;
 const BRUSHED_SHEEN = ["rgba(255,255,255,0)", "rgba(255,255,255,0.16)", "rgba(255,255,255,0)"] as const;
 const SWEEP_SHEEN = ["rgba(255,255,255,0)", "rgba(255,255,255,0.24)", "rgba(255,255,255,0)"] as const;
 
-export default function HomeBackground() {
+type HomeBackgroundProps = {
+  activeProgress?: SharedValue<number>;
+};
+
+export default function HomeBackground({ activeProgress }: HomeBackgroundProps) {
   const { width, height } = useWindowDimensions();
   const shimmer = useSharedValue(0);
 
   useEffect(() => {
     shimmer.value = withRepeat(withTiming(1, { duration: 6800, easing: Easing.inOut(Easing.ease) }), -1, true);
   }, [shimmer]);
+
+  const accentStyle = useAnimatedStyle(() => {
+    if (!activeProgress) return {};
+    const progress = Math.max(0, Math.min(4, activeProgress.value));
+    const base = interpolateColor(progress, [0, 1, 2, 3, 4], ["#B7C8D1", "#C6D9A8", "#B8BDE2", "#E3D6A7", "#C6D9A8"]);
+    return { backgroundColor: base };
+  });
 
   const sweepStyle = useAnimatedStyle(() => ({
     transform: [
@@ -40,6 +53,7 @@ export default function HomeBackground() {
       {/* Dasar metalik + scrim slate yang sudah dipakai homepage */}
       <MetallicBackground />
       <View style={[StyleSheet.absoluteFill, styles.scrim]} />
+      <Animated.View style={[StyleSheet.absoluteFill, styles.accentWash, accentStyle]} />
 
       {/* Aura iridescent lembut, mengikuti komposisi glow halaman menu */}
       <Svg width={width} height={height} style={StyleSheet.absoluteFill}>
@@ -107,6 +121,9 @@ const styles = StyleSheet.create({
   scrim: {
     backgroundColor: SCRIM_COLOR,
     opacity: SCRIM_OPACITY,
+  },
+  accentWash: {
+    opacity: 0.28,
   },
   brushed: {
     opacity: 0.55,
