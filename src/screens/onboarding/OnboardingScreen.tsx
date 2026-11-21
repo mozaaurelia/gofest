@@ -113,7 +113,7 @@ export default function OnboardingScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: "#8FB8F5" },
+  root: { flex: 1, backgroundColor: "#F4F9F8" },
   safe: { flex: 1 },
   illustWrap: { flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 12 },
 });
