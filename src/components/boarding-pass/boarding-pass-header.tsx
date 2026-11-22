@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: gfColors.surface,
   },
   actionPrimary: {
-    backgroundColor: gfColors.teal,
-    borderColor: gfColors.teal,
+    backgroundColor: gfColors.brandBlue,
+    borderColor: gfColors.brandBlue,
   },
 });

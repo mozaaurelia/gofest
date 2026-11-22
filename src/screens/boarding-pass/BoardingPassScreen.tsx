@@ -3,12 +3,13 @@ import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
-import { PAYMENT_CUSTOMER } from "@/constants/detail-payment-data";
+import { toPaymentCustomer } from "@/constants/detail-payment-data";
 import { BoardingPassCard, BoardingPassHeader } from "@/components/boarding-pass";
 import { gfColors } from "@/constants/gf-theme";
 import { useTranslation } from "@/context/language-context";
 import { eventAddress, eventDate } from "@/utils/event-i18n";
 import { OnboardingBackground } from "@/components/onboarding";
+import { useAuth } from "@/context/auth-context";
 
 export default function BoardingPassScreen() {
   const { id, qty, price, category } = useLocalSearchParams<{
@@ -18,6 +19,8 @@ export default function BoardingPassScreen() {
     category: string;
   }>();
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const customer = toPaymentCustomer(user);
   const concert = getConcertDetailById(id);
   const parsedQty = Number.parseInt(String(qty), 10);
   const totalQty = Number.isFinite(parsedQty) && parsedQty > 0 ? parsedQty : null;
@@ -37,7 +40,7 @@ export default function BoardingPassScreen() {
             date={concert ? eventDate(t, concert) : ""}
             category={ticketCategory}
             quantity={totalQty}
-            passenger={PAYMENT_CUSTOMER.name}
+            passenger={customer?.name ?? "Penonton GoFest"}
           />
 
           <View style={styles.summary}>
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
   summarySub: { fontSize: 11, color: gfColors.textMuted, marginTop: 4, textAlign: "center" },
   actions: { marginTop: 20, paddingHorizontal: 16, gap: 10 },
   btnPrimary: {
-    backgroundColor: gfColors.teal,
+    backgroundColor: gfColors.brandBlue,
     borderRadius: 12,
     height: 48,
     alignItems: "center",
