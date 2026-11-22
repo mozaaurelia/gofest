@@ -1,13 +1,21 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
-import Svg, { Path, Circle } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSavedTickets } from "../../context/saved-tickets-context";
+import ShareWhatsAppButton from "./share-whatsapp-button";
 
-type DetailHeaderProps = { title: string; concertId?: string };
+type DetailHeaderProps = {
+  title: string;
+  date: string;
+  time: string;
+  venue: string;
+  concertId?: string;
+  concertLink?: string;
+};
 
-export default function DetailHeader({ title, concertId }: DetailHeaderProps) {
+export default function DetailHeader({ title, date, time, venue, concertId, concertLink }: DetailHeaderProps) {
   const { isSaved, toggle } = useSavedTickets();
   const insets = useSafeAreaInsets();
   const saved = concertId ? isSaved(concertId) : false;
@@ -53,14 +61,14 @@ export default function DetailHeader({ title, concertId }: DetailHeaderProps) {
           </Svg>
         </Pressable>
 
-        <Pressable style={styles.iconButton}>
-          <Svg viewBox="0 0 24 24" width={18} height={18} fill="none">
-            <Circle cx="18" cy="5" r="2.4" stroke="#FFFFFF" strokeWidth={1.8} />
-            <Circle cx="6" cy="12" r="2.4" stroke="#FFFFFF" strokeWidth={1.8} />
-            <Circle cx="18" cy="19" r="2.4" stroke="#FFFFFF" strokeWidth={1.8} />
-            <Path d="M8.2 10.8 15.8 6.6M8.2 13.2l7.6 4.2" stroke="#FFFFFF" strokeWidth={1.6} strokeLinecap="round" />
-          </Svg>
-        </Pressable>
+        <ShareWhatsAppButton
+          title={title}
+          date={date}
+          time={time}
+          venue={venue}
+          concertId={concertId}
+          concertLink={concertLink}
+        />
       </View>
     </View>
   );
