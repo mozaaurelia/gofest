@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TicketSaleItem, formatRupiah } from "@/constants/ticket-sale-data";
 import { useTranslation } from "@/context/language-context";
+import { gfColors } from "@/constants/gf-theme";
 import TicketQtyPicker from "./ticket-qty-picker";
 
 type Props = {
@@ -39,7 +40,7 @@ export default function TicketOptionCard({ item, qty, onChangeQty }: Props) {
 
         <View style={styles.deadlineRow}>
           <Svg viewBox="0 0 24 24" width={14} height={14} fill="none">
-            <Path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" fill="#2FA8C0" />
+            <Path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" fill={gfColors.brandBlue} />
             <Path d="M12 7v5l3 2" stroke="#FFFFFF" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" />
           </Svg>
           <Text style={styles.deadline}>{t("ticket.deadline")}</Text>
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: "#111827", marginTop: 7 },
   bulletText: { flex: 1, fontSize: 13, color: "#374151", lineHeight: 18 },
   deadlineRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 4 },
-  deadline: { fontSize: 12, color: "#2FA8C0", fontWeight: "500" },
+  deadline: { fontSize: 12, color: gfColors.brandBlue, fontWeight: "500" },
   dashed: {
     marginTop: 14,
     borderTopWidth: 1,

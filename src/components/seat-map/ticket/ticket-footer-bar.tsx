@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { formatRupiah } from "@/constants/ticket-sale-data";
 import { useTranslation } from "@/context/language-context";
+import { gfColors } from "@/constants/gf-theme";
 
 type Props = {
   totalQty: number;
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   qty: { fontSize: 12, color: "#9CA3AF", fontWeight: "500" },
   price: { fontSize: 16, fontWeight: "800", color: "#111827" },
   btn: {
-    backgroundColor: "#2FA8C0",
+     backgroundColor: gfColors.brandBlue,
     paddingHorizontal: 26,
     height: 44,
     borderRadius: 10,

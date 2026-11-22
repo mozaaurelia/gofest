@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { gfColors } from "@/constants/gf-theme";
 import { CalendarGuideIcon, PinGuideIcon } from "./event-guide-icons";
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 
 export default function EventGuideHero({ label, title, subtitle, date, address }: Props) {
   return (
-    <LinearGradient colors={["#2FA8C0", "#1D6F8C"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.card}>
+    <LinearGradient colors={[gfColors.brandBlueLight, gfColors.brandBlue]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.card}>
       <View style={styles.glowOne} />
       <View style={styles.glowTwo} />
 
