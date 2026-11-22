@@ -31,6 +31,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email: next.email.trim(),
       firstName: next.firstName?.trim() || undefined,
       lastName: next.lastName?.trim() || undefined,
+      birthDate: next.birthDate?.trim() || undefined,
+      gender: next.gender?.trim() || undefined,
     };
     saveSession(account);
     setUser(account);

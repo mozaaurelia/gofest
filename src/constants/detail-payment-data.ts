@@ -1,4 +1,5 @@
 import { ImageSourcePropType } from "react-native";
+import type { AuthUser } from "@/services/auth";
 
 export type PaymentCustomer = {
   name: string;
@@ -9,14 +10,16 @@ export type PaymentCustomer = {
   gender: string;
 };
 
-export const PAYMENT_CUSTOMER: PaymentCustomer = {
-  name: "guehruer hehehehr",
-  email: "mozaaurel05@gmail.com",
-  phone: "+62123456789",
-  identity: "jerhrjrjr",
-  birthDate: "06 May 2001",
-  gender: "Wanita",
-};
+export function toPaymentCustomer(user: AuthUser | null): PaymentCustomer {
+  return {
+    name: [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "-",
+    email: user?.email || "-",
+    phone: "-",
+    identity: "-",
+    birthDate: user?.birthDate || "-",
+    gender: user?.gender || "-",
+  };
+}
 
 export const QRIS_DESCRIPTION =
   "Quick Response Code Indonesian Standard atau biasa disingkat QRIS (dibaca KRIS) adalah penyatuan berbagai macam QR dari berbagai Penyelenggara Jasa Sistem Pembayaran (PJSP) menggunakan QR Code. QRIS dikembangkan oleh industri sistem pembayaran bersama dengan Bank Indonesia agar proses transaksi dengan QR Code dapat lebih mudah, cepat, dan terjaga.";

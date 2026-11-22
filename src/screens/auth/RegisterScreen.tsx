@@ -26,7 +26,13 @@ export default function RegisterScreen() {
   const { t } = useTranslation();
 
   const handleSignUp = () => {
-    signUp({ email, firstName, lastName });
+    signUp({
+      email,
+      firstName,
+      lastName,
+      birthDate: `${birthDate.day} ${birthDate.month} ${birthDate.year}`,
+      gender,
+    });
     router.replace("/(tabs)" as any);
   };
 

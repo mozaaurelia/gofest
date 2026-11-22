@@ -10,6 +10,8 @@ export type AuthUser = {
   email: string;
   firstName?: string;
   lastName?: string;
+  birthDate?: string;
+  gender?: string;
 };
 
 let cachedDir: Directory | null | undefined;
@@ -79,6 +81,8 @@ export function loadSession(): AuthUser | null {
       email: parsed.email.trim(),
       firstName: typeof parsed.firstName === "string" ? parsed.firstName : undefined,
       lastName: typeof parsed.lastName === "string" ? parsed.lastName : undefined,
+      birthDate: typeof parsed.birthDate === "string" ? parsed.birthDate : undefined,
+      gender: typeof parsed.gender === "string" ? parsed.gender : undefined,
     };
   } catch {
     return null;

@@ -5,12 +5,13 @@ import { router, useLocalSearchParams } from "expo-router";
 import { getConcertDetailById } from "@/constants/concert-detail-data";
 import {
   DETAIL_PAYMENT_FALLBACK_EVENT,
-  PAYMENT_CUSTOMER,
+  toPaymentCustomer,
 } from "@/constants/detail-payment-data";
 import { calcPaymentSummary, PAYMENT_FEES } from "@/constants/payment-data";
 import usePaymentTimer from "@/hooks/use-payment-timer";
 import { PaymentTimerBar } from "@/components/payment";
 import { OnboardingBackground } from "@/components/onboarding";
+import { useAuth } from "@/context/auth-context";
 import {
   DetailPaymentBottomBar,
   DetailPaymentBrandFooter,
@@ -20,6 +21,7 @@ import {
 } from "@/components/detail-payment";
 
 export default function DetailPaymentScreen() {
+  const { user } = useAuth();
   const { id, qty, price, category, timer, paymentMethod } = useLocalSearchParams<{
     id: string;
     qty: string;
@@ -85,7 +87,7 @@ export default function DetailPaymentScreen() {
             category={ticketCategory}
             qty={ticketQty}
             price={basePrice}
-            customer={PAYMENT_CUSTOMER}
+             customer={toPaymentCustomer(user)}
           />
 
           <DetailPaymentMethodCard paymentMethodId={selectedPaymentMethodId} />
