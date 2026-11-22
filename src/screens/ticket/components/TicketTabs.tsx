@@ -27,7 +27,7 @@ export default function TicketTabs({ activeTab, onChange }: Props) {
 }
 
 const styles = StyleSheet.create({
-  tabWrap: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 0, backgroundColor: gfColors.bg },
+  tabWrap: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 0, backgroundColor: "transparent" },
   tabPill: {
     flexDirection: "row",
     borderBottomWidth: 1,

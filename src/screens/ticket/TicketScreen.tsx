@@ -82,10 +82,10 @@ export default function TicketScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: gfColors.bg },
-  safeEmpty: { backgroundColor: "#FFFFFF" },
+  safe: { flex: 1, backgroundColor: "transparent" },
+  safeEmpty: { backgroundColor: "transparent" },
   emptyContainer: { flex: 1 },
-  headingBlock: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 10, backgroundColor: gfColors.bg },
+  headingBlock: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 10, backgroundColor: "transparent" },
   heading: { fontSize: 18, fontWeight: "800", color: gfColors.text },
   subHeading: { fontSize: 12.5, color: gfColors.textMuted, marginTop: 4, lineHeight: 16 },
   scrollContent: { paddingTop: 8, paddingBottom: 120 },
