@@ -81,7 +81,6 @@ export default function DetailPaymentTicketCard({
         <CustomerField label="Nama Lengkap" value={customer.name} />
         <CustomerField label="Email" value={customer.email} />
         <CustomerField label="No. Handphone" value={customer.phone} />
-        <CustomerField label="Nomor Identitas (KTP/Passport,dll)" value={customer.identity} />
         <CustomerField label="Tanggal Lahir" value={customer.birthDate} />
         <CustomerField label="Jenis Kelamin" value={customer.gender} />
       </View>

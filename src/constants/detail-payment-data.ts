@@ -10,14 +10,44 @@ export type PaymentCustomer = {
   gender: string;
 };
 
+const MONTH_NAMES = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
+function formatBirthDate(value?: string): string {
+  if (!value) return "-";
+  const [day, month, year] = value.split(" ");
+  const monthIndex = Number(month) - 1;
+  return day && year && MONTH_NAMES[monthIndex]
+    ? `${day} ${MONTH_NAMES[monthIndex]} ${year}`
+    : value;
+}
+
+function formatGender(value?: string): string {
+  if (value === "male") return "Pria";
+  if (value === "female") return "Wanita";
+  return value || "-";
+}
+
 export function toPaymentCustomer(user: AuthUser | null): PaymentCustomer {
   return {
     name: [user?.firstName, user?.lastName].filter(Boolean).join(" ") || "-",
     email: user?.email || "-",
     phone: "-",
     identity: "-",
-    birthDate: user?.birthDate || "-",
-    gender: user?.gender || "-",
+    birthDate: formatBirthDate(user?.birthDate),
+    gender: formatGender(user?.gender),
   };
 }
 
