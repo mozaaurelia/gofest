@@ -10,15 +10,12 @@ import SeatMapHeader from "@/components/seat-map/seat-map-header";
 import SeatMapSectionHeader from "@/components/seat-map/seat-map-section-header";
 import SeatMapCategorySection from "@/components/seat-map/seat-map-category-section";
 import SeatMapBenefitSection from "@/components/seat-map/seat-map-benefit-section";
-import SeatMapImage from "@/components/seat-map/seat-map-image";
-import SeatMapFullscreenViewer from "@/components/seat-map/seat-map-fullscreen-viewer";
 import { TicketOptionsSection, TicketFooterBar } from "@/components/seat-map/ticket";
 import { OnboardingBackground } from "@/components/onboarding";
 
 export default function SeatMapScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const concert = getConcertDetailById(id);
-  const [viewerVisible, setViewerVisible] = useState(false);
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const { t } = useTranslation();
 
@@ -79,16 +76,11 @@ export default function SeatMapScreen() {
 
         <SeatMapBenefitSection />
 
-        {/* Photocard image — tap to open fullscreen like reference BIGBANG Seat Map */}
-        <SeatMapImage image={concert?.image} onPress={() => setViewerVisible(true)} />
-
         {/* Ticket options — di bawah gambar, seperti GENERAL SALE di referensi */}
         <TicketOptionsSection quantities={quantities} onChange={handleQtyChange} />
       </ScrollView>
 
       <TicketFooterBar totalQty={totalQty} totalPrice={totalPrice} onPress={handleOrder} />
-
-      <SeatMapFullscreenViewer visible={viewerVisible} onClose={() => setViewerVisible(false)} image={concert?.image} />
     </SafeAreaView>
   );
 }
