@@ -35,8 +35,6 @@ export const translations: Record<Language, Dict> = {
     "eventGuide.rules.smoking": "Dilarang merokok di area tertutup",
     "eventGuide.location.title": "Lokasi & Transportasi",
     "eventGuide.location.transport": "Gunakan transportasi umum atau ride sharing untuk menghindari kemacetan",
-    "eventGuide.help.title": "Butuh Bantuan?",
-    "eventGuide.help.body": "Hubungi tim kami di help@gofest.id jika ada pertanyaan",
     "detail.promo.text": "Event baru tersedia!",
     "detail.promo.link": "Lihat Info Tiket",
     // Headers
