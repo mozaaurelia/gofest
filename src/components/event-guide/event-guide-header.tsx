@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path } from "react-native-svg";
 import { gfColors } from "@/constants/gf-theme";
+import SectionDrawer from "@/components/menu/SectionDrawer";
 
 type Props = {
   title: string;
@@ -10,31 +11,47 @@ type Props = {
 };
 
 export default function EventGuideHeader({ title, subtitle }: Props) {
-  return (
-    <View style={styles.container}>
-      <Pressable
-        onPress={() => router.back()}
-        hitSlop={8}
-        accessibilityRole="button"
-        accessibilityLabel="Back"
-        style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
-      >
-        <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
-          <Path d="M15 18l-6-6 6-6" stroke={gfColors.text} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-        </Svg>
-      </Pressable>
+  const [menuOpen, setMenuOpen] = useState(false);
 
-      <View style={styles.titleWrap}>
-        <Text style={styles.title} numberOfLines={1}>
-          {title}
-        </Text>
-        <Text style={styles.subtitle} numberOfLines={1}>
-          {subtitle}
-        </Text>
+  return (
+    <>
+      <View style={styles.container}>
+        <Pressable
+          onPress={() => router.back()}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+          style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+        >
+          <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
+            <Path d="M15 18l-6-6 6-6" stroke={gfColors.text} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+          </Svg>
+        </Pressable>
+
+        <View style={styles.titleWrap}>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+          <Text style={styles.subtitle} numberOfLines={1}>
+            {subtitle}
+          </Text>
+        </View>
+
+        <Pressable
+          onPress={() => setMenuOpen(true)}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Menu"
+          style={({ pressed }) => [styles.iconButton, pressed && styles.iconButtonPressed]}
+        >
+          <Svg viewBox="0 0 24 24" width={22} height={22} fill="none">
+            <Path d="M4 6h16M4 12h16M4 18h16" stroke={gfColors.text} strokeWidth={2} strokeLinecap="round" />
+          </Svg>
+        </Pressable>
       </View>
 
-      <View style={styles.iconButton} />
-    </View>
+      <SectionDrawer visible={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
 }
 

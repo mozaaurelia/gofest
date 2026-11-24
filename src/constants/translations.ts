@@ -99,8 +99,6 @@ export const translations: Record<Language, Dict> = {
     "wristband.q5.b1": "E-voucher yang sudah dicetak",
     "wristband.q5.b2": "Surat Kuasa yang ditandatangani di atas meterai Rp 10.000 oleh orang yang diwakilkan",
     "wristband.q5.b3": "Salinan Kartu Identitas Nasional yang namanya tertulis di e-voucher",
-    "wristband.menu.questions": "Punya Pertanyaan?",
-    "wristband.menu.questionsSub": "Jawaban cepat untuk pertanyaanmu",
     "wristband.menu.eventGuide": "Panduan Event",
     "wristband.menu.eventGuideSub": "Hal yang perlu diketahui sebelum hari acara",
     // Seat map
@@ -405,8 +403,6 @@ export const translations: Record<Language, Dict> = {
     "wristband.q5.b1": "Printed e-voucher",
     "wristband.q5.b2": "Letter of Attorney signed on a IDR 10.000 stamp (Materai) by the person that you are representing",
     "wristband.q5.b3": "A copy of the National Identification Card whose name is written on the e-voucher",
-    "wristband.menu.questions": "Got Questions?",
-    "wristband.menu.questionsSub": "Quick answers to your questions",
     "wristband.menu.eventGuide": "Event Guide",
     "wristband.menu.eventGuideSub": "Things to know before the event day",
     "seatmap.title": "Seat Map",
